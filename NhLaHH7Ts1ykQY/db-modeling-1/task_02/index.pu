@@ -1,60 +1,127 @@
 @startuml osushi_table
 
-entity orderer {
-    id
-    name
-    phone_number
-    created_at
-    updated_at
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity orderer as "orderer\n注文者" <<T, TRANSACTION>>  {
+    + id BIGINT [PK]
+    --
+    name VARCHAR(30) [氏名]
+    phone_number VARCHAR(30) [電話番号]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
 }
 
 
-entity item {
-    id
-    name
-    price
-    has_wasabi
-    rise_size
-    item_category_id
-    created_at
-    updated_at
+entity order as "order\n注文" <<T, TRANSACTION>> {
+    + order_number BIGINT [PK]
+    --
+    # orderer_id [FK]
+    # consumption_tax_id [FK]
+    comments TEXT [自由記述欄]
+    is_paied BOOLEAN [支払いの有無]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
 }
 
-entity item_category {
-    id
-    name
-    created_at
-    updated_at
+entity oshusi_order_detail as "oshusi_order_detail\nお寿司注文詳細" <<T, TRANSACTION>>  {
+    + id BIGINT [PK]
+    --
+    # order_number [FK]
+    # osushi_id [FK]
+    # rice_size_id [FK]
+    has_wasabi BOOLEAN [わさびの有無]
+    count INTEGER [個数]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
 }
 
-entity order {
-    order_number
-    orderer_id
-    is_paied
-    created_at
-    updated_at
+entity set_menu_order_detail as "oshusi_order_detail\nセットメニュー注文詳細" <<T, TRANSACTION>>  {
+    + id BIGINT [PK]
+    --
+    # order_number [FK]
+    # set_menu_id [FK]
+    has_wasabi BOOLEAN [わさびの有無]
+    count INTEGER [個数]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
 }
 
-entity order_detail {
-    id
-    order_number
-    item_id
-    count
-    created_at
-    updated_at
+entity osushi as "osushi\nお寿司" <<T, TRANSACTION>> {
+    + id BIGINT [PK]
+    --
+    # osushi_category_id [FK]
+    # price_id [FK]
+    name VARCHAR(30) [お寿司の名前]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
 }
 
-entity tax {
-    id
-    name
-    tax_rate
-    created_at
-    updated_at
+entity osushi_category as "osushi_category\nお寿司カテゴリー" <<M, MASTER>> {
+    + id BIGINT [PK]
+    --
+    name VARCHAR(30) [分類名]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
 }
 
-orderer -{ order
-order -{ order_detail
-order_detail -{ item
-item -{ item_category
+entity rice_size as "rice_size\nご飯の量" <<M, MASTER>> {
+    + id BIGINT [PK]
+    --
+    name VARCHAR(30) [分類名]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity set_menu as "set_menu\nセットメニュー" <<T, TRANSACTION>> {
+    + id BIGINT [PK]
+    --
+    # set_menu_category_id [FK]
+    # price_id [FK]
+    name VARCHAR(30) [セットメニューの名前]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity set_menu_category as "set_menu_category\nセットメニューカテゴリー" <<M, MASTER>> {
+    + id BIGINT [PK]
+    --
+    name VARCHAR(30) [分類名]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity price as "price\n価格" <<M, MASTER>> {
+    + id BIGINT [PK]
+    --
+    price INT [税抜価格]
+    started_at TIMESTAMP [適用開始日]
+    ended_at TIMESTAMP [適用終了日]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+
+entity consumption_tax as "consumption_tax\n消費税" <<M, MASTER>> {
+    + id  BIGINT [PK]
+    --
+    rate DOUBLE [税率]
+    started_at TIMESTAMP [適用開始日]
+    ended_at TIMESTAMP [適用終了日]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+orderer ||--|{ order
+order ||--o{ oshusi_order_detail
+order ||--o{ set_menu_order_detail
+order ||--|| consumption_tax
+oshusi_order_detail ||--|| osushi
+oshusi_order_detail ||--|| rice_size
+set_menu_order_detail ||--|| set_menu
+osushi ||--|| osushi_category
+set_menu ||--|| set_menu_category
+osushi ||--|| price
+set_menu ||--|| price
 
 @enduml
