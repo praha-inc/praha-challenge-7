@@ -1,0 +1,58 @@
+@startuml
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "users" as e01 {
+  *id: big int <<PK generated>>
+  --
+  *name: string
+  *phone: string
+}
+
+entity "orders" as e02 {
+  *id: big int<<PK generated>>
+  --
+  *status: int
+  *user_id : big int <<FK>>
+}
+
+entity "order_groups" as e03 {
+  *id : big int <<PK generated>>
+  --
+  *order_id: big int <<FK>>
+}
+
+entity "order_items" as e04 {
+  *id: big int <<PK generated>>
+  --
+  *condiment: int
+  *order_group_id: big int <<FK>>
+}
+
+entity "order_products" as e05 {
+  *id : big int <<PK generated>>
+  --
+  *order_item_id: big int <<FK>>
+  *product_id: big int <<FK>>
+}
+
+entity "products" as e06 {
+  *id : big int <<PK generated>>
+  --
+  *name: string
+  *price: int
+  *category: int
+  *kind: int
+  *tax_percentage : int
+  *provide_method : int
+}
+
+e01 ||...o{ e02
+e02 ||..|{ e03
+e03 ||..|{ e04
+e04 ||..|| e05
+e05 }o..|| e06
+@enduml
