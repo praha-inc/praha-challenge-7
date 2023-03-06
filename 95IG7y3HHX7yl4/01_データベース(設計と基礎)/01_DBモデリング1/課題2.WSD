@@ -1,0 +1,73 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+package database <<Database>> {
+  entity category as "category\nカテゴリー" <<M,MASTER>> {
+    + id INT(10) [PK]
+    --
+    name TEXT
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity menu as "menu\nメニュー" <<M,MASTER>> {
+    + id INT(10) [PK]
+    --
+    name TEXT
+    price INT
+    category_id [FK(category,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity option as "option\nオプション" <<M,MASTER>> {
+    + id INT(10) [PK]
+    --
+    name TEXT
+    price INT
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order as "order\n注文" <<T,TRANSACTION>> {
+    + id INT(10) [PK]
+    --
+    orderer TEXT
+    phone VARCHAR
+    paid BOOLEAN
+    checked_number_of_orders INT
+    request TEXT
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_menu as "order_menu\norderとmenuの中間テーブル" <<T,TRANSACTION>> {
+    + id INT(10) [PK]
+    --
+    orderer_id [FK(orderer,id)]
+    menu_id [FK(menu,id)]
+    number INT
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_menu_option as "order_menu_option\n order_menuとoptionの中間テーブル" <<T,TRANSACTION>> {
+    + id INT(10) [PK]
+    --
+    order_menu_id [FK(menu,id)]
+    option_id [FK(option,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  category ||-ri-o{ menu
+  menu ||-ri-o{ order_menu
+  order ||-le-|{ order_menu
+  option ||-up-o{ order_menu_option
+  order_menu ||-down-o{ order_menu_option
+}
+
+
+@enduml
