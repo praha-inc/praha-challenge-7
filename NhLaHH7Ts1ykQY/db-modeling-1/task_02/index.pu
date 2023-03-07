@@ -4,17 +4,21 @@
 !define TRANSACTION CAE7F2
 
 entity orderer as "orderer\n注文者" <<T, TRANSACTION>>  {
-    + id BIGINT [PK]
+    id BIGSERIAL 
+    +uid TEXT [PK]
     --
-    name VARCHAR(30) [氏名]
-    phone_number VARCHAR(30) [電話番号]
+    first_name VARCHAR(255) [名],
+    last_name VARCHAR(255) [姓],
+    first_name_kana VARCHAR(255) [名(かな)],
+    last_name_kana VARCHAR(255) [姓(かな)],
+    phone_number VARCHAR(255) [電話番号]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
 
-entity order as "order\n注文" <<T, TRANSACTION>> {
-    + order_number BIGINT [PK]
+entity orders as "orders\n注文" <<T, TRANSACTION>> {
+    + order_number BIGSERIAL [PK]
     --
     # orderer_id [FK]
     # consumption_tax_id [FK]
@@ -25,7 +29,7 @@ entity order as "order\n注文" <<T, TRANSACTION>> {
 }
 
 entity oshusi_order_detail as "oshusi_order_detail\nお寿司注文詳細" <<T, TRANSACTION>>  {
-    + id BIGINT [PK]
+    + id BIGSERIAL [PK]
     --
     # order_number [FK]
     # osushi_id [FK]
@@ -37,7 +41,7 @@ entity oshusi_order_detail as "oshusi_order_detail\nお寿司注文詳細" <<T, 
 }
 
 entity set_menu_order_detail as "oshusi_order_detail\nセットメニュー注文詳細" <<T, TRANSACTION>>  {
-    + id BIGINT [PK]
+    + id BIGSERIAL [PK]
     --
     # order_number [FK]
     # set_menu_id [FK]
@@ -47,7 +51,7 @@ entity set_menu_order_detail as "oshusi_order_detail\nセットメニュー注�
     updated_at TIMESTAMP
 }
 
-entity osushi as "osushi\nお寿司" <<T, TRANSACTION>> {
+entity osushi as "osushi\nお寿司" <<M, MASTER>> {
     + id BIGINT [PK]
     --
     # osushi_category_id [FK]
@@ -58,23 +62,23 @@ entity osushi as "osushi\nお寿司" <<T, TRANSACTION>> {
 }
 
 entity osushi_category as "osushi_category\nお寿司カテゴリー" <<M, MASTER>> {
-    + id BIGINT [PK]
+    + id SERIAL [PK]
     --
     name VARCHAR(30) [分類名]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity rice_size as "rice_size\nご飯の量" <<M, MASTER>> {
-    + id BIGINT [PK]
+entity rice as "rice\nご飯の量" <<M, MASTER>> {
+    + id SERIAL [PK]
     --
-    name VARCHAR(30) [分類名]
+    size VARCHAR(30) [分類名]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity set_menu as "set_menu\nセットメニュー" <<T, TRANSACTION>> {
-    + id BIGINT [PK]
+entity set_menu as "set_menu\nセットメニュー" <<M, MASTER>> {
+    + id SERIAL [PK]
     --
     # set_menu_category_id [FK]
     # price_id [FK]
@@ -84,7 +88,7 @@ entity set_menu as "set_menu\nセットメニュー" <<T, TRANSACTION>> {
 }
 
 entity set_menu_category as "set_menu_category\nセットメニューカテゴリー" <<M, MASTER>> {
-    + id BIGINT [PK]
+    + id SERIAL [PK]
     --
     name VARCHAR(30) [分類名]
     created_at TIMESTAMP
@@ -92,7 +96,7 @@ entity set_menu_category as "set_menu_category\nセットメニューカテゴ�
 }
 
 entity price as "price\n価格" <<M, MASTER>> {
-    + id BIGINT [PK]
+    + id SERIAL [PK]
     --
     price INT [税抜価格]
     started_at TIMESTAMP [適用開始日]
@@ -103,21 +107,21 @@ entity price as "price\n価格" <<M, MASTER>> {
 
 
 entity consumption_tax as "consumption_tax\n消費税" <<M, MASTER>> {
-    + id  BIGINT [PK]
+    + id SERIAL [PK]
     --
-    rate DOUBLE [税率]
+    rate NUMERIC [税率]
     started_at TIMESTAMP [適用開始日]
     ended_at TIMESTAMP [適用終了日]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-orderer ||--|{ order
-order ||--o{ oshusi_order_detail
-order ||--o{ set_menu_order_detail
-order ||--|| consumption_tax
+orderer ||--|{ orders
+orders ||--o{ oshusi_order_detail
+orders ||--o{ set_menu_order_detail
+orders ||--|| consumption_tax
 oshusi_order_detail ||--|| osushi
-oshusi_order_detail ||--|| rice_size
+oshusi_order_detail ||--|| rice
 set_menu_order_detail ||--|| set_menu
 osushi ||--|| osushi_category
 set_menu ||--|| set_menu_category
