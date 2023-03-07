@@ -116,16 +116,16 @@ entity consumption_tax as "consumption_tax\n消費税" <<M, MASTER>> {
     updated_at TIMESTAMP
 }
 
-orderer ||--|{ orders
-orders ||--o{ oshusi_order_detail
-orders ||--o{ set_menu_order_detail
-orders ||--|| consumption_tax
-oshusi_order_detail ||--|| osushi
-oshusi_order_detail ||--|| rice
-set_menu_order_detail ||--|| set_menu
-osushi ||--|| osushi_category
-set_menu ||--|| set_menu_category
-osushi ||--|| price
-set_menu ||--|| price
+orderer --|{ orders
+orders --o{ oshusi_order_detail
+orders --o{ set_menu_order_detail
+orders }|-- consumption_tax
+oshusi_order_detail }|-- osushi
+oshusi_order_detail }|-- rice
+set_menu_order_detail }|-- set_menu
+osushi }|-- osushi_category
+set_menu }|-- set_menu_category
+osushi }|-- price
+set_menu }|-- price
 
 @enduml
