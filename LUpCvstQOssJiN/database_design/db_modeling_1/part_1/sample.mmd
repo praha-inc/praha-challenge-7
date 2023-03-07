@@ -15,8 +15,8 @@ product_condiments }o--|| condiments: ""
 
 users {
   id bigint PK
-  name string
-  phone string
+  name varchar(255)
+  phone varchar(11)
 }
 
 orders {
@@ -31,13 +31,13 @@ orders {
 
 payment_statuses {
   id bigint PK
-  name string FK
+  name varchar(255) FK
 }
 
 order_items {
   id bigint PK
   count int
-  order_item_group_id bigint FK
+  order_id bigint FK
 }
 
 order_item_products {
@@ -48,7 +48,7 @@ order_item_products {
 
 products {
   id bigint PK
-  name string
+  name varchar(255)
   price int
   provide_method_id int
   tax_rate_id bigint FK
@@ -56,7 +56,7 @@ products {
 
 provide_methods {
   id bigint PK
-  name string
+  name varchar(255)
 }
 
 product_condiments {
@@ -67,7 +67,7 @@ product_condiments {
 
 condiments {
   id bigint PK
-  name string
+  name varchar(255)
 }
 
 product_categories {
@@ -78,16 +78,10 @@ product_categories {
 
 categories {
   id bigint PK
-  name string
+  name varchar(255)
 }
 
 tax_rates {
   id bigint PK
   tax_percentage int
 }
-
-menu_items {
-  id bigint PK
-}
-
-## productの部分をmenu_productsにすべきな気がしてきた。productだと抽象的すぎて、他の商品的な概念が出た時に辛そう。もしくは別名
