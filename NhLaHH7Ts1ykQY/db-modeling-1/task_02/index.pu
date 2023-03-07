@@ -28,7 +28,7 @@ entity orders as "orders\n注文" <<T, TRANSACTION>> {
     updated_at TIMESTAMP
 }
 
-entity oshusi_order_detail as "oshusi_order_detail\nお寿司注文詳細" <<T, TRANSACTION>>  {
+entity osushi_order_detail as "osushi_order_detail\nお寿司注文詳細" <<T, TRANSACTION>>  {
     + id BIGSERIAL [PK]
     --
     # order_number [FK]
@@ -40,7 +40,7 @@ entity oshusi_order_detail as "oshusi_order_detail\nお寿司注文詳細" <<T, 
     updated_at TIMESTAMP
 }
 
-entity set_menu_order_detail as "oshusi_order_detail\nセットメニュー注文詳細" <<T, TRANSACTION>>  {
+entity set_menu_order_detail as "set_menu_order_detail\nセットメニュー注文詳細" <<T, TRANSACTION>>  {
     + id BIGSERIAL [PK]
     --
     # order_number [FK]
@@ -117,11 +117,11 @@ entity consumption_tax as "consumption_tax\n消費税" <<M, MASTER>> {
 }
 
 orderer --|{ orders
-orders --o{ oshusi_order_detail
+orders --o{ osushi_order_detail
 orders --o{ set_menu_order_detail
 orders }|-- consumption_tax
-oshusi_order_detail }|-- osushi
-oshusi_order_detail }|-- rice
+osushi_order_detail }|-- osushi
+osushi_order_detail }|-- rice
 set_menu_order_detail }|-- set_menu
 osushi }|-- osushi_category
 set_menu }|-- set_menu_category
