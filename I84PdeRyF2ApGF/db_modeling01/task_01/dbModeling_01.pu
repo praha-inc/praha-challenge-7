@@ -53,10 +53,10 @@
         --
         menue_id [FK] : INT : メニューID
         quantity : INT : 個数
-        option_detail_id [FK] : INT : オプション詳細ID
+        order_option_detail_id [FK] : INT : 注文オプション詳細ID
     }
 
-    Entity "optioins(オプション)" as options{
+    Entity "order_optioins(注文オプション)" as order_options{
         id [PK] : INT : オプションID
         --
         option_detail_id : INT : オプション詳細ID
@@ -77,8 +77,8 @@
     set_menues ||--o{ set_details
     set_details ||--|| sushi_menues
     orders }o-r-|| tax_rate
-    order_details ||-r-o{ options
-    options ||--|| condiments
+    order_details ||-r-o{ order_options
+    order_options ||--|| condiments
 
     ' * 主キー
     ' + 外部キー
