@@ -31,11 +31,17 @@ package database <<Database>> {
     created_at TIMESTAMP
   }
   
+  entity customer as "customer\nお客さん" <<T,TRANSACTION>> {
+    + id INT(10) [PK]
+    --
+    name TEXT
+    phone_number VARCHAR
+  }
+  
   entity order as "order\n注文" <<T,TRANSACTION>> {
     + id INT(10) [PK]
     --
-    orderer TEXT
-    phone VARCHAR
+    customer_id [FK(customer,id)]
     paid BOOLEAN
     checked_number_of_orders INT
     request TEXT
@@ -64,6 +70,7 @@ package database <<Database>> {
   
   category ||-ri-o{ menu
   menu ||-ri-o{ order_menu
+  customer ||-le-|{ order
   order ||-le-|{ order_menu
   option ||-up-o{ order_menu_option
   order_menu ||-down-o{ order_menu_option
