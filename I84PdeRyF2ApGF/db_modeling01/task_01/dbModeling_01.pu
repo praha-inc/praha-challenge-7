@@ -24,7 +24,7 @@
         sushi_menu_id [PK, FK] : INT : 寿司ID
     }
 
-    Entity "mst_tax_rate(消費税率マスタ)" as mst_tax_rate{
+    Entity "tax_rate(消費税率マスタ)" as tax_rate{
         id [PK] : INT : 消費税区分ID
         --
         tax_rate : INT : 消費税率
@@ -52,9 +52,22 @@
         order_detail_id [PK] : INT : 注文明細番号 
         --
         menue_id [FK] : INT : メニューID
-        quantity : INT : 数量
-        wasabi : INT : わさび有無(0:無, 1:有)
+        quantity : INT : 個数
+        option_detail_id [FK] : INT : オプション詳細ID
     }
+
+    Entity "optioins(オプション)" as options{
+        id [PK] : INT : オプションID
+        --
+        option_detail_id : INT : オプション詳細ID
+        condiment_id [FK] : INT : 薬味ID 
+    }
+
+    Entity "condiments(薬味)" as condiments{
+        id [PK] : INT : 薬味ID
+        --
+        name : INT : 薬味名称
+    } 
 
     orders }o-l-|| customers
     orders ||--|{ order_details
@@ -63,7 +76,9 @@
     menues ||--o| set_menues
     set_menues ||--o{ set_details
     set_details ||--|| sushi_menues
-    orders }o-r-|| mst_tax_rate
+    orders }o-r-|| tax_rate
+    order_details ||-r-o{ options
+    options ||--|| condiments
 
     ' * 主キー
     ' + 外部キー
