@@ -1,0 +1,87 @@
+erDiagram
+
+users ||--o{ orders: ""
+orders ||--|{ order_items: ""
+orders }o--|| payment_statuses: ""
+orders }o--|| tax_rates: ""
+order_items ||--|{ order_item_products: ""
+order_item_products }o--|| products: ""
+products ||--o{ product_categories: ""
+product_categories }o--|| categories: ""
+products ||--o{ product_condiments: ""
+products }o--|| provide_methods: ""
+products }o--|| tax_rates: ""
+product_condiments }o--|| condiments: ""
+
+users {
+  id bigint PK
+  name varchar(255)
+  phone varchar(11)
+}
+
+orders {
+  id bigint PK
+  ordered_at datetime
+  total_count int
+  payment_status_id bigint FK
+  payment_completed_at datetime
+  user_id bigint FK
+  tax_rate_id bigint FK
+}
+
+payment_statuses {
+  id bigint PK
+  name varchar(255) FK
+}
+
+order_items {
+  id bigint PK
+  count int
+  order_id bigint FK
+}
+
+order_item_products {
+  id bigint PK
+  order_item_id bigint FK
+  product_id bigint FK
+}
+
+products {
+  id bigint PK
+  name varchar(255)
+  price int
+  provide_method_id int
+  tax_rate_id bigint FK
+}
+
+provide_methods {
+  id bigint PK
+  name varchar(255)
+}
+
+product_condiments {
+  id bigint PK
+  product_id bigint FK
+  condiment_id bigint FK
+}
+
+condiments {
+  id bigint PK
+  name varchar(255)
+}
+
+product_categories {
+  id bigint PK
+  product_id bigint FK
+  category_id bigint FK
+}
+
+categories {
+  id bigint PK
+  name varchar(255)
+}
+
+tax_rates {
+  id bigint PK
+  tax_percentage int
+}
