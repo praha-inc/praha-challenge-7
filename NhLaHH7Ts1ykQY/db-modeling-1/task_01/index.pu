@@ -51,7 +51,7 @@ entity set_menu_order_detail as "set_menu_order_detail\nセットメニュー注
 }
 
 entity osushi as "osushi\nお寿司" <<M, MASTER>> {
-    + id BIGINT [PK]
+    + id SERIAL [PK]
     --
     # osushi_category_id [FK]
     # price_id [FK]
