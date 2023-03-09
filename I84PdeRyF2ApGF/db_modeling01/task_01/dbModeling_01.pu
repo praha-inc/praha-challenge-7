@@ -1,0 +1,96 @@
+@startuml dbModeling1
+    Entity "menues(メニュー)" as menues {
+        id [PK] : INT : メニューID
+        item_id [PK, FK] : INT : 商品ID(寿司ID or セットID)
+        --
+        price : INT : 値段
+    }
+
+    Entity "sushi_menues(寿司メニュー)" as sushi_menues {
+        id [PK] : INT : 寿司ID
+        --
+        name : VARCHAR : 寿司名称
+    }
+
+    Entity "set_menues(セットメニュー)" as set_menues {
+        id [PK] : INT : セットID
+        --
+        name : VARCHAR : セット名称
+        set_detail_id [FK] : INT : セット詳細ID
+    }
+
+    Entity "set_details(セットメニュー詳細)" as set_details {
+        id [PK] : INT : セット詳細ID
+        sushi_menu_id [PK, FK] : INT : 寿司ID
+    }
+
+    Entity "tax_rate(消費税率マスタ)" as tax_rate{
+        id [PK] : INT : 消費税区分ID
+        --
+        tax_rate : INT : 消費税率
+        start_date : DATETIME : 適用開始日
+    }
+
+    Entity "customers(顧客)" as customers {
+        id [PK] : INT : 顧客ID
+        --
+        name : VARCHAR : 顧客名
+        phone_number : VARCHAR : 電話番号
+    }
+
+    Entity "orders(注文票)" as orders {
+        id [PK] : INT : 注文ID
+        --
+        customer_id [FK] : INT : 顧客ID
+        mst_tax_rate_id [FK] : INT : 消費税区分ID 
+        order_date : DATETIME : 注文日
+        payment_date : DATETIME : 支払日
+    }
+
+    Entity "order_details(注文明細)" as order_details {
+        order_id [PK, FK] : INT : 注文ID 
+        order_detail_id [PK] : INT : 注文明細番号 
+        --
+        menue_id [FK] : INT : メニューID
+        quantity : INT : 個数
+        order_option_detail_id [FK] : INT : 注文オプション詳細ID
+    }
+
+    Entity "order_optioins(注文オプション)" as order_options{
+        id [PK] : INT : オプションID
+        --
+        option_detail_id : INT : オプション詳細ID
+        condiment_id [FK] : INT : 薬味ID 
+    }
+
+    Entity "condiments(薬味)" as condiments{
+        id [PK] : INT : 薬味ID
+        --
+        name : INT : 薬味名称
+    } 
+
+    orders }o-l-|| customers
+    orders ||--|{ order_details
+    order_details  ||--|| menues
+    menues ||--o| sushi_menues
+    menues ||--o| set_menues
+    set_menues ||--o{ set_details
+    set_details ||--|| sushi_menues
+    orders }o-r-|| tax_rate
+    order_details ||-r-o{ order_options
+    order_options ||--|| condiments
+
+    ' * 主キー
+    ' + 外部キー
+    ' カラム名 : 型 : 説明
+
+    ' 1対０また1
+    ' A ||--o| B
+    ' 1対1
+    ' A ||--|| B
+    ' 1対0以上
+    ' A ||--o{ B
+    ' 1対1以上
+    ' A ||--|{ B
+
+@enduml
