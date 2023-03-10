@@ -32,8 +32,8 @@ INSERT INTO customer (id, name, phone_number)
 VALUES (1, '山崎友輔', '080-0000-0000') 
 
 -- order
-INSERT INTO `order` (id, customer_id, paid, checked_number_of_orders, request)
-VALUES (1, 1, true, 5, null) 
+INSERT INTO `order` (id, customer_id, paid, request)
+VALUES (1, 1, true, null) 
 
 -- order_menu
 INSERT INTO order_menu (id, order_id, menu_id, number)

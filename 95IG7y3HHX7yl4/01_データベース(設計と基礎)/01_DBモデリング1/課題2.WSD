@@ -37,7 +37,6 @@ package database <<Database>> {
     orderer TEXT
     phone VARCHAR
     paid BOOLEAN
-    checked_number_of_orders INT
     request TEXT
     updated_at TIMESTAMP
     created_at TIMESTAMP
