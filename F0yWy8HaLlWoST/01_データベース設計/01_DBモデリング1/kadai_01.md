@@ -29,13 +29,13 @@ erDiagram
 
   "お好みすし_セットメニュ_中間テーブル" {
     int id PK "お好みすし_セットメニュ_中間テーブルID"
-    int id FK "お好みすしID <<FK>>"
-    int id FK "セットメニュID <<FK>>"
+    int id FK "お好みすしID"
+    int id FK "セットメニュID"
   }
 
   "注文" {
     int id PK "注文ID"
-    int id FK "お客さんID <<FK>>"
+    int id FK "お客さんID"
     int price "合計金額"
     int count "合計皿数"
     int isPaid "支払い済みか"
@@ -43,8 +43,8 @@ erDiagram
 
   "注文詳細" {
     int id PK "注文詳細ID"
-    int id FK "注文ID <<FK>>"
-    int id FK "商品ID <<FK>>"
+    int id FK "注文ID"
+    int id FK "商品ID"
     int count "個数"
     int isWithWasabi "さびぬきか"
   }
