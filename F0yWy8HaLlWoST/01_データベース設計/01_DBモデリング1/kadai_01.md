@@ -1,71 +1,61 @@
 # 課題１
 
-[プレビュー](https://www.plantuml.com/plantuml/uml/dPFTYjD05CVlvod2NWgxJx0iUo62-12Xsc4Dv0EQoOKqGcT7jgabMAcfg5SLgwqVjLB5GfK-p6dIv2tCnuaTajOBhyByppd__s_2cKkRDLhCCNH2JQQnHye9yAVX_2tm0Aw79qh3LWprWMCpow0jfKqKvPRSSFTsgfoUPdBoPXtFlks2Z-6pdzav7FXXpoUFoL_dCBW9XnmzDKQDmg-GzqwP_-Gty0tmLy1VvWMuNeCG83mGOn1z49DKbgmhCvXXE_P33Q7hfiXTgQJOELJdNJJ_8KVK4SeKoZ2Z3ean1uj7aof4QdrKtQw-9ACXY1iGlq2CG7pAOLAKujBgVQfRvfLcNY7Q_rWY_S7VfvoVtxbtSN7isbYMRnKjfz6ekrrrulSVSbYcMgrckLH55HFhMoR5XGClddf9ztaozlVdtUjD52nofnTVeru0_4cqydBWVfqYdYrttnSoXTgahA7f4Wms8PBCACFWxifIfuya6JnV0lyCt4SCwIsvxjcPsoxp2NvHhc2H2cNMPBNn5P7YKqowvThNLSe8rd3-qBgGlF5V3UIIcat7qFy0)
+```mermaid
+erDiagram
 
-```plantuml
-@startuml
-entity "お客さん" as m_customer {
-  *お客さんID
-  --
-  *電話番号
-  *名前
-}
+  "お客さん" {
+    int id PK "お客さんID"
+    int phone "電話番号"
+    string name "名前"
+  }
 
-entity "商品" as m_item {
-  *商品ID
-  --
-  お好みすしID
-  セットメニュID
-}
+  "商品" {
+    int id PK "商品ID"
+    int id FK "お好みすしID"
+    int id FK "セットメニュID"
+  }
 
-entity "お好みすし" as m_sushi {
-  *お好みすしID
-  --
-  *お好みすし名
-  *値段
-}
+  "お好みすし" {
+    int id PK "お好みすしID"
+    string name "お好みすし名"
+    int price "値段"
+  }
 
-entity "セットメニュ" as m_set {
-  *セットメニュID
-  --
-  *セットメニュ名
-  *値段
-}
+  "セットメニュ" {
+    int id PK "セットメニュID"
+    string name "セットメニュ名"
+    int price "値段"
+  }
 
-entity "お好みすし_セットメニュ_中間テーブル" as set_sushi_belonging {
-  *お好みすし_セットメニュ_中間テーブルID
-  --
-  *お好みすしID <<FK>>
-  *セットメニュID <<FK>>
-}
+  "お好みすし_セットメニュ_中間テーブル" {
+    int id PK "お好みすし_セットメニュ_中間テーブルID"
+    int id FK "お好みすしID <<FK>>"
+    int id FK "セットメニュID <<FK>>"
+  }
 
-entity "注文一覧" as t_order {
-  *注文ID
-  --
-  *お客さんID <<FK>>
-  *合計金額
-  *合計皿数
-  *支払い済みか
-}
+  "注文" {
+    int id PK "注文ID"
+    int id FK "お客さんID <<FK>>"
+    int price "合計金額"
+    int count "合計皿数"
+    int isPaid "支払い済みか"
+  }
 
-entity "注文詳細" as t_order_detail {
-  *注文詳細ID
-  --
-  *注文ID <<FK>>
-  *商品ID <<FK>>
-  *個数
-  *さびぬきか
-}
+  "注文詳細" {
+    int id PK "注文詳細ID"
+    int id FK "注文ID <<FK>>"
+    int id FK "商品ID <<FK>>"
+    int count "個数"
+    int isWithWasabi "さびぬきか"
+  }
 
-m_customer ||..|{ t_order
-t_order ||..|{ t_order_detail
-t_order_detail ||..o{ m_item
-m_item ||..|| m_sushi
-m_item ||..|| m_set
-m_sushi ||..o{ set_sushi_belonging
-m_set ||..o{ set_sushi_belonging
-
-@enduml
+  "お客さん" ||--|{ "注文": "1人のお客さんは1つ以上の注文をもつ"
+  "注文" ||--|{ "注文詳細": "1つの注文は1つ以上の注文詳細をもつ"
+  "注文詳細" ||--|| "商品": "1つの注文詳細は1つの商品をもつ"
+  "商品" ||--|| "お好みすし": "1つの商品は1つのお好みすしをもつ"
+  "商品" ||--|| "セットメニュ": "1つの商品は1つのセットメニュをもつ"
+  "お好みすし" ||--o{ "お好みすし_セットメニュ_中間テーブル": ""
+  "セットメニュ" ||--o{ "お好みすし_セットメニュ_中間テーブル": ""
 ```
 
 ## 疑問点メモ
