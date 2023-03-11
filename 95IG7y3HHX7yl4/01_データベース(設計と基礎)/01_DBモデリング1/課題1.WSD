@@ -54,6 +54,7 @@ package database <<Database>> {
     orderer_id [FK(orderer,id)]
     menu_id [FK(menu,id)]
     number INT
+    price INT
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }

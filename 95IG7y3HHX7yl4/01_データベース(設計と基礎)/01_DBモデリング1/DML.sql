@@ -36,13 +36,13 @@ INSERT INTO `order` (id, customer_id, paid, request)
 VALUES (1, 1, true, null) 
 
 -- order_menu
-INSERT INTO order_menu (id, order_id, menu_id, number)
+INSERT INTO order_menu (id, order_id, menu_id, number, price)
 VALUES 
-  (1, 1, 1, 1),
-  (2, 1, 4, 1),
-  (3, 1, 7, 1),
-  (4, 1, 8, 1),
-  (5, 1, 12, 2) 
+  (1, 1, 1, 1, 8650),
+  (2, 1, 4, 1, 5680),
+  (3, 1, 7, 1, 4440),
+  (4, 1, 8, 1, 3830),
+  (5, 1, 12, 2, 2830) 
 
 -- order_menu_option
 INSERT INTO order_menu_option (id, order_menu_id, option_id)
