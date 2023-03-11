@@ -1,79 +1,67 @@
 # 課題2
 
-[プレビュー](https://www.plantuml.com/plantuml/uml/dPFVJjH05CRlvoaQBatW2GZXmfWO7w9PtGaqsMwJTdgXMvETZe7Yfd7DsZNg5GeAg8XP2HlHy327wRPlOJlJaQ4ZNd0rcVFd-tvpScOz81sVX6uFuJvno6Dh2UXpVlmUQ0RnPCdg19PhFme3uhdOjmR8ikxe1VVlLf7bvJfSlZil3hyliYF-ugo-yt7ATrBq5FrLvjaMdz16qo7ObNeoVALKw-__1de1z0tGro81yJam1Ym1jWji16o_2clIhPx68mY3JKUQj0gKcvcfi0NKS2y_FjKjJ0JbWedqC2jq6oDverEBo3PRxSlvrt8w0RO5x1UmAR3F0gP2aO-s7-AUrzzm-XiIxLQI6hqnFcjrzTw3jRMRdgtIsglosK4-tRwS3ukFdmGiiJs_gvPAPfMZiMMQ7HydnK5IRhyiTzEh--BjHPwT2ALNt_AT3EYpV9u8u959KHpE5ZzET0gxYqd7wKaOlKX3ac4DHkrkQnndm3u0EuBu5E8zY7zUxnYE6j3wRNG6z0lGj4LfQgXTs-puZXquJx0aDGirNZF9n-93QZywYbPMee6Q0f9dAwo6WwvVHP4tQFuoaeViZDJdCwEOe2Qd-l-nj4WK_gV0G97w-e0GMiVzRkZs_W00)
+```mermaid
+erDiagram
 
-```plantuml
-@startuml
-entity "お客さん" as m_customer {
-  *お客さんID
-  --
-  *電話番号
-  *名前
-}
+  "お客さん" {
+    int id PK "お客さんID"
+    int phone "電話番号"
+    string name "名前"
+  }
 
-entity "商品" as m_item {
-  *商品ID
-  --
-  お好みすしID
-  セットメニュID
-}
+  "商品" {
+    int id PK "商品ID"
+    int id FK "お好みすしID"
+    int id FK "セットメニュID"
+  }
 
-entity "お好みすし" as m_sushi {
-  *お好みすしID
-  --
-  *お好みすし名
-  *値段
-}
+  "お好みすし" {
+    int id PK "お好みすしID"
+    string name "お好みすし名"
+    int price "値段"
+  }
 
-entity "セットメニュ" as m_set {
-  *セットメニュID
-  --
-  *セットメニュ名
-  *値段
-}
+  "セットメニュ" {
+    int id PK "セットメニュID"
+    string name "セットメニュ名"
+    int price "値段"
+  }
 
-entity "お好みすし_セットメニュ_中間テーブル" as set_sushi_belonging {
-  *お好みすし_セットメニュ_中間テーブルID
-  --
-  *お好みすしID <<FK>>
-  *セットメニュID <<FK>>
-}
+  "お好みすし_セットメニュ_中間テーブル" {
+    int id PK "お好みすし_セットメニュ_中間テーブルID"
+    int id FK "お好みすしID <<FK>>"
+    int id FK "セットメニュID <<FK>>"
+  }
 
-entity "注文一覧" as t_order {
-  *注文ID
-  --
-  *お客さんID <<FK>>
-  *合計金額
-  *合計皿数
-  *支払い済みか
-}
+  "注文" {
+    int id PK "注文ID"
+    int id FK "お客さんID <<FK>>"
+    int price "合計金額"
+    int count "合計皿数"
+    int isPaid "支払い済みか"
+  }
 
-entity "注文詳細" as t_order_detail {
-  *注文詳細ID
-  --
-  *注文ID <<FK>>
-  *商品ID <<FK>>
-  *シャリサイズID <<FK>>
-  *個数
-  *さびぬきか
-}
+  "注文詳細" {
+    int id PK "注文詳細ID"
+    int id FK "注文ID <<FK>>"
+    int id FK "商品ID <<FK>>"
+    int count "個数"
+    int isWithWasabi "さびぬきか"
+  }
 
-entity "シャリサイズ" as m_shari_size {
-  *シャリサイズID
-  --
-  *シャリサイズ名
-}
+  "シャリサイズ" {
+    int id PK "シャリサイズID"
+    string name "シャリサイズ名"
+  }
 
-m_customer ||..|{ t_order
-t_order ||..|{ t_order_detail
-t_order_detail ||..o{ m_item
-m_item ||..|| m_sushi
-m_item ||..|| m_set
-m_sushi ||..o{ set_sushi_belonging
-m_set ||..o{ set_sushi_belonging
-t_order_detail ||..|| m_shari_size
-
-@enduml
+  "お客さん" ||--|{ "注文": "1人のお客さんは1つ以上の注文をもつ"
+  "注文" ||--|{ "注文詳細": "1つの注文は1つ以上の注文詳細をもつ"
+  "注文詳細" ||--|| "商品": "1つの注文詳細は1つの商品をもつ"
+  "商品" ||--|| "お好みすし": "1つの商品は1つのお好みすしをもつ"
+  "商品" ||--|| "セットメニュ": "1つの商品は1つのセットメニュをもつ"
+  "お好みすし" ||--o{ "お好みすし_セットメニュ_中間テーブル": ""
+  "セットメニュ" ||--o{ "お好みすし_セットメニュ_中間テーブル": ""
+  "注文詳細" ||..|| "シャリサイズ": "1つの注文詳細は1つのシャリサイズをもつ"
 ```
 
 ## 疑問点メモ
