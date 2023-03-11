@@ -2,67 +2,67 @@
 
 ```plantuml
 @startuml
-entity "お客さん" as e01 {
-  *電話番号
+entity "お客さん" as m_customer {
+  *お客さんID
   --
-  *注文ID <<FK>>
+  *電話番号
   *名前
 }
 
-entity "商品" as e03 {
+entity "商品" as m_item {
   *商品ID
   --
   お好みすしID
   セットメニュID
 }
 
-entity "お好みすし" as e04 {
+entity "お好みすし" as m_sushi {
   *お好みすしID
   --
   *お好みすし名
   *値段
 }
 
-entity "セットメニュ" as e05 {
+entity "セットメニュ" as m_set {
   *セットメニュID
   --
   *セットメニュ名
   *値段
 }
 
-entity "お好みすし_セットメニュ_中間テーブル" as e06 {
+entity "お好みすし_セットメニュ_中間テーブル" as set_sushi_belonging {
   *お好みすし_セットメニュ_中間テーブルID
   --
   *お好みすしID <<FK>>
   *セットメニュID <<FK>>
 }
 
-entity "注文一覧" as e07 {
+entity "注文一覧" as t_order {
   *注文ID
   --
-  *お客さん.電話番号 <<FK>>
+  *お客さんID <<FK>>
   *従業員ID <<FK>>
   *合計金額
   *合計皿数
-  *支払い済みかどうか
+  *支払い済みか
 }
 
-entity "注文詳細" as e08 {
+entity "注文詳細" as t_order_detail {
   *注文詳細ID
   --
   *注文ID <<FK>>
   *商品ID <<FK>>
   *個数
-  *さびぬき
+  *さびぬきか
 }
 
-e01 ||..|{ e07
-e07 ||..|{ e08
-e08 ||..o{ e03
-e03 ||..|| e04
-e03 ||..|| e05
-e04 ||..o{ e06
-e05 ||..o{ e06
+m_customer ||..|{ t_order
+t_order ||..|{ t_order_detail
+t_order_detail ||..o{ m_item
+m_item ||..|| m_sushi
+m_item ||..|| m_set
+m_sushi ||..o{ set_sushi_belonging
+m_set ||..o{ set_sushi_belonging
 
 @enduml
 ```
