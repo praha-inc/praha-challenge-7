@@ -7,7 +7,7 @@ package database <<Database>> {
   entity category as "category\nカテゴリー" <<M,MASTER>> {
     + id INT(10) [PK, autonumber]
     --
-    name TEXT
+    name VARCHAR
     is_combo BOOLEAN
     updated_at TIMESTAMP
     created_at TIMESTAMP
@@ -16,7 +16,7 @@ package database <<Database>> {
   entity combo_menu as "combo_menu\nセットメニュー" <<M,MASTER>> {
     + id INT(10) [PK, autonumber]
     --
-    name TEXT
+    name VARCHAR
     price DECIMAL(10, 2)
     can_takeaway: BOOLEAN
     category_id [FK(category,id)]
@@ -27,7 +27,7 @@ package database <<Database>> {
   entity single_menu as "single_menu\n単品メニュー" <<M,MASTER>> {
     + id INT(10) [PK, autonumber]
     --
-    name TEXT
+    name VARCHAR
     price DECIMAL(10, 2)
     can_takeaway: BOOLEAN
     category_id [FK(category,id)]
@@ -38,7 +38,7 @@ package database <<Database>> {
   entity allergen as "allergen\nアレルゲン" <<M,MASTER>> {
     + id INT(10) [PK, autonumber]
     --
-    name TEXT
+    name VARCHAR
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
@@ -64,7 +64,7 @@ package database <<Database>> {
   entity option as "option\nオプション" <<M,MASTER>> {
     + id INT(10) [PK, autonumber]
     --
-    name TEXT
+    name VARCHAR
     price DECIMAL(10, 2)
     updated_at TIMESTAMP
     created_at TIMESTAMP
@@ -73,7 +73,7 @@ package database <<Database>> {
   entity customer as "customer\nお客さん" <<T,TRANSACTION>> {
     + id INT(10) [PK, autonumber]
     --
-    name TEXT
+    name VARCHAR
     phone_number VARCHAR
   }
   
@@ -82,7 +82,7 @@ package database <<Database>> {
     --
     customer_id [FK(customer,id)]
     paid BOOLEAN
-    request TEXT
+    request VARCHAR
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
