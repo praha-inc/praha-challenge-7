@@ -59,9 +59,9 @@
 
     Entity "order_options\n注文オプション" as options {
         id [PK] : INT : 注文オプションID
-        order_id [PK, FK] : INT : 注文ID
-        order_detail_id [PK, FK] : INT : 注文明細ID
         --
+        order_id [FK] : INT : 注文ID
+        order_detail_id [FK] : INT : 注文明細ID
         option_id [FK] : INT : オプションID
     }
 
