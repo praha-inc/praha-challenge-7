@@ -35,6 +35,23 @@ package database <<Database>> {
     created_at TIMESTAMP
   }
   
+  entity allergen as "allergen\nアレルゲン" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name TEXT
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity menu_allergen_detail as "menu_allergen_detail\nメニューアレルゲン詳細" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    single_menu_id [FK(single_menu,id)]
+    allergen [FK(allergen,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
   entity combo_detail as "combo_detail\nセットメニュー詳細" <<T,TRANSACTION>> {
     + id INT(10) [PK, autonumber]
     --
@@ -126,6 +143,8 @@ package database <<Database>> {
   single_menu ||-right-o{ order_detail
   single_menu ||-down-o{ combo_detail
   single_menu ||-down-o{ single_menu_option
+  single_menu ||-up-o{ menu_allergen_detail
+  allergen ||-right-o{ menu_allergen_detail
   customer ||-left-|{ order
   order ||-up-|{ order_coupon_detail
   coupon ||-down-|{ order_coupon_detail
