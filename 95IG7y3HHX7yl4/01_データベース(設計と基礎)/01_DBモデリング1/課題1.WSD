@@ -5,41 +5,43 @@
 
 package database <<Database>> {
   entity category as "category\nカテゴリー" <<M,MASTER>> {
-    + id INT(10) [PK]
+    + id INT(10) [PK, autonumber]
     --
     name TEXT
+    is_combo BOOLEAN
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
   
   entity menu as "menu\nメニュー" <<M,MASTER>> {
-    + id INT(10) [PK]
+    + id INT(10) [PK, autonumber]
     --
     name TEXT
-    price INT
+    price DECIMAL(10, 2)
+    can_takeaway: BOOLEAN
     category_id [FK(category,id)]
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
   
   entity option as "option\nオプション" <<M,MASTER>> {
-    + id INT(10) [PK]
+    + id INT(10) [PK, autonumber]
     --
     name TEXT
-    price INT
+    price DECIMAL(10, 2)
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
   
   entity customer as "customer\nお客さん" <<T,TRANSACTION>> {
-    + id INT(10) [PK]
+    + id INT(10) [PK, autonumber]
     --
     name TEXT
     phone_number VARCHAR
   }
   
   entity order as "order\n注文" <<T,TRANSACTION>> {
-    + id INT(10) [PK]
+    + id INT(10) [PK, autonumber]
     --
     customer_id [FK(customer,id)]
     paid BOOLEAN
@@ -48,19 +50,28 @@ package database <<Database>> {
     created_at TIMESTAMP
   }
   
-  entity order_menu as "order_menu\norderとmenuの中間テーブル" <<T,TRANSACTION>> {
-    + id INT(10) [PK]
+  entity order_menu as "order_menu\n注文詳細テーブル" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
     --
     orderer_id [FK(orderer,id)]
     menu_id [FK(menu,id)]
     number INT
-    price INT
+    price DECIMAL(10, 2)
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
   
-  entity order_menu_option as "order_menu_option\n order_menuとoptionの中間テーブル" <<T,TRANSACTION>> {
-    + id INT(10) [PK]
+    entity menu_option as "menu_option\nオプション追加可能メニューテーブル" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    menu_id [FK(menu,id)]
+    option_id [FK(option,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_menu_option as "order_menu_option\n注文詳細オプション内容テーブル" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
     --
     order_menu_id [FK(menu,id)]
     option_id [FK(option,id)]
@@ -68,11 +79,13 @@ package database <<Database>> {
     created_at TIMESTAMP
   }
   
-  category ||-ri-o{ menu
-  menu ||-ri-o{ order_menu
+  category ||-right-o{ menu
+  menu ||-right-o{ order_menu
+  menu ||-down-o{ menu_option
   customer ||-le-|{ order
-  order ||-le-|{ order_menu
+  order ||-left-|{ order_menu
   option ||-up-o{ order_menu_option
+  option ||-left-o{ menu_option
   order_menu ||-down-o{ order_menu_option
 }
 
