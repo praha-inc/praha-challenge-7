@@ -112,6 +112,7 @@ package database <<Database>> {
     --
     orderer_id [FK(orderer,id)]
     single_menu_id [FK(single_menu,id)]
+    combo_menu_id [FK(combo_menu,id)]
     number INT
     price DECIMAL(10, 2)
     updated_at TIMESTAMP
@@ -138,12 +139,12 @@ package database <<Database>> {
   
   category ||-right-o{ single_menu
   category ||-up-o{ combo_menu
-  combo_menu ||-right-o{ order_detail
+  combo_menu |o-right-o{ order_detail
   combo_menu ||-up-o{ combo_detail
   single_menu ||-right-o{ order_detail
   single_menu ||-down-o{ combo_detail
   single_menu ||-down-o{ single_menu_option
-  single_menu ||-up-o{ menu_allergen_detail
+  single_menu |o-up-o{ menu_allergen_detail
   allergen ||-right-o{ menu_allergen_detail
   customer ||-left-|{ order
   order ||-up-|{ order_coupon_detail
