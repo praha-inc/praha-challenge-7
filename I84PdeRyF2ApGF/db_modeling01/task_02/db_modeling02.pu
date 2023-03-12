@@ -88,7 +88,6 @@
         id [PK] : INT : 商品ID
         --
         name : VARCHAR : 商品名称
-        category_id [FK] : INT : カテゴリーID
         price : INT : 値段
         tax_rate_id [FK] : 消費税ID
     }
@@ -100,10 +99,17 @@
         sushi_id [FK] : INT : 寿司ID
     }
 
-    Entity "categories\nカテゴリー" as c {
+    Entity "categories\nカテゴリーマスタ" as c {
         id [PK] : INT : カテゴリーID
         --
         name : VARCHAR : カテゴリー名称
+    }
+
+    Entity "product_categories\n商品カテゴリー" as pc {
+        id [PK] : INT : 商品カテゴリーID
+        --
+        product_id [FK] : INT : 商品ID
+        category_id [FK] : INT : カテゴリーID
     }
 
     orders }o..r..|| customers
@@ -111,7 +117,8 @@
     orders }o-l-|| tax_rate
     order_details }o--|| p
     tax_rate ||--o{ p
-    p ||-l-o{ c
+    p ||..o{ pc
+    pc }o..|| c
     p ||..o{ s_d
     order_details ||..o{ options
     options }o..|| om
