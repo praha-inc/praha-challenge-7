@@ -46,7 +46,7 @@ erDiagram
     int id FK "注文ID"
     int id FK "商品ID"
     int count "個数"
-    int isWithWasabi "さびぬきか"
+    int isWithoutWasabi "さびぬきか"
   }
 
   "シャリサイズ" {
