@@ -13,13 +13,33 @@ package database <<Database>> {
     created_at TIMESTAMP
   }
   
-  entity menu as "menu\nメニュー" <<M,MASTER>> {
+  entity combo_menu as "combo_menu\nセットメニュー" <<M,MASTER>> {
     + id INT(10) [PK, autonumber]
     --
     name TEXT
     price DECIMAL(10, 2)
     can_takeaway: BOOLEAN
     category_id [FK(category,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity single_menu as "single_menu\n単品メニュー" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name TEXT
+    price DECIMAL(10, 2)
+    can_takeaway: BOOLEAN
+    category_id [FK(category,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity combo_detail as "combo_detail\nセットメニュー詳細" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    combo_menu [FK(combo_menu,id)]
+    single_menu_id [FK(single_menu,id)]
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
@@ -50,44 +70,69 @@ package database <<Database>> {
     created_at TIMESTAMP
   }
   
-  entity order_menu as "order_menu\n注文詳細テーブル" <<T,TRANSACTION>> {
+  entity coupon as "coupon\nクーポン" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    discount_price DECIMAL(10, 2)
+    start_at TIMESTAMP
+    end_at TIMESTAMP
+    is_exclusive BOOLEAN
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_coupon_detail as "order_coupon_detail\n使用クーポン" <<T,TRANSACTION>> {
     + id INT(10) [PK, autonumber]
     --
     orderer_id [FK(orderer,id)]
-    menu_id [FK(menu,id)]
+    coupon_id [FK(coupon,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_detail as "order_detail\n注文詳細" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    orderer_id [FK(orderer,id)]
+    single_menu_id [FK(single_menu,id)]
     number INT
     price DECIMAL(10, 2)
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
   
-    entity menu_option as "menu_option\nオプション追加可能メニューテーブル" <<T,TRANSACTION>> {
+  entity single_menu_option as "single_menu_option\nオプション追加可能メニュー" <<T,TRANSACTION>> {
     + id INT(10) [PK, autonumber]
     --
-    menu_id [FK(menu,id)]
+    single_menu_id [FK(single_menu,id)]
     option_id [FK(option,id)]
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
   
-  entity order_menu_option as "order_menu_option\n注文詳細オプション内容テーブル" <<T,TRANSACTION>> {
+  entity order_detail_option as "order_detail_option\n注文詳細オプション内容" <<T,TRANSACTION>> {
     + id INT(10) [PK, autonumber]
     --
-    order_menu_id [FK(menu,id)]
+    order_single_menu_id [FK(single_menu,id)]
     option_id [FK(option,id)]
     updated_at TIMESTAMP
     created_at TIMESTAMP
   }
   
-  category ||-right-o{ menu
-  menu ||-right-o{ order_menu
-  menu ||-down-o{ menu_option
-  customer ||-le-|{ order
-  order ||-left-|{ order_menu
-  option ||-up-o{ order_menu_option
-  option ||-left-o{ menu_option
-  order_menu ||-down-o{ order_menu_option
+  category ||-right-o{ single_menu
+  category ||-up-o{ combo_menu
+  combo_menu ||-right-o{ order_detail
+  combo_menu ||-up-o{ combo_detail
+  single_menu ||-right-o{ order_detail
+  single_menu ||-down-o{ combo_detail
+  single_menu ||-down-o{ single_menu_option
+  customer ||-left-|{ order
+  order ||-up-|{ order_coupon_detail
+  coupon ||-down-|{ order_coupon_detail
+  order ||-left-|{ order_detail
+  option ||-up-o{ order_detail_option
+  option ||-left-o{ single_menu_option
+  order_detail ||-down-o{ order_detail_option
 }
-
 
 @enduml
