@@ -1,0 +1,108 @@
+@startuml dbModeling1
+    Entity "tax_rate\n消費税率マスタ" as tax_rate{
+        id [PK] : INT : 消費税区分ID
+        --
+        tax_rate : DECIMAL : 消費税率
+        start_date : DATETIME : 適用開始日
+    }
+
+    Entity "customers\n顧客" as customers {
+        id [PK] : INT : 顧客ID
+        --
+        name : VARCHAR : 顧客名
+        phone_number : VARCHAR : 電話番号
+    }
+
+    Entity "orders\n注文票" as orders {
+        id [PK] : INT : 注文ID
+        --
+        customer_id [FK] : INT : 顧客ID
+        tax_rate_id [FK] : INT : 消費税区分ID 
+        order_date : DATETIME : 注文日
+        payment_date : DATETIME : 支払日
+    }
+
+    Entity "order_details\n注文明細" as order_details {
+        order_id [PK, FK] : INT : 注文ID 
+        order_detail_id [PK] : INT : 注文明細番号 
+        --
+        product_id [FK] : INT : 販売商品ID
+        quantity : INT : 個数
+    }
+
+    Entity "order_options\n注文オプション" as options {
+        id [PK] : INT : 注文オプションID
+        --
+        order_id [FK] : INT : 注文ID
+        order_detail_id [FK] : INT : 注文明細ID
+        option_id [FK] : INT : オプションID
+    }
+
+    Entity "options\nオプションマスタ" as om{
+        id [PK] : INT : オプションID
+        --
+        name : VARCHAR : オプション名称
+    }
+
+    Entity "sales_product\n販売商品" as s_p{
+        id [PK] : INT : 販売商品ID
+        --
+        product_id [FK] : INT : 商品ID
+        price : INT : 値段
+        tax_rate_id [FK] : 消費税ID
+        sales_status : INT : 販売状況
+        update_date : DATETIME : 更新日
+    }
+
+    Entity "products\n商品マスタ" as p{
+        id [PK] : INT : 商品ID
+        --
+        name : VARCHAR : 商品名称
+    }
+
+    Entity "set_details\nセット詳細" as s_d{
+        id [PK] : INT : セット詳細ID
+        --
+        set_id [FK] : INT : 商品ID
+        sushi_id [FK] : INT : 寿司ID
+    }
+
+    Entity "categories\nカテゴリーマスタ" as c {
+        id [PK] : INT : カテゴリーID
+        --
+        name : VARCHAR : カテゴリー名称
+    }
+
+    Entity "product_categories\n商品カテゴリー" as pc {
+        id [PK] : INT : 商品カテゴリーID
+        --
+        product_id [FK] : INT : 商品ID
+        category_id [FK] : INT : カテゴリーID
+    }
+
+    orders }o..r..|| customers
+    orders ||-d-|{ order_details
+    orders }o-l-|| tax_rate
+    order_details }o--|| s_p
+    tax_rate ||--o{ s_p
+    s_p ||..o{ pc
+    pc }o..|| c
+    s_p ||..o{ s_d
+    order_details ||..o{ options
+    options }o..|| om
+    p ||..r..o{ s_p
+    
+    ' * 主キー
+    ' + 外部キー
+    ' カラム名 : 型 : 説明
+
+    ' 1対０また1
+    ' A ||--o| B
+    ' 1対1
+    ' A ||--|| B
+    ' 1対0以上
+    ' A ||--o{ B
+    ' 1対1以上
+    ' A ||--|{ B
+
+@enduml
