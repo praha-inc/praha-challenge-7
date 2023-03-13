@@ -1,37 +1,36 @@
-@startuml osushi_table
+@startuml single_item_table
 
 !define MASTER F9DFD5
 !define TRANSACTION CAE7F2
 
-entity orderer as "orderer\n注文者" <<T, TRANSACTION>>  {
-    id BIGSERIAL 
-    +uid TEXT [PK]
+entity customers as "customers\n注文者" <<T, TRANSACTION>>  {
+    id BIGSERIAL [PK]
+    +uuid VARCHAR(255)
     --
     first_name VARCHAR(255) [名],
     last_name VARCHAR(255) [姓],
-    first_name_kana VARCHAR(255) [名(かな)],
-    last_name_kana VARCHAR(255) [姓(かな)],
     phone_number VARCHAR(255) [電話番号]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
 entity orders as "orders\n注文" <<T, TRANSACTION>> {
-    + order_number BIGSERIAL [PK]
+    + id BIGSERIAL [PK]
+    +uuid VARCHAR(255)
     --
-    # orderer_id [FK]
-    # consumption_tax_id [FK]
+    # customer_id [FK]
     comments TEXT [自由記述欄]
-    is_paied BOOLEAN [支払いの有無]
+    is_paid BOOLEAN [支払いの有無]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity osushi_order_detail as "osushi_order_detail\nお寿司注文詳細" <<T, TRANSACTION>>  {
+entity single_item_order_detail as "single_item_order_detail\n単品注文詳細" <<T, TRANSACTION>>  {
     + id BIGSERIAL [PK]
+    +uuid VARCHAR(255)
     --
-    # order_number [FK]
-    # osushi_id [FK]
+    # order_id [FK]
+    # single_item_id [FK]
     has_wasabi BOOLEAN [わさびの有無]
     count INTEGER [個数]
     created_at TIMESTAMP
@@ -40,8 +39,9 @@ entity osushi_order_detail as "osushi_order_detail\nお寿司注文詳細" <<T, 
 
 entity set_menu_order_detail as "set_menu_order_detail\nセットメニュー注文詳細" <<T, TRANSACTION>>  {
     + id BIGSERIAL [PK]
+    +uuid VARCHAR(255)
     --
-    # order_number [FK]
+    # order_id [FK]
     # set_menu_id [FK]
     has_wasabi BOOLEAN [わさびの有無]
     count INTEGER [個数]
@@ -49,44 +49,67 @@ entity set_menu_order_detail as "set_menu_order_detail\nセットメニュー注
     updated_at TIMESTAMP
 }
 
-entity osushi as "osushi\nお寿司" <<M, MASTER>> {
+entity single_items as "single_items\n単品" <<M, MASTER>> {
     + id SERIAL [PK]
+    +uuid VARCHAR(255)
     --
-    # osushi_category_id [FK]
-    # price_id [FK]
-    name VARCHAR(30) [お寿司の名前]
+    # single_item_category_id [FK]
+    name VARCHAR(255) [お寿司の名前]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity osushi_category as "osushi_category\nお寿司カテゴリー" <<M, MASTER>> {
+entity single_item_categories as "single_item_categories\n単品のカテゴリー" <<M, MASTER>> {
     + id SERIAL [PK]
+    +uuid VARCHAR(255)
     --
-    name VARCHAR(30) [分類名]
+    name VARCHAR(255) [分類名]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity single_item_price_relations as "single_item_price_relations\n単品の価格" <<T, TRANSACTION>> {
+    + id SERIAL [PK]
+    +uuid VARCHAR(255)
+    --
+    # single_item_id [FK]
+    # price_id [FK]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
 entity set_menu as "set_menu\nセットメニュー" <<M, MASTER>> {
     + id SERIAL [PK]
+    +uuid VARCHAR(255)
     --
     # set_menu_category_id [FK]
-    # price_id [FK]
-    name VARCHAR(30) [セットメニューの名前]
+    name VARCHAR(255) [セットメニューの名前]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity set_menu_category as "set_menu_category\nセットメニューカテゴリー" <<M, MASTER>> {
+entity set_menu_categories as "set_menu_categories\nセットメニューカテゴリー" <<M, MASTER>> {
     + id SERIAL [PK]
+    +uuid VARCHAR(255)
     --
-    name VARCHAR(30) [分類名]
+    name VARCHAR(255) [分類名]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity set_menu_price_relations as "set_menu_price_relations\nセットメニューの価格" <<T, TRANSACTION>> {
+    + id SERIAL [PK]
+    +uuid VARCHAR(255)
+    --
+    # set_menu_id [FK]
+    # price_id [FK]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
 entity price as "price\n価格" <<M, MASTER>> {
     + id SERIAL [PK]
+    +uuid VARCHAR(255)
     --
     price INT [税抜価格]
     started_at TIMESTAMP [適用開始日]
@@ -95,26 +118,16 @@ entity price as "price\n価格" <<M, MASTER>> {
     updated_at TIMESTAMP
 }
 
-
-entity consumption_tax as "consumption_tax\n消費税" <<M, MASTER>> {
-    + id SERIAL [PK]
-    --
-    rate NUMERIC [税率]
-    started_at TIMESTAMP [適用開始日]
-    ended_at TIMESTAMP [適用終了日]
-    created_at TIMESTAMP
-    updated_at TIMESTAMP
-}
-
-orderer --|{ orders
-orders --o{ osushi_order_detail
+customers --|{ orders
+orders --o{ single_item_order_detail
 orders --o{ set_menu_order_detail
-orders }|-- consumption_tax
-osushi_order_detail }|-- osushi
+single_item_order_detail }|-- single_items
 set_menu_order_detail }|-- set_menu
-osushi }|-- osushi_category
-set_menu }|-- set_menu_category
-osushi }|-- price
-set_menu }|-- price
+single_items }|-right- single_item_categories
+set_menu }|-down- set_menu_categories
+single_items }|-- single_item_price_relations
+price }|-up- single_item_price_relations
+set_menu }|-- set_menu_price_relations
+price }|-up- set_menu_price_relations
 
 @enduml
