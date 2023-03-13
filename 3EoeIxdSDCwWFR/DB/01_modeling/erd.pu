@@ -1,0 +1,115 @@
+@startuml test
+hide circle
+skinparam linetype ortho
+
+entity "m_menu (メニューマスタ)" as m_menu {
+     * <<PK>> menu_id(メニューID) int
+     --
+     * <<FK>> menu_category_kbn(メニューカテゴリー区分) int (1:セットメニュー 2:寿司)
+     * <<FK>> price_id(価格ID) int
+     * delete_flg(削除フラグ) int
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_menu_category_kbn (メニューカテゴリー区分マスタ)" as m_menu_category_kbn {
+     * <<PK>> menu_category_kbn(メニューカテゴリー区分) int
+     --
+     * menu_category_kbn_name(メニューカテゴリー区分名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_set_menu (セットメニューマスタ)" as m_set_menu {
+     * <<PK>> menu_id(メニューID) int
+     --
+     * set_menu_kbn(セットメニュー区分) int(1:盛り込み 2:にぎり 以下略)
+     * set_menu_name(セットメニュー名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_set_menu_kbn (セットメニュー区分マスタ)" as m_set_menu_kbn {
+     * <<PK>> set_menu_kbn(セットメニュー区分) int
+     --
+     * set_menu_kbn_name(セットメニュー区分名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_sushi_menu (寿司メニューマスタ)" as m_sushi_menu {
+     * <<PK>> menu_id(メニューID) int
+     --
+     * sushi_menu_name(寿司メニュー名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_price (価格マスタ)" as m_price {
+     * <<PK>> price_id(価格ID) int
+     --
+     * price(価格) int
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "m_customer (顧客マスタ)" as m_customer {
+     * <<PK>> customer_id(顧客ID) int
+     --
+     * <<FK>> customer_name(顧客名) string
+     * tel_number(電話番号) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "t_order (注文トラン)" as t_order {
+     * <<PK>> order_id(注文ID) int
+     --
+     * <<FK>> customer_id(顧客ID) int
+     * payment_zumi_flg(支払い済みフラグ) int
+     * tax_rate_id(税率ID) int
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "t_order_details (注文詳細トラン)" as t_order_details {
+     * <<PK>> order_id(注文ID) int
+     --
+     * <<FK>> menu_id(メニューID) int
+     * amount(数量) int
+     * wasabi_nuki_flg(わさび抜きフラグ) int
+     * <<FK>> shari_amount_kbn (シャリ量区分) int (0:少 1:大)
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "m_shari_amount_kbn (シャリ量区分マスタ)" as m_shari_amount_kbn {
+     * <<PK>> shari_amount_kbn (シャリ量区分) int
+     --
+     * shari_amount_kbn_name (シャリ量区分) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "m_tax_rate (税率マスタ)" as m_tax_rate {
+     * <<PK>> tax_rate_id(税率ID) int
+     --
+     * tax_rate(税率) int
+     * start_date(適用開始日時) date
+     * end_date(適用終了日時) date
+ }
+
+ t_order ||..|{ t_order_details
+ m_customer ||..|{ t_order
+ m_menu ||..|| m_menu_category_kbn
+ m_menu |o--|| m_set_menu
+ m_menu |o--|| m_sushi_menu
+ m_menu ||..o{ t_order_details
+ m_set_menu }o..|| m_set_menu_kbn
+ t_order }o..|| m_tax_rate 
+ m_price }o..|| m_menu
+ t_order_details }o..|| m_shari_amount_kbn
+
+
+
+@enduml
