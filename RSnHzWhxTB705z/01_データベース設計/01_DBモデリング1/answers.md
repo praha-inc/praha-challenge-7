@@ -5,16 +5,16 @@ MySQL利用想定です！
 ## 課題1
 
 ### スケッチ
-[ER図（svg）](./01_01_er_diagram.svg)<br>
-[ER図（puml）](./01_01_er_diagram.puml)
+[ER図（svg）](./01_01_01_er_diagram.svg)<br>
+[ER図（puml）](./01_01_01_er_diagram.puml)
 
 ### DB構造
-[DB構造（md）](./01_01_db_structure.md)
+[DB構造（md）](./01_01_01_db_structure.md)
   
 ### 利用想定
 
 #### あらかじめデータを登録しておくテーブル（マスター系）
-登録しておくデータの例は [DB構造（md）](./01_01_db_structure.md) の備考欄に記載しています。
+登録しておくデータの例は [DB構造（md）](./01_01_01_db_structure.md) の備考欄に記載しています。
 - channels
 - order_statuses
 - products
@@ -69,3 +69,25 @@ MySQL利用想定です！
   - 最長の人の氏名をググったら1000文字以上だったが、極端に長い場合は通称を使うだろうと255文字にした
   - 入りそうな値を考えておいて、あとは大体の感覚値？
 - インデックスどういう場合にどういう風に貼る？（あとで調べる）
+
+
+<hr>
+
+## 課題2
+
+### スケッチ
+[ER図（svg）](./01_01_02_er_diagram.svg)<br>
+[ER図（puml）](./01_01_02_er_diagram.puml)
+
+### DB構造
+[DB構造（md）](./01_01_02_db_structure.md)
+
+#### 処理流れ
+1. シャリ小の場合、 order_details.is_less_rice に1を格納する
+
+#### 人気の寿司ネタの特定
+- 設計は現状でOK
+- order_detailsテーブルのレコード数が商品の販売数と等しいため、order_detailsテーブルから条件を指定したりGROUP BYしたりしてSELECTする
+    - SELECTする際に、 order_details.product_id からproductsテーブルのレコードを同時に取得する
+        - SELECTする際に、 products.food_id からfoodsテーブルのレコードを同時に取得する
+    - 取得したレコードから、 foods.id でGROUP BYしてCOUNT()する
