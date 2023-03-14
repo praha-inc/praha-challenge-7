@@ -131,7 +131,7 @@ package database <<Database>> {
   entity order_detail_option as "order_detail_option\n注文詳細オプション内容" <<T,TRANSACTION>> {
     + id INT(10) [PK, autonumber]
     --
-    order_single_menu_id [FK(single_menu,id)]
+    single_menu_id [FK(single_menu,id)]
     option_id [FK(option,id)]
     updated_at TIMESTAMP
     created_at TIMESTAMP
