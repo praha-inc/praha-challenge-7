@@ -59,6 +59,7 @@
 | product_description | 商品説明 | VARCHAR(1000) |  |  | NULL |  |  |  |  |  |
 | menu_category_id | メニューカテゴリーid | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
 | price_id | 価格id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
+| is_available | 商品を提供中かどうか | TINYINT |  |  | NOT NULL | 1 |  |  |  |  |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 

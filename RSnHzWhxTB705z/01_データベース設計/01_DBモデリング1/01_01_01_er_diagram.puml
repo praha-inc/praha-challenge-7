@@ -58,6 +58,7 @@ entity "products : 商品テーブル" as products {
   product_description: 商品説明
   #menu_category_id : メニューカテゴリーid
   #price_id : 税抜価格id
+  *is_available : 商品を提供中かどうか
   *created_at
   *updated_at
 }
