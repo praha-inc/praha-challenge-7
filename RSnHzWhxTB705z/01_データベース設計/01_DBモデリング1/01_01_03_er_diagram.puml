@@ -1,0 +1,112 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title DB設計
+
+entity "orders : 注文テーブル" as orders {
+  *id
+  --
+  #customer_id : 顧客id
+  #channel_id : 注文経路id
+  #order_status_id : 注文状態id
+  *created_at
+  *updated_at
+}
+
+entity "customers : 顧客テーブル" as customers {
+  *id
+  --
+  *family_name : 氏
+  *first_name : 名
+  *tel : 電話番号
+  *created_at
+  *updated_at
+}
+
+entity "channels : 注文経路テーブル" as channels {
+  *id
+  --
+  *channel_name : 注文経路名
+  *created_at
+  *updated_at
+}
+
+entity "order_statuses : 注文状態テーブル" as order_statuses {
+  *id
+  --
+  *status : 注文状態 : 注文受付、支払い済み、受け渡し済み
+  *created_at
+  *updated_at
+}
+
+entity "order_details : 注文詳細テーブル" as order_details {
+  *id
+  --
+  #order_id : 注文id
+  #product_id : 商品id
+  *is_without_wasabi : さび抜きかどうか
+  *is_less_rice : シャリ小かどうか
+  *created_at
+  *updated_at
+}
+
+entity "products : 商品テーブル" as products {
+  *id
+  --
+  *product_name: 商品名
+  product_description: 商品説明
+  #menu_category_id : メニューカテゴリーid
+  #price_id : 税抜価格id
+  *is_available : 商品を提供中かどうか
+  *created_at
+  *updated_at
+}
+
+entity "menu_categories : メニューカテゴリーテーブル" as menu_categories {
+  *id
+  --
+  *menu_category_name : メニューカテゴリー名（盛り込み、にぎり、丼、お好みなど）
+  *created_at
+  *updated_at
+}
+
+entity "prices : 税抜価格テーブル" as prices {
+  *id
+  --
+  *price : 税抜価格
+  *created_at
+  *updated_at
+}
+
+entity "product_foods : 商品食材テーブル" as product_foods {
+  *id
+  --
+  #product_id : 商品id
+  #food_id : 食材id
+  *created_at
+  *updated_at
+}
+
+entity "foods : 食材テーブル" as foods {
+  *id
+  --
+  *food_name : 食材名
+  *stock : 在庫数
+  *expiration_date : 消費期限
+  *created_at
+  *updated_at
+}
+
+orders ||--|{ customers
+orders ||--|{ channels
+orders ||--|| order_statuses
+orders ||--|{ order_details
+order_details ||--|| products
+products ||--|| menu_categories
+products ||--|| prices
+products ||--|{ product_foods
+product_foods ||--|| foods
+
+@enduml
