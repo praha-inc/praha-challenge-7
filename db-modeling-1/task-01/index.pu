@@ -7,9 +7,9 @@ entity customers as "customers\n注文者" <<T, TRANSACTION>>  {
     id BIGSERIAL [PK]
     +uuid VARCHAR(255)
     --
-    first_name VARCHAR(255) [名],
-    last_name VARCHAR(255) [姓],
-    phone_number VARCHAR(255) [電話番号]
+    first_name VARCHAR(255) [名] NOT NULL,
+    last_name VARCHAR(255) [姓] NOT NULL,
+    phone_number VARCHAR(255) [電話番号], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -18,9 +18,9 @@ entity orders as "orders\n注文" <<T, TRANSACTION>> {
     + id BIGSERIAL [PK]
     +uuid VARCHAR(255)
     --
-    # customer_id [FK]
+    # customer_id [FK], NOT NULL
     comments TEXT [自由記述欄]
-    is_paid BOOLEAN [支払いの有無]
+    is_paid BOOLEAN [支払いの有無], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -29,10 +29,10 @@ entity single_item_order_detail as "single_item_order_detail\n単品注文詳細
     + id BIGSERIAL [PK]
     +uuid VARCHAR(255)
     --
-    # order_id [FK]
-    # single_item_id [FK]
-    has_wasabi BOOLEAN [わさびの有無]
-    count INTEGER [個数]
+    # order_id [FK], NOT NULL
+    # single_item_id [FK], NOT NULL
+    has_wasabi BOOLEAN [わさびの有無], NOT NULL, DEFAULT: TRUE
+    count INTEGER [個数], NOT NULL, DEFAULT: 0
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -41,10 +41,10 @@ entity set_menu_order_detail as "set_menu_order_detail\nセットメニュー注
     + id BIGSERIAL [PK]
     +uuid VARCHAR(255)
     --
-    # order_id [FK]
-    # set_menu_id [FK]
-    has_wasabi BOOLEAN [わさびの有無]
-    count INTEGER [個数]
+    # order_id [FK], NOT NULL
+    # set_menu_id [FK], NOT NULL
+    has_wasabi BOOLEAN [わさびの有無], NOT NULL, DEFAULT: TRUE
+    count INTEGER [個数], NOT NULL, DEFAULT: 0
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -53,8 +53,8 @@ entity single_items as "single_items\n単品" <<M, MASTER>> {
     + id SERIAL [PK]
     +uuid VARCHAR(255)
     --
-    # single_item_category_id [FK]
-    name VARCHAR(255) [お寿司の名前]
+    # single_item_category_id [FK], NOT NULL
+    name VARCHAR(255) [お寿司の名前], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -63,7 +63,7 @@ entity single_item_categories as "single_item_categories\n単品のカテゴリ�
     + id SERIAL [PK]
     +uuid VARCHAR(255)
     --
-    name VARCHAR(255) [分類名]
+    name VARCHAR(255) [分類名], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -72,8 +72,8 @@ entity single_item_price_relations as "single_item_price_relations\n単品の価
     + id SERIAL [PK]
     +uuid VARCHAR(255)
     --
-    # single_item_id [FK]
-    # price_id [FK]
+    # single_item_id [FK], NOT NULL
+    # price_id [FK], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -82,8 +82,8 @@ entity set_menu as "set_menu\nセットメニュー" <<M, MASTER>> {
     + id SERIAL [PK]
     +uuid VARCHAR(255)
     --
-    # set_menu_category_id [FK]
-    name VARCHAR(255) [セットメニューの名前]
+    # set_menu_category_id [FK], NOT NULL
+    name VARCHAR(255) [セットメニューの名前], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -92,7 +92,7 @@ entity set_menu_categories as "set_menu_categories\nセットメニューカテ�
     + id SERIAL [PK]
     +uuid VARCHAR(255)
     --
-    name VARCHAR(255) [分類名]
+    name VARCHAR(255) [分類名], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -101,8 +101,8 @@ entity set_menu_price_relations as "set_menu_price_relations\nセットメニュ
     + id SERIAL [PK]
     +uuid VARCHAR(255)
     --
-    # set_menu_id [FK]
-    # price_id [FK]
+    # set_menu_id [FK], NOT NULL
+    # price_id [FK], NOT NULL
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
@@ -111,8 +111,8 @@ entity price as "price\n価格" <<M, MASTER>> {
     + id SERIAL [PK]
     +uuid VARCHAR(255)
     --
-    price INT [税抜価格]
-    started_at TIMESTAMP [適用開始日]
+    price INT [税抜価格], NOT NULL
+    started_at TIMESTAMP [適用開始日], NOT NULL
     ended_at TIMESTAMP [適用終了日]
     created_at TIMESTAMP
     updated_at TIMESTAMP
