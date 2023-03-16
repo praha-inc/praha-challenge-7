@@ -115,8 +115,10 @@ VALUES (1, '山崎友輔', '080-0000-0000');
 INSERT INTO `order` (id, customer_id, paid, request)
 VALUES (1, 1, true, null);
 -- クーポン
-INSERT INTO coupon (id, discount_price, start_at, end_at, is_exclusive)
-VALUES (1, 1000, '2023-03-14 12:00:00', '2023-04-14 12:00:00', true);
+INSERT INTO coupon (id, code, discount_type, discount_value, start_at, end_at, is_exclusive)
+VALUES 
+  (1, '00001', 0, 1000, '2023-03-14 12:00:00', '2023-04-14 12:00:00', true),
+  (2, '00002', 1, 10, '2023-03-14 12:00:00', '2023-04-14 12:00:00', true);
 -- 使用クーポン
 INSERT INTO order_coupon_detail (id, order_id, coupon_id)
 VALUES (1, 1, 1);

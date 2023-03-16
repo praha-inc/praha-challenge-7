@@ -90,7 +90,9 @@ package database <<Database>> {
   entity coupon as "coupon\nクーポン" <<T,TRANSACTION>> {
     + id INT(10) [PK, autonumber]
     --
-    discount_price DECIMAL(10, 2)
+    code VARCHAR
+    discount_type SMALLINT UNSIGNED // 0: 金額 1:割引率
+    discount_value DECIMAL(10, 2)
     start_at TIMESTAMP
     end_at TIMESTAMP
     is_exclusive BOOLEAN
