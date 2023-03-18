@@ -21,6 +21,7 @@ entity "customers : 顧客テーブル" as customers {
   *family_name : 氏
   *first_name : 名
   *tel : 電話番号
+  *app_user_id : アプリのユーザーid
   *created_at
   *updated_at
 }
@@ -46,6 +47,7 @@ entity "order_details : 注文詳細テーブル" as order_details {
   --
   #order_id : 注文id
   #product_id : 商品id
+  #discount_id : 割引id
   *is_without_wasabi : さび抜きかどうか
   *is_less_rice : シャリ小かどうか
   *created_at
@@ -68,6 +70,7 @@ entity "menu_categories : メニューカテゴリーテーブル" as menu_categ
   *id
   --
   *menu_category_name : メニューカテゴリー名（盛り込み、にぎり、丼、お好みなど）
+  *is_lunch_discounted : ランチタイムの割引対象かどうか
   *created_at
   *updated_at
 }
@@ -76,6 +79,28 @@ entity "prices : 税抜価格テーブル" as prices {
   *id
   --
   *price : 税抜価格
+  *created_at
+  *updated_at
+}
+
+entity "discounts : 割引テーブル" as discounts {
+  *id
+  --
+  discount_value : 割引価格
+  discount_rate : 割引割合
+  *discount_reason : 割引理由
+  *begin_at : 開始日時
+  end_at : 終了日時
+  *created_at
+  *updated_at
+}
+
+entity "products_discounts : 商品割引中間テーブル" as products_discounts {
+  *id
+  --
+  #product_id : 商品id
+  #discount_id : 割引id
+  *is_deleted : 論理削除フラグ
   *created_at
   *updated_at
 }
@@ -103,10 +128,17 @@ orders ||--|{ customers
 orders ||--|{ channels
 orders ||--|| order_statuses
 orders ||--|{ order_details
+
 order_details ||--|| products
+order_details ||--o{ discounts
+
 products ||--|| menu_categories
 products ||--|| prices
 products ||--|{ product_foods
+
+products ||-r-o{ products_discounts
+discounts ||-l-o{ products_discounts
+
 product_foods ||--|| foods
 
 @enduml

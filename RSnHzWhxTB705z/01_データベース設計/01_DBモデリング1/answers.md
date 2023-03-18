@@ -59,6 +59,10 @@ MySQL利用想定です！
     - 特定のデータベース : Oracle Database, PostgreSQL, MySQL, など
 
 ### 疑問点
+- product_foodsテーブルは中間テーブル？products_foodsテーブルに命名変更すべき？
+  - ある商品が使用している食材を格納している
+  - 商品と食材の関係しか格納していない
+  - 商品テーブルと食材テーブルを直接リレーションさせるとしたら、1対1以上になる（多対多ではない）　→　中間テーブルではない？
 - DB構造、どこにどうやって書く？（書類管理の問題）
   - スプレッドシートなど、外部の表ソフトを使った方が絶対にわかりやすい
   - 外部のソフトを使うと、書類が色々なところに散らばり、管理が大変
@@ -96,12 +100,42 @@ MySQL利用想定です！
 
 ## 課題3
 
+### スケッチ
+[ER図（svg）](./01_01_03_er_diagram.svg)<br>
+[ER図（puml）](./01_01_03_er_diagram.puml)
+
+### DB構造
+[DB構造（md）](./01_01_03_db_structure.md)
+
 ### 今後発生しそうな追加仕様
-- ランチ実施
-    - 平日11:00-14:00はランチ実施（注文した時間）
-    - 「にぎり」「丼」のメニューが税別の価格から10%オフ
-    - 今後セット区分としての「ランチ」とその中の商品が追加される可能性がある
-    - 今後ランチのみ提供のメニューが追加される可能性がある
-- 電話注文だけでなく、アプリからの注文も対応
-    - 可能なのは注文のみで、配達などはなし、取りに来てもらう想定
-    - アプリ利用の場合、支払いは注文時に必ず済ませるものとする（支払いは外部サービスを使う1択として支払い手段は考慮しない）
+
+#### tanakaさん案
+1. メニューが廃止された場合
+    - products.is_available カラムを0にUPDATEする
+
+#### okazakiさん案
+1. 全体価格が10/20/30％オフになるクーポンが発行される
+    - あらかじめアプリケーション側で discounts テーブルをSELECTしておく
+      - discounts.begin_at と discounts.end_at が指定期間内のレコードを取得
+        - レコードがあれば、 order_details.discount_id に該当のidを入れる
+1. 特定商品が安くなるキャンペーンが開催される
+    - 特定商品が安くなるキャンペーンの場合、 discounts テーブルに discount_reason = "キャンペーン"、 products_discounts テーブルに discounts.id と 該当商品の products.id を入れておく
+    - あらかじめアプリケーション側で products テーブルと products_discounts テーブルと discounts テーブルをSELECTしておく
+        - products_discounts テーブルにレコードがある場合、 products_discounts.discount_id から discounts テーブルの該当レコードを取得
+        - products_discounts テーブルにレコードがない場合、 他の割引が適用されていないか探索（ランチ、ほか割引など（有効期限をみる））
+    - 特定商品が安くなるキャンペーンが終了する場合、 discounts.end_at に日時を格納、 products_discounts.is_deleted に1を格納
+
+#### igarashi案
+1. ランチ実施
+    1. 平日11:00-14:00はランチ実施（注文した時間）
+        - あらかじめアプリケーション側で menu_categories テーブル、 discounts テーブルをSELECTしておく
+            - ランチ時間帯の注文は、 menu_categories.is_lunch_discounted = 1 の場合、order_details.discount_id に discounts.discount_reason = "ランチ" のidを入れる
+    1. 「にぎり」「丼」のメニューが税別の価格から10%オフ
+        - menu_categories.is_lunch_discounted = 1 のレコードを取得
+        - 対象のカテゴリーの場合、order_details.discount_id に discounts.discount_reason = "ランチ" のidを入れる
+    1. 今後セット区分としての「ランチ」とその中の商品が追加される可能性がある
+        - menu_categories テーブルに menu_category_name = "ランチ"、 is_lunch_discounted = 1　のレコードを追加
+1. 電話注文だけでなく、アプリからの注文も対応
+    1. 可能なのは注文のみで、配達などはなし、取りに来てもらう想定
+    1. アプリ利用の場合、支払いは注文時に必ず済ませるものとする（支払いは外部サービスを使う1択として支払い手段は考慮しない）
+        - アプリ利用者の場合は、customers.app_user_id に uuid を、 orders.channel_id に channels.channel_name = "アプリ" のidを入れる

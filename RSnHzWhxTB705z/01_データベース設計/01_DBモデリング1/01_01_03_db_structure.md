@@ -17,6 +17,8 @@
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | family_name | 氏 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  |  |
 | first_name | 名 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  |  |
+| tel | 電話番号 | INT(11) |  |  | NOT NULL |  | ※ |  |  |  |
+| app_user_id | アプリのユーザーid | CHAR(36) |  |  | NULL |  | ※ |  |  |  |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
@@ -25,7 +27,7 @@
 | カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
-| channel_name | 注文経路名 | VARCHAR(100) |  |  | NOT NULL |  |  |  |  | 「来店」「電話」 |
+| channel_name | 注文経路名 | VARCHAR(100) |  |  | NOT NULL |  |  |  |  | 「来店」「電話」「アプリ」 |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
@@ -45,6 +47,7 @@
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | order_id | 注文id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
 | product_id | 商品id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
+| discount_id | 割引id | UNSIGNED INT |  | FOREIGN KEY | NULL | NULL |  |  |  | 割引がなにもない場合はNULLを入れ、割引がある場合に割引idを入れる |
 | is_without_wasabi | さび抜きかどうか | TINYINT(1) |  |  | NOT NULL | 0 |  |  |  |  |
 | is_less_rice | シャリ小かどうか | TINYINT(1) |  |  | NOT NULL | 0 |  |  |  |  |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
@@ -55,11 +58,12 @@
 | カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
-| product_name | 商品名 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  | 「はな」「みさき」「海鮮ちらし」「鮨八宝巻」「玉子」「まぐろ赤身」など |
+| product_name | 商品名 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  | 「はな」「みさき」「海鮮ちらし」「鮨八宝巻」「玉子」「まぐろ赤身」「ランチセットA」など |
 | product_description | 商品説明 | VARCHAR(1000) |  |  | NULL |  |  |  |  |  |
 | menu_category_id | メニューカテゴリーid | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
 | price_id | 価格id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
-| is_available | 商品を提供中かどうか | TINYINT |  |  | NOT NULL | 1 |  |  |  |  |
+| discount_id | 割引id | UNSIGNED INT |  | FOREIGN KEY | NULL |  |  |  |  |  |
+| is_available | 商品を提供中かどうか | TINYINT(1) |  |  | NOT NULL | 1 |  |  |  |  |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
@@ -68,7 +72,8 @@
 | カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
-| menu_category_name | メニューカテゴリー名 | VARCHAR(100) |  |  | NOT NULL |  |  |  |  | 「盛り込み」「にぎり」「丼」「お好み」など |
+| menu_category_name | メニューカテゴリー名 | VARCHAR(100) |  |  | NOT NULL |  |  |  |  | 「盛り込み」「にぎり」「丼」「お好み」「ランチ」など |
+| is_lunch_discounted | ランチタイムの割引対象かどうか | TINYINT(1) |  |  | NOT NULL | 0 |  |  |  |  |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
@@ -78,6 +83,30 @@
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | price | 税抜価格 | INT |  |  | NOT NULL |  |  |  |  | 「8650」「1940」「100」「150」など<br> 「○円引きクーポン」みたいな場合に使うかも...？ |
+| created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+| updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+
+## discounts : 割引テーブル
+
+| カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
+| discount_value | 割引価格 | UNSIGNED INT |  |  | NULL | NULL |  |  | discount_value もしくは discount_rate　のどちらかに値が入っていないといけない　| 「50」「100」など |
+| discount_rate | 割引割合 | UNSIGNED FLOAT(6, 3) |  |  | NULL | NULL |  |  | discount_value もしくは discount_rate　のどちらかに値が入っていないといけない | 「5.0」「10.0」など |
+| discount_reason | 割引理由 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  | 「ランチ」「10%オフクーポン」「すしの日セール」「〇〇キャンペーン」など |
+| begin_at | 開始日時 | DATETIME |  |  | NOT NULL |  |  |  |  | 開始時期を入れる（定期的に実施する割引も含め） |
+| end_at | 終了日時 | DATETIME |  |  | NULL | NULL |  |  |  | 定期的に実施しない割引の場合、終了時期を入れる <br> 定期的に実施する割引の場合、もう使用しなくなったときにここの値を入れる |
+| created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+| updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+
+## products_discounts : 商品割引中間テーブル（特定の商品の割引の際に、このテーブルを使用する）
+
+| カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
+| product_id | 商品id | UNSIGNED INT |  |  | NULL | NULL |  |  |  | 特定の商品の割引の際、該当する商品のidを入れる |
+| discount_id | 割引id | UNSIGNED INT |  |  | NULL | NULL |  |  |  | 特定の商品の割引の際、該当する割引のidを入れる |
+| is_deleted | 論理削除フラグ | TINYINT(1) |  |  | NOT NULL | 0 |  |  |  | 特定の商品の割引が終了した際、1を入れる |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
