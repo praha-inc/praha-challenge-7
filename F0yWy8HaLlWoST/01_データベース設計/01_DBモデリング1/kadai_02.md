@@ -15,7 +15,7 @@ erDiagram
     int item_id PK "商品ID"
     int sushi_id FK "お好みすしID"
     int set_id FK "セットメニュID"
-    int is_deleted "削除されたか"
+    boolean is_deleted "削除されたか"
     date created_at "作成日"
     date updated_at "更新日"
   }
@@ -48,7 +48,7 @@ erDiagram
   "注文" {
     int order_id PK "注文ID"
     int customer_id FK "お客さんID"
-    int isPaid "支払い済みか"
+    boolean is_paid "支払い済みか"
     date created_at "作成日"
     date updated_at "更新日"
   }
@@ -59,7 +59,7 @@ erDiagram
     int item_id FK "商品ID"
     int shari_size_id FK "シャリサイズID"
     int count "個数"
-    int isWithoutWasabi "さびぬきか"
+    boolean is_without_wasabi "さびぬきか"
     date created_at "作成日"
     date updated_at "更新日"
   }
