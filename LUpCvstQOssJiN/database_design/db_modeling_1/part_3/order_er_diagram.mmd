@@ -50,6 +50,7 @@ coupons {
   id bigint PK
   is_available boolean
   name varchar(255)
+  coupon_code varchar(255)
   discount_price int
   coupon_type_id bigint FK
   expiration_at datetime
