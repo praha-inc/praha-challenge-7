@@ -46,6 +46,7 @@
         --
         customer_id [FK] : INT : 顧客ID
         tax_rate_id [FK] : INT : 消費税ID
+        used_coupon_id [FK] : INT : 使用クーポンID
         order_method : INT : 注文方法
         payment_method : INT : 決済方法
         order_date : DATETIME : 注文日
@@ -83,7 +84,7 @@
         name : VARCHAR : 梱包名称
         price : INT : 梱包代
     }
-    
+
     Entity "products\n商品マスタ" as s_p{
         id [PK] : INT : 商品ID
         --
@@ -144,6 +145,7 @@
     r_c ||..o{ c_h_c
     c_h_c }o..|| f_c
     c_m ||..o{ c_h_c
+    c_m |o..o{orders
 
     ' * 主キー
     ' + 外部キー
