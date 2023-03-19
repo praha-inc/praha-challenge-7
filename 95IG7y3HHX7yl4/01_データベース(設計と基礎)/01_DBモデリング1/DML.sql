@@ -7,7 +7,7 @@ VALUES
   (2, 'にぎり', true),
   (3, '鮨屋の丼＆おすすめ', true),
   (4, '地元に生まれた味', true),
-  (6, 'お好みすし', false);
+  (5, 'お好みすし', false);
 
 -- menu 盛り込みと1皿100円
 INSERT INTO combo_menu (id, name, price, can_takeaway, category_id)
@@ -30,66 +30,66 @@ VALUES
 INSERT INTO single_menu (id, name, price, can_takeaway, category_id)
 VALUES 
   -- 100円
-  (1, '玉子', 100, true, 6), 
-  (2, 'いなり', 100, true, 6), 
-  (3, '納豆軍艦', 100, true, 6), 
-  (4, 'ツナサラダ', 100, true, 6), 
-  (5, 'コーン', 100, true, 6), 
-  (6, 'カニサラダ', 100, true, 6),
-  (7, 'オクラ軍艦', 100, true, 6),
+  (1, '玉子', 100, true, 5), 
+  (2, 'いなり', 100, true, 5), 
+  (3, '納豆軍艦', 100, true, 5), 
+  (4, 'ツナサラダ', 100, true, 5), 
+  (5, 'コーン', 100, true, 5), 
+  (6, 'カニサラダ', 100, true, 5), 
+  (7, 'オクラ軍艦', 100, true, 5), 
   -- 150円
-  (8, 'ゆでげそ', 150, true, 6), 
-  (9, 'とびっこ', 150, true, 6), 
-  (10, '明太子サラダ', 150, true, 6), 
-  (11, 'いかの塩辛', 150, true, 6), 
-  (12, 'オクラ納豆', 150, true, 6), 
-  (13, 'かんぴょう巻', 150, true, 6),
-  (14, 'なっとう巻', 150, true, 6),
-  (15, 'かっぱ巻', 150, true, 6), 
-  (16, 'おしんこ巻', 150, true, 6),
-  (17, '梅しそ巻き', 150, true, 6),
+  (8, 'ゆでげそ', 150, true, 5), 
+  (9, 'とびっこ', 150, true, 5), 
+  (10, '明太子サラダ', 150, true, 5), 
+  (11, 'いかの塩辛', 150, true, 5), 
+  (12, 'オクラ納豆', 150, true, 5), 
+  (13, 'かんぴょう巻', 150, true, 5), 
+  (14, 'なっとう巻', 150, true, 5), 
+  (15, 'かっぱ巻', 150, true, 5), 
+  (16, 'おしんこ巻', 150, true, 5), 
+  (17, '梅しそ巻き', 150, true, 5), 
   -- 180円
-  (18, 'えび', 180, true, 6), 
-  (19, '赤いか', 180, true, 6), 
-  (20, 'かにみそ軍艦', 180, true, 6), 
+  (18, 'えび', 180, true, 5), 
+  (19, '赤いか', 180, true, 5), 
+  (20, 'かにみそ軍艦', 180, true, 5), 
   -- 220円
-  (21, '生サーモン', 220, true, 6), 
-  (22, 'オニオンサーモン', 220, true, 6), 
-  (23, 'マグロ赤身', 220, true, 6),
-  (24, 'ゆでだこ', 220, true, 6),
+  (21, '生サーモン', 220, true, 5), 
+  (22, 'オニオンサーモン', 220, true, 5), 
+  (23, 'マグロ赤身', 220, true, 5), 
+  (24, 'ゆでだこ', 220, true, 5), 
   -- 260円
-  (25, 'あじ', 260, true, 6), 
-  (26, '赤えび', 260, true, 6),
-  (27, '生たこ', 260, true, 6),
-  (28, 'えんがわ', 260, true, 6), 
-  (29, '炙りえんがわ', 260, true, 6), 
-  (30, 'まぐろの塩だれ焼', 260, true, 6), 
-  (31, '焼えび', 260, true, 6), 
-  (32, 'ねぎとろ', 260, true, 6), 
-  (33, '炙りサーモン', 260, true, 6),
-  (34, '鉄火巻', 260, true, 6),
-  (35, 'まぐろわさび巻', 260, true, 6), 
+  (25, 'あじ', 260, true, 5), 
+  (26, '赤えび', 260, true, 5), 
+  (27, '生たこ', 260, true, 5), 
+  (28, 'えんがわ', 260, true, 5), 
+  (29, '炙りえんがわ', 260, true, 5), 
+  (30, 'まぐろの塩だれ焼', 260, true, 5), 
+  (31, '焼えび', 260, true, 5), 
+  (32, 'ねぎとろ', 260, true, 5), 
+  (33, '炙りサーモン', 260, true, 5), 
+  (34, '鉄火巻', 260, true, 5), 
+  (35, 'まぐろわさび巻', 260, true, 5), 
   -- 360円
-  (36, 'いくら', 360, true, 6),
-  (37, 'ホタテ貝', 360, false, 6),
-  (38, '穴子', 360, true, 6), 
-  (39, '真鯛', 360, true, 6), 
+  (36, 'いくら', 360, true, 5), 
+  (37, 'ホタテ貝', 360, false, 5), 
+  (38, '穴子', 360, true, 5), 
+  (39, '真鯛', 360, true, 5), 
   -- 400円
-  (40, '活ヒラメ', 400, true, 6), 
-  (41, '数の子', 400, true, 6), 
-  (42, 'ずわいがに', 400, true, 6), 
-  (43, 'トロタク巻き', 400, true, 6),
-  (44, 'すじこ巻', 400, true, 6),
+  (40, '活ヒラメ', 400, true, 5), 
+  (41, '数の子', 400, true, 5), 
+  (42, 'ずわいがに', 400, true, 5), 
+  (43, 'トロタク巻き', 400, true, 5), 
+  (44, 'すじこ巻', 400, true, 5), 
   -- 460円
-  (45, '中トロ', 460, true, 6), 
-  (46, '特大海老', 460, true, 6),
+  (45, '中トロ', 460, true, 5), 
+  (46, '特大海老', 460, true, 5), 
   -- 520円
-  (47, 'あなご一本すし', 520, true, 6),
-  (48, 'まぐろづくし', 520, true, 6), 
-  (49, '白身づくし', 520, true, 6), 
+  (47, 'あなご一本すし', 520, true, 5), 
+  (48, 'まぐろづくし', 520, true, 5), 
+  (49, '白身づくし', 520, true, 5), 
   -- 600円
-  (50, 'うに', 600, true, 6), 
-  (51, 'インドまぐろ大トロ', 600, true, 6);
+  (50, 'うに', 600, true, 5), 
+  (51, 'インドまぐろ大トロ', 600, true, 5);
 -- アレルゲン
 INSERT INTO allergen (id, name)
 VALUES 
@@ -112,8 +112,8 @@ VALUES
 INSERT INTO customer (id, name, phone_number)
 VALUES (1, '山崎友輔', '080-0000-0000');
 -- 注文
-INSERT INTO `order` (id, customer_id, paid, request)
-VALUES (1, 1, true, null);
+INSERT INTO `order` (id, customer_id, paid, request, total_before_discount, discount_value)
+VALUES (1, 1, true, null, 13300, 1000);
 -- クーポン
 INSERT INTO coupon (id, code, discount_type, discount_value, start_at, end_at, is_exclusive)
 VALUES 
@@ -146,11 +146,11 @@ VALUES
 
 -- DML：課題4
 
--- 1オーダーの合計金額金額
-SELECT SUM(order_menu.price) AS total
-FROM order_menu
-GROUP BY order_menu.order_id 
-HAVING order_menu.order_id  = <order_id>
+-- 1オーダーの合計金額金額 order_id 1の場合
+SELECT SUM(order_detail.price) AS total
+FROM order_detail
+WHERE order_detail.order_id = 1
+GROUP BY order_detail.order_id 
 
 -- 1オーダーの合計皿枚数
 SELECT SUM(order_menu.`number`) AS total

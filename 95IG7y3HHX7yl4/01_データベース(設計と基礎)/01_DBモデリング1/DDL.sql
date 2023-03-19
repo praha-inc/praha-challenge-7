@@ -88,6 +88,8 @@ CREATE TABLE `order` (
   customer_id INTEGER NOT NULL,
   paid BOOLEAN NOT NULL,
   request VARCHAR(255),
+  total_before_discount DECIMAL(10, 2) NOT NULL,
+  discount_value DECIMAL(10, 2) NOT NULL,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
