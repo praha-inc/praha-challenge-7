@@ -101,6 +101,7 @@
         --
         products_id [FK] : INT : 商品ID
         name : VARCHAR : 商品名称
+        price : INT : 値段
         tax_rate_id [FK] : 消費税ID
         sales_status : INT : 販売状況
         insert_date : DATETIME : 登録日
