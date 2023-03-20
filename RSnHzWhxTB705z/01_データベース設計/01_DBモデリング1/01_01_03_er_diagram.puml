@@ -71,6 +71,15 @@ entity "menu_categories : メニューカテゴリーテーブル" as menu_categ
   --
   *menu_category_name : メニューカテゴリー名（盛り込み、にぎり、丼、お好みなど）
   *is_lunch_discounted : ランチタイムの割引対象かどうか
+  #menu_group_id : メニューグループid
+  *created_at
+  *updated_at
+}
+
+entity "menu_groups : メニューグループテーブル" as menu_groups {
+  *id
+  --
+  *menu_group_name : メニューグループ名（セットメニュー、お好みすしなど）
   *created_at
   *updated_at
 }
@@ -138,6 +147,8 @@ products ||--|{ product_foods
 
 products ||-r-o{ products_discounts
 discounts ||-l-o{ products_discounts
+
+menu_categories ||-d-|| menu_groups
 
 product_foods ||--|| foods
 

@@ -74,6 +74,16 @@
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | menu_category_name | メニューカテゴリー名 | VARCHAR(100) |  |  | NOT NULL |  |  |  |  | 「盛り込み」「にぎり」「丼」「お好み」「ランチ」など |
 | is_lunch_discounted | ランチタイムの割引対象かどうか | TINYINT(1) |  |  | NOT NULL | 0 |  |  |  |  |
+| menu_group_id | メニューグループid | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
+| created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+| updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+
+## menu_groups : メニューグループテーブル
+
+| カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
+| menu_group_name | メニューグループ名 | VARCHAR(100) |  |  | NOT NULL |  |  |  |  | 「セットメニュー」「お好みすし」など |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
