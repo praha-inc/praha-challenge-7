@@ -48,7 +48,7 @@ entity "m_menu (メニューマスタ)" as m_menu {
  }
 
  entity "m_menu_sushi_menu_mapping (メニュー 寿司メニューマッピングマスタ)" as m_menu_sushi_menu_mapping {
-     * <<PK>><<FK>> menu_id(メニューID) uuid
+     * <<PK>> <<FK>> menu_id(メニューID) uuid
      -- 
      * <<FK>> sushi_menu_id(寿司メニューID) uuid
      created_at(作成日時) date
@@ -56,7 +56,7 @@ entity "m_menu (メニューマスタ)" as m_menu {
  }
 
  entity "m_menu_set_menu_mapping (メニュー セットメニューマッピングマスタ)" as m_menu_set_menu_mapping {
-     * <<PK>><<FK>> menu_id(メニューID) uuid
+     * <<PK>> <<FK>> menu_id(メニューID) uuid
      -- 
      * <<FK>> sushi_menu_id(セットメニューID) uuid
      created_at(作成日時) date
@@ -64,7 +64,7 @@ entity "m_menu (メニューマスタ)" as m_menu {
  }
 
  entity "m_menu_lunch_menu_mapping (メニュー ランチメニューマッピングマスタ)" as m_menu_lunch_menu_mapping {
-     * <<PK>> menu_id(メニューID) uuid
+     * <<PK>>  <<FK>> menu_id(メニューID) uuid
      -- 
      * <<FK>> lunch_menu_id(ランチメニューID) uuid
      created_at(作成日時) date
@@ -120,7 +120,8 @@ entity "t_order (注文トラン)" as t_order {
      * <<PK>> coupon_id(クーポンID) uuid
      --
      * coupon_name(クーポン名) string
-     * discount_rate(割引率) int
+     discount_rate(割引率) int
+     discount_price(割引金額) int
      * start_date(適用開始日時) date
      * end_date(適用終了日時) date
      created_at(作成日時) date
@@ -170,6 +171,7 @@ entity "m_tax_rate (税率マスタ)" as m_tax_rate {
  m_menu_sushi_menu_mapping ||..|| m_menu
  m_menu_set_menu_mapping ||..|| m_menu
  m_menu_lunch_menu_mapping ||..||m_menu
+ m_coupon ||..|{ t_order
 
 
 
