@@ -3,11 +3,11 @@
         id [PK] : INT : 消費税区分ID
         --
         tax_rate : DECIMAL : 消費税率
-        start_date : DATETIME : 適用開始日
+        start_on : DATE : 適用開始日
     }
 
-    Entity "free_customers\nフリー客" as f_c {
-        id [PK] : INT : フリー客ID
+    Entity "guest_customers\nゲスト客" as f_c {
+        id [PK] : INT : ゲストID
         --
         name : VARCHAR : 名前
         phone_number : VARCHAR : 電話番号
@@ -15,13 +15,20 @@
         address : VARCHAR : 住所
     }
 
+    Entity "customer_addresses\n顧客住所" as c_a{
+        id [PK] : INT : 住所ID
+        --
+        customer_id [FK] : INT : 顧客ID
+        address : VARCHAR : 住所 
+    }
+    
     Entity "registerd_customers\n登録顧客" as r_c{
         id [PK] : INT : 登録顧客ID
         --
         name : VARCHAR : 名前
         phone_number : VARCHAR : 電話番号
         email : VARCHAR : メールアドレス
-        address : VARCHAR : 住所
+        customer_address_id : VARCHAR : 顧客住所ID
     }
 
     Entity "customer_holding_coupons\n顧客保有クーポン" as c_h_c{
@@ -29,16 +36,16 @@
         --
         customer_id [FK] : INT : 顧客ID
         coupon_id [FK] : INT : クーポンID
-        used : BOOLEAN : 使用有無
+        used_at : DATETIME : 使用日時
     }
 
     Entity "coupons\nクーポンマスタ" as c_m{
         id [PK] : INT : クーポンID
         --
         name : VARCHAR : クーポン名称
-        discount : INT : 割引額
-        start_date : DATETIME : 適用開始日
-        end_date : DATETIME : 適用終了日
+        discount_price : INT : 割引額
+        start_at : DATETIME : 適用開始日
+        end_at : DATETIME : 適用終了日
     }
 
     Entity "orders\n注文票" as orders {
@@ -48,12 +55,13 @@
         tax_rate_id [FK] : INT : 消費税ID
         used_coupon_id [FK] : INT : 使用クーポンID
         order_method : INT : 注文方法
+        destination : VARCHAR : 配達先
         payment_method : INT : 決済方法
-        order_date : DATETIME : 注文日
-        payment_date : DATETIME : 支払日
+        order_at : DATETIME : 注文日時
+        payment_at : DATETIME : 支払日時
     }
 
-    Entity "order_details\n注文明細" as order_details {
+    Entity "order_products\n注文商品" as order_details {
         order_id [PK, FK] : INT : 注文ID 
         order_detail_id [PK] : INT : 注文明細番号 
         --
@@ -92,20 +100,20 @@
         price : INT : 値段
         tax_rate_id [FK] : 消費税ID
         sales_status : INT : 販売状況
-        insert_date : DATETIME : 登録日
-        update_date : DATETIME : 更新日
+        insert_at : DATETIME : 登録日時
+        update_at : DATETIME : 更新日時
     }
 
-    Entity "products_history\n商品履歴" as p_h {
-        id [PK] : INT : 商品履歴ID
+    Entity "products_update_histories\n商品変更履歴" as p_h {
+        id [PK] : INT : 商品変更履歴ID
         --
         products_id [FK] : INT : 商品ID
         name : VARCHAR : 商品名称
         price : INT : 値段
         tax_rate_id [FK] : 消費税ID
         sales_status : INT : 販売状況
-        insert_date : DATETIME : 登録日
-        update_date : DATETIME : 更新日
+        product_insert_at : DATETIME : 商品登録日時
+        product_update_at : DATETIME : 商品更新日時
     }
 
     Entity "set_details\nセット詳細" as s_d{
@@ -147,6 +155,8 @@
     c_h_c }o..|| f_c
     c_m ||..o{ c_h_c
     c_m |o..o{orders
+    c_a }|.r.|| r_c
+
 
     ' * 主キー
     ' + 外部キー
