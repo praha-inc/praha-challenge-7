@@ -1,11 +1,17 @@
 erDiagram
 
 users ||--o{ orders: ""
+users ||--o{ user_addresses: ""
+users ||--o{ payment_methods: ""
+users ||--o{ user_credit_cards: ""
+user_credit_cards |o--o| payment_methods: ""
+user_credit_cards }o--|| card_brands: ""
 orders ||--|{ order_items: ""
 orders }o--|| payment_statuses: ""
 orders }o--|| tax_rates: ""
 orders }o--|| provide_methods: ""
 orders }o--|| packagings: ""
+orders }o--o| payment_methods: ""
 order_items ||--|{ order_item_products: ""
 order_items ||--o{ order_item_optional_menus: ""
 order_item_optional_menus }o--|| optional_menus: ""
@@ -18,10 +24,16 @@ product_log_families }o--o{ product_logs: ""
 categories ||--o{ product_log_categories: ""
 product_logs ||--o{ product_log_categories: ""
 guest_users ||--o{ orders: ""
+guest_users ||--o{ user_addresses: ""
 users ||--o{ user_coupons: ""
 user_coupons }o--|| coupons: ""
 coupons }o--|| coupon_types: ""
+orders ||--o{ order_coupons: ""
+orders }o--|| user_addresses: ""
+orders }o--|| payment_methods: ""
+order_coupons }o--|| coupons: ""
 guest_users ||--o{ user_coupons: ""
+guest_users ||--o{ payment_methods: ""
 
 users {
   id bigint PK
@@ -30,6 +42,37 @@ users {
   email varchar(255)
   crypted_password varchar(255)
   salt varchar(255)
+}
+
+user_addresses {
+  id bigint pk
+  user_id bigint FK
+  name varchar(255)
+  zip_code varchar(255)
+  region varchar(255)
+  city varchar(255)
+  address_line_1 varchar(255)
+  address_line_2 varchar(255)
+}
+
+user_credit_cards {
+  id bigint PK
+  card_brand_id bigint
+  card_number bigint
+  card_validation_code bigint
+  expired_at datetime
+  user_id bigint
+}
+
+payment_methods {
+  id bigint PK
+  user_id bigint FK
+  user_credit_card_id bigint FK
+}
+
+card_brands {
+  id bigint PK
+  name varchar(255)
 }
 
 guest_users {
@@ -48,12 +91,12 @@ user_coupons {
 
 coupons {
   id bigint PK
-  is_available boolean
   name varchar(255)
   coupon_code varchar(255)
   discount_price int
   coupon_type_id bigint FK
-  expiration_at datetime
+  started_at datetime
+  ended_at datetime
 }
 
 coupon_types {
@@ -63,16 +106,24 @@ coupon_types {
 
 orders {
   id bigint PK
-  ordered_at datetime
   total_quantity int
   sub_total_price int
   total_price int
-  payment_status_id bigint FK
   provide_method_id bigint FK
+  payment_method_id bigint FK
+  payment_status_id bigint FK
+  ordered_at datetime
   payment_completed_at datetime
   user_id bigint FK
+  user_addresse_id bigint FK
   tax_rate_id bigint FK
   packaging_id bigint FK
+}
+
+order_coupons {
+  id bigint PK
+  order_id bigint FK
+  coupon_id bigint FK
 }
 
 packagings {
