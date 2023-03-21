@@ -144,41 +144,4 @@ INSERT INTO order_menu_option (id, order_detail_id, option_id)
 VALUES 
   (1, 4, 1);
 
--- DML：課題4
-
--- 1オーダーの合計金額金額 order_id 1の場合
-SELECT SUM(order_detail.price) AS total
-FROM order_detail
-WHERE order_detail.order_id = 1
-GROUP BY order_detail.order_id 
-
--- 1オーダーの合計皿枚数
-SELECT SUM(order_menu.`number`) AS total
-FROM order_menu
-GROUP BY order_menu.order_id 
-HAVING order_menu.order_id  = <order_id>
-
--- すべてのオーダーの売上合計金額
-SELECT SUM(order_menu.price) AS total
-FROM order_menu
-GROUP BY order_menu.order_id 
-
--- メニューごとの売上合計金額
-SELECT menu.name, SUM(order_menu.price) AS total
-FROM order_menu
-LEFT JOIN menu ON order_menu.menu_id  = menu.id
-GROUP BY menu.name
-
--- サビ抜きオプションのトータル
-SELECT SUM(order_menu.`number`) AS 'わさび抜きtotal'
-FROM order_menu
-LEFT JOIN order_menu_option ON order_menu.id = order_menu_option.order_menu_id
-LEFT JOIN `option` ON order_menu_option.option_id = `option`.id
-WHERE `option`.name = 'わさび抜き'
-GROUP BY order_menu.order_id
-
--- セットメニューとお好みすしそれぞれの売上合計金額
-
-
--- リピート率の算出
 
