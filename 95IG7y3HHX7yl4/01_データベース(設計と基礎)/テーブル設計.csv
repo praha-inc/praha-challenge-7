@@ -1,0 +1,15 @@
+,,想定
+カテゴリー,name,お好みすし/盛り込み/にぎり/鮨屋の丼＆おすすめ/地元に生まれた味
+,is_combo,ture/false　（セットか、単品可）
+,,
+メニュー,name,はな、わだつみ、玉子、いなり　etc
+,price,値段
+,,
+注文,paid,ture/false　
+,request,その他
+,,
+お客さん,name,注文者
+,phone_number,電話番号
+,,
+オプション,name,オプション名
+,price,値段

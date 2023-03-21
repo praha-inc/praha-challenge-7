@@ -1,0 +1,162 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+package database <<Database>> {
+  entity category as "category\nカテゴリー" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name VARCHAR
+    is_combo BOOLEAN
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity combo_menu as "combo_menu\nセットメニュー" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name VARCHAR
+    price DECIMAL(10, 2)
+    can_takeaway: BOOLEAN
+    category_id [FK(category,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity single_menu as "single_menu\n単品メニュー" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name VARCHAR
+    price DECIMAL(10, 2)
+    can_takeaway: BOOLEAN
+    category_id [FK(category,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity allergen as "allergen\nアレルゲン" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name VARCHAR
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity menu_allergen_detail as "menu_allergen_detail\nメニューアレルゲン詳細" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    single_menu_id [FK(single_menu,id)]
+    allergen [FK(allergen,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity combo_detail as "combo_detail\nセットメニュー詳細" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    combo_menu [FK(combo_menu,id)]
+    single_menu_id [FK(single_menu,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity option as "option\nオプション" <<M,MASTER>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name VARCHAR
+    price DECIMAL(10, 2)
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity customer as "customer\nお客さん" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    name VARCHAR
+    phone_number VARCHAR
+  }
+  
+  entity order as "order\n注文" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    customer_id [FK(customer,id)]
+    paid BOOLEAN
+    request VARCHAR
+    total_before_discount DECIMAL(10, 2)
+    discount_value DECIMAL(10, 2)
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity coupon as "coupon\nクーポン" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    code VARCHAR
+    discount_type SMALLINT UNSIGNED // 0: 金額 1:割引率
+    discount_value DECIMAL(10, 2)
+    start_at TIMESTAMP
+    end_at TIMESTAMP
+    is_exclusive BOOLEAN
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_coupon_detail as "order_coupon_detail\n使用クーポン" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    orderer_id [FK(orderer,id)]
+    coupon_id [FK(coupon,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_detail as "order_detail\n注文詳細" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    orderer_id [FK(orderer,id)]
+    single_menu_id [FK(single_menu,id)]
+    combo_menu_id [FK(combo_menu,id)]
+    number INT
+    price DECIMAL(10, 2)
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity single_menu_option as "single_menu_option\nオプション追加可能メニュー" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    single_menu_id [FK(single_menu,id)]
+    option_id [FK(option,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  entity order_detail_option as "order_detail_option\n注文詳細オプション内容" <<T,TRANSACTION>> {
+    + id INT(10) [PK, autonumber]
+    --
+    single_menu_id [FK(single_menu,id)]
+    option_id [FK(option,id)]
+    updated_at TIMESTAMP
+    created_at TIMESTAMP
+  }
+  
+  category ||-right-o{ single_menu
+  category ||-up-o{ combo_menu
+  combo_menu |o-right-o{ order_detail
+  combo_menu ||-up-o{ combo_detail
+  single_menu ||-right-o{ order_detail
+  single_menu ||-down-o{ combo_detail
+  single_menu ||-down-o{ single_menu_option
+  single_menu |o-up-o{ menu_allergen_detail
+  allergen ||-right-o{ menu_allergen_detail
+  customer ||-left-|{ order
+  order ||-up-|{ order_coupon_detail
+  coupon ||-down-|{ order_coupon_detail
+  order ||-left-|{ order_detail
+  option ||-up-o{ order_detail_option
+  option ||-left-o{ single_menu_option
+  order_detail ||-down-o{ order_detail_option
+}
+
+@enduml
