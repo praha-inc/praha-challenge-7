@@ -58,7 +58,7 @@
         destination : VARCHAR : 配達先
         payment_method : INT : 決済方法
         ordered_at : DATETIME : 注文日時
-        payment_at : DATETIME : 支払日時
+        payed_at : DATETIME : 支払日時
     }
 
     Entity "order_products\n注文商品" as order_details {
