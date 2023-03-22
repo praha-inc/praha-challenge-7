@@ -12,7 +12,6 @@
         name : VARCHAR : 名前
         phone_number : VARCHAR : 電話番号
         email : VARCHAR : メールアドレス
-        address : VARCHAR : 住所
     }
 
     Entity "customer_addresses\n顧客住所" as c_a{
