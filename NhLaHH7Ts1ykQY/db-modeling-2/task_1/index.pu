@@ -1,0 +1,58 @@
+@startuml osushi_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity users as "users\nユーザー" <<T, TRANSACTION>> {
+    id BIGSERIAL INT
+    +uuid VARCHAR(255)
+    --
+    name VARCHAR(255) [名前]
+    display_name VARCHAR(255) [表示名]
+    email VARCHAR(255) [名(かな)]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity channels as "channels\nチャンネル" <<T, TRANSACTION>>  {
+    id BIGSERIAL INT
+    +uuid VARCHAR(255)
+    --
+    name VARCHAR(255) [名前]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity workspaces as "workspaces\nワークスペース" <<T, TRANSACTION>>  {
+    id BIGSERIAL INT
+    +uuid VARCHAR(255)
+    --
+    name VARCHAR(255) [名前]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity posts as "posts\n投稿" <<T, TRANSACTION>>  {
+    id BIGSERIAL INT
+    +uuid VARCHAR(255)
+    --
+    user_id VARCHAR(255) [ユーザーID]
+    channel_id VARCHAR(255) [チャンネルID]
+    post_type ENUM [投稿の種類(メッセージ or スレッド)]
+    post_path TEXT [投稿内容へのパス]
+    body TEXT [投稿内容]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity belonging as "belonging\n所属" <<T, TRANSACTION>>  {
+    id BIGSERIAL INT
+    +uuid VARCHAR(255)
+    --
+    user_id: VARCHAR(255) [ユーザーID]
+    workspace_id VARCHAR(255) [ワークスペースID]
+    channel_id: VARCHAR(255) [チャンネルID]
+    name VARCHAR(255) [名前]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
