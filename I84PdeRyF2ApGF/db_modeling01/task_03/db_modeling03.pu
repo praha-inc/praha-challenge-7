@@ -3,7 +3,7 @@
         id [PK] : INT : 消費税区分ID
         --
         tax_rate : DECIMAL : 消費税率
-        start_on : DATE : 適用開始日
+        starts_at : DATE : 適用開始日
     }
 
     Entity "guest_customers\nゲスト客" as f_c {
@@ -44,8 +44,8 @@
         --
         name : VARCHAR : クーポン名称
         discount_price : INT : 割引額
-        start_at : DATETIME : 適用開始日
-        end_at : DATETIME : 適用終了日
+        starts_at : DATETIME : 適用開始日
+        ends_at : DATETIME : 適用終了日
     }
 
     Entity "orders\n注文票" as orders {
@@ -57,7 +57,7 @@
         order_method : INT : 注文方法
         destination : VARCHAR : 配達先
         payment_method : INT : 決済方法
-        order_at : DATETIME : 注文日時
+        ordered_at : DATETIME : 注文日時
         payment_at : DATETIME : 支払日時
     }
 
@@ -100,8 +100,8 @@
         price : INT : 値段
         tax_rate_id [FK] : 消費税ID
         sales_status : INT : 販売状況
-        insert_at : DATETIME : 登録日時
-        update_at : DATETIME : 更新日時
+        inserted_at : DATETIME : 登録日時
+        updated_at : DATETIME : 更新日時
     }
 
     Entity "products_update_histories\n商品変更履歴" as p_h {
@@ -112,8 +112,8 @@
         price : INT : 値段
         tax_rate_id [FK] : 消費税ID
         sales_status : INT : 販売状況
-        product_insert_at : DATETIME : 商品登録日時
-        product_update_at : DATETIME : 商品更新日時
+        product_inserted_at : DATETIME : 商品登録日時
+        product_updated_at : DATETIME : 商品更新日時
     }
 
     Entity "set_details\nセット詳細" as s_d{
