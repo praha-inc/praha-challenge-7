@@ -23,7 +23,7 @@ entity orders as "orders\n注文" <<T, TRANSACTION>> {
     # orderer_id [FK]
     # consumption_tax_id [FK]
     comments TEXT [自由記述欄]
-    is_paied BOOLEAN [支払いの有無]
+    is_paid BOOLEAN [支払いの有無]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
