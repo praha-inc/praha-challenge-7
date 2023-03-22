@@ -19,7 +19,9 @@
         id [PK] : INT : 住所ID
         --
         customer_id [FK] : INT : 顧客ID
-        address : VARCHAR : 住所 
+        postal_code : VARCHAR : 郵便番号
+        address1 : VARCHAR : 住所1
+        address2 : VARCHAR : 住所2
     }
     
     Entity "registerd_customers\n登録顧客" as r_c{
@@ -54,8 +56,12 @@
         customer_id [FK] : INT : 顧客ID
         tax_rate_id [FK] : INT : 消費税ID
         used_coupon_id [FK] : INT : 使用クーポンID
+        subtotal_price : INT : 小計金額
+        total_price : INT : 合計金額
         order_method : INT : 注文方法
-        destination : VARCHAR : 配達先
+        postal_code : VARCHAR : 配達先郵便番号
+        address1 : VARCHAR : 住所1
+        address2 : VARCHAR : 住所2
         payment_method : INT : 決済方法
         ordered_at : DATETIME : 注文日時
         payed_at : DATETIME : 支払日時
