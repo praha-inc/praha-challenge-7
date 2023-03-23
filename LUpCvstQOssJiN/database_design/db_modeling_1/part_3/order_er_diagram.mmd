@@ -60,7 +60,7 @@ user_credit_cards {
   card_brand_id bigint
   card_number bigint
   card_validation_code bigint
-  expired_at datetime
+  expires_at datetime
   user_id bigint
 }
 
@@ -95,8 +95,8 @@ coupons {
   coupon_code varchar(255)
   discount_price int
   coupon_type_id bigint FK
-  started_at datetime
-  ended_at datetime
+  starts_at datetime
+  ends_at datetime
 }
 
 coupon_types {
