@@ -3,7 +3,7 @@
 !define MASTER F9DFD5
 !define TRANSACTION CAE7F2
 
-entity "Users" as users <<M,MASTER>> {
+entity "users" as users <<M,MASTER>> {
     + id: INT <<PK>>
     username: VARCHAR(255)
     email: VARCHAR(255)
@@ -14,14 +14,14 @@ entity "Users" as users <<M,MASTER>> {
     updated_at: TIMESTAMP
 }
 
-entity "Workspaces" as workspaces <<M,MASTER>> {
+entity "workspaces" as workspaces <<M,MASTER>> {
     + id: INT <<PK>>
     name: VARCHAR(255)
     created_at: TIMESTAMP
     updated_at: TIMESTAMP
 }
 
-entity "Workspace_Members" as workspace_members <<T,TRANSACTION>> {
+entity "workspace_members" as workspace_members <<T,TRANSACTION>> {
     + id: INT <<PK>>
     - user_id: INT <<FK>>
     - workspace_id: INT <<FK>>
@@ -30,7 +30,7 @@ entity "Workspace_Members" as workspace_members <<T,TRANSACTION>> {
     updated_at: TIMESTAMP
 }
 
-entity "Channels" as channels <<M,MASTER>> {
+entity "channels" as channels <<M,MASTER>> {
     + id: INT <<PK>>
     - workspace_id: INT <<FK>>
     name: VARCHAR(255)
@@ -40,7 +40,7 @@ entity "Channels" as channels <<M,MASTER>> {
     updated_at: TIMESTAMP
 }
 
-entity "Channel_Members" as channel_members <<T,TRANSACTION>> {
+entity "channel_members" as channel_members <<T,TRANSACTION>> {
     + id: INT <<PK>>
     - user_id: INT <<FK>>
     - channel_id: INT <<FK>>
@@ -48,7 +48,7 @@ entity "Channel_Members" as channel_members <<T,TRANSACTION>> {
     updated_at: TIMESTAMP
 }
 
-entity "Messages" as messages <<T,TRANSACTION>> {
+entity "messages" as messages <<T,TRANSACTION>> {
     + id: INT <<PK>>
     - user_id: INT <<FK>>
     - channel_id: INT <<FK>>
@@ -57,7 +57,7 @@ entity "Messages" as messages <<T,TRANSACTION>> {
     updated_at: TIMESTAMP
 }
 
-entity "Threads" as threads <<T,TRANSACTION>> {
+entity "threads" as threads <<T,TRANSACTION>> {
     + id: INT <<PK>>
     - parent_message_id: INT <<FK>>
     - user_id: INT <<FK>>
