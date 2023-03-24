@@ -25,7 +25,7 @@ entity "workspace_members" as workspace_members <<T,TRANSACTION>> {
     + id: INT <<PK>>
     - user_id: INT <<FK>>
     - workspace_id: INT <<FK>>
-    role: VARCHAR(255)
+    role: TINYINT UNSIGNED
     joined_at: TIMESTAMP
     updated_at: TIMESTAMP
 }
