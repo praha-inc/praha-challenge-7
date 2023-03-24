@@ -41,7 +41,7 @@ erDiagram
     int sushi_set_id PK "お好みすし_セットメニュ_中間テーブルID"
     int sushi_id FK "お好みすしID"
     int set_id FK "セットメニュID"
-    int sushi_count "お好みすしが1セットに何個入っているか" 
+    int sushi_count "1セットに入っているお好みすしの個数" 
     date created_at "作成日"
     date updated_at "更新日"
   }
