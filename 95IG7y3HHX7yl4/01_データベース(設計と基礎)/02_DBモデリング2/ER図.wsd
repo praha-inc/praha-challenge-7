@@ -66,9 +66,9 @@ entity "threads" as threads <<T,TRANSACTION>> {
     updated_at: TIMESTAMP
 }
 
-users ||-down-o{ workspace_members
-workspaces ||-down-o{ workspace_members
-workspace_members }o--|| channels
+users ||-left-o{ workspace_members
+workspaces ||-right-o{ workspace_members
+workspaces ||-down-o{ channels
 users ||--o{ channel_members
 channels ||-right-o{ channel_members
 users ||--o{ messages
