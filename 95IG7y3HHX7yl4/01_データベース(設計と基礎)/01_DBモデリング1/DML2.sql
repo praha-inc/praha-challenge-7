@@ -8,8 +8,7 @@ WHERE `order`.id = 1
 -- 1オーダーの合計皿枚数 (order_id 1の場合)
 SELECT SUM(order_detail.`number`) AS '合計皿枚数'
 FROM order_detail
-WHERE order_detail.order_id = 1
-GROUP BY order_detail.order_id 
+WHERE order_detail.order_id = 1;
 
 -- すべてのオーダーの売上合計金額
 SELECT SUM(total_before_discount) AS '合計割引前金額', SUM(discount_value) AS '合計割引額', SUM(total_before_discount) - SUM(discount_value) AS '合計支払金額'
@@ -37,8 +36,7 @@ WHERE `option`.name = 'わさび抜き'
 
 -- セットメニューとお好みすしそれぞれの売上合計金額
 SELECT 
-    SUM(order_detail.price) AS '単品合計売上',
-    (SELECT SUM(order_detail.price) FROM order_detail) - SUM(order_detail.price) AS 'セット合計売上',
-    (SELECT SUM(order_detail.price) FROM order_detail) AS '合計売上'
+    SUM(price) AS '合計売上',
+    SUM(CASE WHEN single_menu_id IS NULL THEN price ELSE 0 END) AS 'セット合計売上',
+    SUM(CASE WHEN single_menu_id IS NOT NULL THEN price ELSE 0 END) AS '単品合計売上'
 FROM order_detail
-WHERE order_detail.single_menu_id IS NOT NULL
