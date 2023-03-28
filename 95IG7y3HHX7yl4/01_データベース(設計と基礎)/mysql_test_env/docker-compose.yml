@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     image: mysql:8
-    container_name: db_modeling_1
+    container_name: db_modeling
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
