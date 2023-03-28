@@ -15,3 +15,7 @@ https://dbeaver.io/
     ユーザー名: root  
     パスワード: root
 
+## 発生したエラー
+- `SQLエラー [08001]: Public Key Retrieval is not allowed`
+`編集 接続` -> タブのドライバプロパティを表示 -> allowPublicKeyRetrievalを`TRUE`に変更
+
