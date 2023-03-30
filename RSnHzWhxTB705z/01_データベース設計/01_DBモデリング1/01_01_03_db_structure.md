@@ -125,6 +125,7 @@
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | product_id | 商品id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  | 商品が「はな」の場合「はな」のproduct_id <br> 商品が「まぐろ赤身」の場合「まぐろ赤身」の商品id|
 | food_id | 食材id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  | 商品が「はな」の場合「はな」に含まれる食材の食材id（10貫セットなら10レコード） <br> 商品が「まぐろ赤身」の場合「まぐろ赤身」の食材id |
+| food_quantity | 食材量 | INT |  |  | NOT NULL | 1 |  |  |  | 商品に含まれる食材の量 |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 

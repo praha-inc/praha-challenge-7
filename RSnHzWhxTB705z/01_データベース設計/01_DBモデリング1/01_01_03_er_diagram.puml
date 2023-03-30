@@ -117,6 +117,7 @@ entity "product_foods : 商品食材テーブル" as product_foods {
   --
   #product_id : 商品id
   #food_id : 食材id
+  *food_quantity : 食材量
   *created_at
   *updated_at
 }
