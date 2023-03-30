@@ -68,11 +68,23 @@ entity "prices : 税抜価格テーブル" as prices {
   *updated_at
 }
 
+entity "boxes : 化粧箱テーブル" as boxes {
+  *id
+  --
+  #price_id : 税抜価格
+  *box_name : 箱の名前
+  box_description : 箱の説明
+  *created_at
+  *updated_at
+}
+
 entity "products : 商品テーブル" as products {
   *id
   --
   #menu_category_id : メニューカテゴリーid
   #price_id : 税抜価格id
+  #discount_id : 化粧箱を付けるか
+  #box_id : 化粧箱を付けるか
   *product_name: 商品名
   product_description: 商品説明
   *is_available : 商品を提供中かどうか
@@ -145,7 +157,9 @@ discounts |o---o{ order_details
 menu_groups ||--|{ menu_categories
 
 menu_categories ||--|{ products
-prices ||--|{ products
+prices ||---|{ products
+prices ||--|{ boxes
+boxes ||--o{ products
 
 products |o-r-o{ products_discounts
 discounts |o-l-o{ products_discounts
