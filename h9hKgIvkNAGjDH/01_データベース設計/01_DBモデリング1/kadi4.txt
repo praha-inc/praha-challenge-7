@@ -1,7 +1,0 @@
-メニューごとのアレルゲンを取得するSQL
-
-SELECT m_menus.name,m_allergens.name FROM m_menus
-	join m_allergy_information 
-    	ON m_allergy_information.menu_id = m_menus.id
-    join m_allergens
-    	ON m_allergens.id = m_allergy_information.allergen_id
