@@ -27,12 +27,11 @@ GROUP BY order_detail.single_menu_id
 
 -- サビ抜きの割合
 SELECT 
-    (SELECT SUM(order_detail.`number`) FROM order_detail) AS '注文数',
-    SUM(order_detail.`number`) AS 'わさび抜き注文数'
+    SUM(order_detail.`number`) AS '注文数',
+    SUM(CASE WHEN `option`.name = 'わさび抜き' THEN order_detail.`number` ELSE 0 END) AS 'わさび抜き注文数'
 FROM order_detail
 LEFT JOIN order_menu_option ON order_detail.id = order_menu_option.order_detail_id
 LEFT JOIN `option` ON  `option`.id = order_menu_option.option_id
-WHERE `option`.name = 'わさび抜き'
 
 -- セットメニューとお好みすしそれぞれの売上合計金額
 SELECT 
