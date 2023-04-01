@@ -42,6 +42,14 @@ entity "orders : 注文テーブル" as orders {
   *updated_at
 }
 
+entity "menu_groups : メニューグループテーブル" as menu_groups {
+  *id
+  --
+  *menu_group_name : メニューグループ名（セットメニュー、お好みすしなど）
+  *created_at
+  *updated_at
+}
+
 entity "menu_categories : メニューカテゴリーテーブル" as menu_categories {
   *id
   --
@@ -109,6 +117,7 @@ entity "product_foods : 商品食材テーブル" as product_foods {
   --
   #product_id : 商品id
   #food_id : 食材id
+  *food_quantity : 食材量
   *created_at
   *updated_at
 }
@@ -133,6 +142,7 @@ orders ||------|{ order_details
 products ||---o{ order_details
 discounts |o---o{ order_details
 
+menu_groups ||--|| menu_categories
 menu_categories ||--|{ products
 prices ||--|{ products
 

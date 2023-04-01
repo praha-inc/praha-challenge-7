@@ -7,7 +7,7 @@
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | family_name | 氏 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  |  |
 | first_name | 名 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  |  |
-| tel | 電話番号 | INT(11) |  |  | NOT NULL |  | ※ |  |  |  |
+| tel | 電話番号 | VARCHAR(20) |  |  | NOT NULL |  | ※ |  |  |  |
 | app_user_id | アプリのユーザーid | CHAR(36) |  |  | NULL |  | ※ |  |  |  |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
@@ -36,7 +36,17 @@
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | customer_id | 注文経路id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
+| channel_id | 注文経路id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
 | order_status_id | 注文状態id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
+| created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+| updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
+
+## menu_groups : メニューグループテーブル
+
+| カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
+| menu_group_name | メニューグループ名 | VARCHAR(100) |  |  | NOT NULL |  |  |  |  | 「セットメニュー」「お好みすし」など |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
@@ -65,11 +75,11 @@
 | カラム名 | 項目名 | 型 | 主キー | 属性 | NULL | 初期値 | ユニーク | インデックス | 条件 | 備考 | 
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
-| product_name | 商品名 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  | 「はな」「みさき」「海鮮ちらし」「鮨八宝巻」「玉子」「まぐろ赤身」「ランチセットA」など |
-| product_description | 商品説明 | VARCHAR(1000) |  |  | NULL |  |  |  |  |  |
 | menu_category_id | メニューカテゴリーid | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
 | price_id | 価格id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  |  |
 | discount_id | 割引id | UNSIGNED INT |  | FOREIGN KEY | NULL |  |  |  |  |  |
+| product_name | 商品名 | VARCHAR(255) |  |  | NOT NULL |  |  |  |  | 「はな」「みさき」「海鮮ちらし」「鮨八宝巻」「玉子」「まぐろ赤身」「ランチセットA」など |
+| product_description | 商品説明 | VARCHAR(1000) |  |  | NULL |  |  |  |  |  |
 | is_available | 商品を提供中かどうか | TINYINT(1) |  |  | NOT NULL | 1 |  |  |  |  |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
@@ -116,6 +126,7 @@
 | id |  | UNSIGNED INT | ※ | AUTO INCREMENT | NOT NULL | 自動付与 | ※ |  |  |  |
 | product_id | 商品id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  | 商品が「はな」の場合「はな」のproduct_id <br> 商品が「まぐろ赤身」の場合「まぐろ赤身」の商品id|
 | food_id | 食材id | UNSIGNED INT |  | FOREIGN KEY | NOT NULL |  |  |  |  | 商品が「はな」の場合「はな」に含まれる食材の食材id（10貫セットなら10レコード） <br> 商品が「まぐろ赤身」の場合「まぐろ赤身」の食材id |
+| food_quantity | 食材量 | INT |  |  | NOT NULL | 1 |  |  |  | 商品に含まれる食材の量 |
 | created_at | 作成日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 | updated_at | 更新日 | DATETIME |  | DEFAULT CURRENT_TIMESTAMP <br> ON UPDATE CURRENT_TIMESTAMP | NOT NULL |  |  |  |  |  |
 
