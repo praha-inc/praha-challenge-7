@@ -1,0 +1,67 @@
+version: "3.0"
+services:
+  web:
+    container_name: praha_web
+    image: php
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "${WEB_PORT}:80"
+    environment:
+      DOCUMENT_ROOT: "/var/www/html/${DOCUMENT_ROOT_DIR}/"
+    volumes:
+      - ../www:/var/www/html/
+      - ./web/log:/var/log
+      - ./web/php.ini:/usr/local/etc/php/php.ini
+      - ./web/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    depends_on:
+      - db
+    networks:
+      - praha
+
+  db:
+    container_name: praha_db
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_USER: "${DB_ROOT_USER}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_HOST: "${DB_HOST}"
+#      MYSQL_USER: "${DB_USER}"
+#      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      TZ: "${TZ}"
+    volumes:
+      # データ永続化
+      - ./db/praha_data:/var/lib/mysql
+      # 初期化
+      - ./db/init:/docker-entrypoint-initdb.d
+#      # mysql設定
+#      - ./db/conf.d:/etc/mysql/conf.d
+    networks:
+      - praha
+
+  phpmyadmin:
+    container_name: praha_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "${PHPMYADMIN_PORT}:80"
+    environment:
+      PMA_HOST: db
+#      PMA_USER: ${DB_USER}
+#      PMA_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      - praha
+
+networks:
+  praha:
+    driver: bridge
