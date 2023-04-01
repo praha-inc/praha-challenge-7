@@ -5,16 +5,6 @@ hide circle
 
 title DB設計
 
-entity "orders : 注文テーブル" as orders {
-  *id
-  --
-  #customer_id : 顧客id
-  #channel_id : 注文経路id
-  #order_status_id : 注文状態id
-  *created_at
-  *updated_at
-}
-
 entity "customers : 顧客テーブル" as customers {
   *id
   --
@@ -42,26 +32,12 @@ entity "order_statuses : 注文状態テーブル" as order_statuses {
   *updated_at
 }
 
-entity "order_details : 注文詳細テーブル" as order_details {
+entity "orders : 注文テーブル" as orders {
   *id
   --
-  #order_id : 注文id
-  #product_id : 商品id
-  #discount_id : 割引id
-  *is_without_wasabi : さび抜きかどうか
-  *is_less_rice : シャリ小かどうか
-  *created_at
-  *updated_at
-}
-
-entity "products : 商品テーブル" as products {
-  *id
-  --
-  *product_name: 商品名
-  product_description: 商品説明
-  #menu_category_id : メニューカテゴリーid
-  #price_id : 税抜価格id
-  *is_available : 商品を提供中かどうか
+  #customer_id : 顧客id
+  #channel_id : 注文経路id
+  #order_status_id : 注文状態id
   *created_at
   *updated_at
 }
@@ -69,6 +45,7 @@ entity "products : 商品テーブル" as products {
 entity "menu_categories : メニューカテゴリーテーブル" as menu_categories {
   *id
   --
+  #menu_group_id : メニューグループid
   *menu_category_name : メニューカテゴリー名（盛り込み、にぎり、丼、お好みなど）
   *is_lunch_discounted : ランチタイムの割引対象かどうか
   *created_at
@@ -79,6 +56,18 @@ entity "prices : 税抜価格テーブル" as prices {
   *id
   --
   *price : 税抜価格
+  *created_at
+  *updated_at
+}
+
+entity "products : 商品テーブル" as products {
+  *id
+  --
+  #menu_category_id : メニューカテゴリーid
+  #price_id : 税抜価格id
+  *product_name: 商品名
+  product_description: 商品説明
+  *is_available : 商品を提供中かどうか
   *created_at
   *updated_at
 }
@@ -105,15 +94,6 @@ entity "products_discounts : 商品割引中間テーブル" as products_discoun
   *updated_at
 }
 
-entity "product_foods : 商品食材テーブル" as product_foods {
-  *id
-  --
-  #product_id : 商品id
-  #food_id : 食材id
-  *created_at
-  *updated_at
-}
-
 entity "foods : 食材テーブル" as foods {
   *id
   --
@@ -124,21 +104,42 @@ entity "foods : 食材テーブル" as foods {
   *updated_at
 }
 
-orders ||--|{ customers
-orders ||--|{ channels
-orders ||--|| order_statuses
-orders ||--|{ order_details
+entity "product_foods : 商品食材テーブル" as product_foods {
+  *id
+  --
+  #product_id : 商品id
+  #food_id : 食材id
+  *created_at
+  *updated_at
+}
 
-order_details ||--|| products
-order_details ||--o{ discounts
+entity "order_details : 注文詳細テーブル" as order_details {
+  *id
+  --
+  #order_id : 注文id
+  #product_id : 商品id
+  #discount_id : 割引id
+  *is_without_wasabi : さび抜きかどうか
+  *is_less_rice : シャリ小かどうか
+  *created_at
+  *updated_at
+}
 
-products ||--|| menu_categories
-products ||--|| prices
+customers ||--|{ orders
+channels ||--|{ orders
+order_statuses ||--|{ orders
+
+orders ||------|{ order_details
+products ||---o{ order_details
+discounts |o---o{ order_details
+
+menu_categories ||--|{ products
+prices ||--|{ products
+
+products |o-r-o{ products_discounts
+discounts |o-l-o{ products_discounts
+
 products ||--|{ product_foods
-
-products ||-r-o{ products_discounts
-discounts ||-l-o{ products_discounts
-
-product_foods ||--|| foods
+foods ||--|{ product_foods
 
 @enduml
