@@ -4,30 +4,27 @@
 !define TRANSACTION CAE7F2
 
 entity users as "users\nユーザー" <<T, TRANSACTION>> {
-    id BIGSERIAL INT
-    +uuid VARCHAR(255)
+    +uuid VARCHAR(30)
     --
-    name VARCHAR(255) [名前]
-    display_name VARCHAR(255) [表示名]
-    email VARCHAR(255) [名(かな)]
+    name VARCHAR(30) [名前]
+    display_name VARCHAR(30) [表示名]
+    email VARCHAR(30) UNIQUE [名(かな)]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity belonging_to_workspaces as "belonging_to_workspaces\n所属(ワークスペース)" <<T, TRANSACTION>>  {
-    id BIGSERIAL INT
-    +uuid VARCHAR(255)
+entity users_workspaces as "users_workspaces\n所属(ワークスペース)" <<T, TRANSACTION>>  {
+    +uuid VARCHAR(30)
     --
-    user_id: VARCHAR(255) [ユーザーID]
-    workspace_id VARCHAR(255) [ワークスペースID]
-    name VARCHAR(255) [名前]
+    user_id: VARCHAR(30) [ユーザーID]
+    workspace_id VARCHAR(30) [ワークスペースID]
+    name VARCHAR(30) [名前]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity belonging_to_channels as "belonging_to_channels\n所属(チャンネル)" <<T, TRANSACTION>>  {
-    id BIGSERIAL INT
-    +uuid VARCHAR(255)
+entity users_channels as "users_channels\n所属(チャンネル)" <<T, TRANSACTION>>  {
+    +uuid VARCHAR(30)
     --
     user_id: VARCHAR(255) [ユーザーID]
     channel_id VARCHAR(255) [チャンネルID]
@@ -37,8 +34,7 @@ entity belonging_to_channels as "belonging_to_channels\n所属(チャンネル)"
 }
 
 entity posts as "posts\n投稿" <<T, TRANSACTION>>  {
-    id BIGSERIAL INT
-    +uuid VARCHAR(255)
+    +uuid VARCHAR(30)
     --
     user_id VARCHAR(255) [ユーザーID]
     channel_id VARCHAR(255) [チャンネルID]
@@ -50,19 +46,17 @@ entity posts as "posts\n投稿" <<T, TRANSACTION>>  {
 }
 
 entity channels as "channels\nチャンネル" <<T, TRANSACTION>>  {
-    id BIGSERIAL INT
-    +uuid VARCHAR(255)
+    +uuid VARCHAR(30)
     --
-    name VARCHAR(255) [名前]
+    name VARCHAR(30) [名前]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
 entity workspaces as "workspaces\nワークスペース" <<T, TRANSACTION>>  {
-    id BIGSERIAL INT
-    +uuid VARCHAR(255)
+    +uuid VARCHAR(30)
     --
-    name VARCHAR(255) [名前]
+    name VARCHAR(30) [名前]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
