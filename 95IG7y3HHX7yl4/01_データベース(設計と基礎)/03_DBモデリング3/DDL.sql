@@ -24,14 +24,15 @@ CREATE TABLE contents (
 
 CREATE TABLE content_histories (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    account_id INT NOT NULL,
+    account_id INT,
     type TINYINT UNSIGNED NOT NULL,
     content_title VARCHAR(255) NOT NULL,
     content_body TEXT,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     operation ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
-    operation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    operation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) SET NULL
 );
 
 CREATE TABLE tree_paths (
