@@ -14,7 +14,7 @@ CREATE TABLE accounts (
 CREATE TABLE contents (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     account_id INT NOT NULL,
-    type TINYINT UNSIGNED NOT NULL,
+    content_type TINYINT UNSIGNED NOT NULL,
     content_title VARCHAR(255) NOT NULL,
     content_body TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -25,7 +25,7 @@ CREATE TABLE contents (
 CREATE TABLE content_histories (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     account_id INT NULL,
-    type TINYINT UNSIGNED NOT NULL,
+    content_type TINYINT UNSIGNED NOT NULL,
     content_title VARCHAR(255) NOT NULL,
     content_body TEXT,
     created_at TIMESTAMP NOT NULL,

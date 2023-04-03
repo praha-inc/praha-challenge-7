@@ -19,7 +19,7 @@ entity contents as "contents" <<T,TRANSACTION>> {
     + id: INT <<PK>>
     --
     - account_id: INT <<FK>>
-    type: UNSIGNED
+    content_type: UNSIGNED
     content_title: VARCHAR(255)
     content_body: TEXT
     created_at: TIMESTAMP
@@ -30,7 +30,7 @@ entity content_histories as "content_histories" <<T,TRANSACTION>> {
     + id: INT <<PK>>
     --
     - account_id: INT <<FK>>
-    type: UNSIGNED
+    content_type: UNSIGNED
     content_title: VARCHAR(255)
     content_body: TEXT
     created_at: TIMESTAMP
@@ -50,7 +50,7 @@ entity content_paths as "content_paths" <<T,TRANSACTION>> {
 accounts ||--o{ contents
 accounts ||--o{ content_histories
 contents ||-right-|{ content_histories
-contents ||--|{ tree_paths
-contents ||--|{ tree_paths
+contents ||--|{ content_paths
+contents ||--|{ content_paths
 
 @enduml
