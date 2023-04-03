@@ -39,7 +39,7 @@ entity content_histories as "content_histories" <<T,TRANSACTION>> {
     operation_date: TIMESTAMP
 }
 
-entity tree_paths as "tree_paths" <<T,TRANSACTION>> {
+entity content_paths as "content_paths" <<T,TRANSACTION>> {
     + (ancestor, descendant)
     --
     - ancestor: INT <<FK>>
