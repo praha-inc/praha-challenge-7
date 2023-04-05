@@ -1,0 +1,77 @@
+@startuml
+
+entity orders as "orders\n注文票" {
+  * <u>order_id</u> (pk) [注文ID]
+  --
+  customer_id (fk) [顧客ID]
+  tax_id (fk) [税率ID]
+  is_take_out [持ち帰りフラグ]
+  is_paid [支払い済みフラグ]
+  order_date [注文日時]
+}
+
+entity order_details as "order_details\n注文詳細" {
+  * <u>order_detail_id</u> (pk) [注文詳細ID]
+  --
+  order_id(fk) [注文ID]
+  menu_id(fk) [メニューID]
+  sushi_id(fk) [寿司ID]
+  cosmetic_cese_id (fk) [化粧箱ID]
+  is_wasabi [わさびフラグ]
+  size_shiari [シャリサイズ]
+  quantity [個数]
+}
+
+entity menu_shshi as "menu_shshi\n寿司メニュー" {
+  * <u>sushi_id (pk)</u> [寿司ID]
+  --
+  shushi_name [寿司名]
+  price [金額]
+}
+
+entity menu_sets as "menu_sets\nセットメニュー" {
+  * <u>course_id</u> (pk) [セットメニューID]
+  --
+  menu_name [セットメニュー名]
+  sushi_id (fk) [寿司ID]
+}
+
+
+entity cosmetic_ceses as "cosmetic_ceses\n化粧箱" {
+  * <u>cosmetic_cese_id</u> (pk) [化粧箱ID]
+  --
+  case_name [化粧箱名]
+  price [金額]
+}
+
+entity tax_rates as "tax_rates\n税率" {
+  * <u>tax_id</u> (pk) [税率ID]
+  --
+  rate [税率]
+}
+
+entity customers as "customers\n顧客情報" {
+  * <u>customer_id</u> (pk) [顧客ID]
+  --
+  customer_name [名前]
+  phone_number [電話番号]
+}
+
+orders ||--|{ order_details
+orders }o..|| tax_rates
+orders }o..|{ customers
+order_details }o..o{ menu_sets
+order_details }o..o{ menu_shshi
+order_details }o..o{ cosmetic_ceses
+menu_sets }o--|{ menu_shshi
+
+' 1 対 0 または 1
+'   users ||..o| user_details
+' 1 対 1
+'   users ||..|| user_details
+' 1 対 0 以上
+'   users ||..o{ user_items
+' 1 対 1 以上
+'   users ||..|{ user_items
+
+@enduml
