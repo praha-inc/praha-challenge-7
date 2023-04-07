@@ -83,7 +83,7 @@ entity "products : 商品テーブル" as products {
   --
   #menu_category_id : メニューカテゴリーid
   #price_id : 税抜価格id
-  #discount_id : 化粧箱を付けるか
+  #discount_id : 割引ID？
   #box_id : 化粧箱を付けるか
   *product_name: 商品名
   product_description: 商品説明
