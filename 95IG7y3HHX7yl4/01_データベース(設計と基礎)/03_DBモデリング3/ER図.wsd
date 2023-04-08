@@ -30,6 +30,7 @@ entity content_histories as "content_histories" <<T,TRANSACTION>> {
     + id: INT <<PK>>
     --
     - account_id: INT <<FK>>
+    - content_id: INT <<FK>>
     content_type: UNSIGNED
     content_title: VARCHAR(255)
     content_body: TEXT
