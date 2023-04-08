@@ -1,0 +1,205 @@
+-- DBを作成
+CREATE DATABASE IF NOT EXISTS praha_sushi CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE praha_sushi;
+
+-- テーブルを作成
+CREATE TABLE `customers` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    family_name VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    tel VARCHAR(20) NOT NULL,
+    app_user_id CHAR(36) NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `channels` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    channel_name VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `order_statuses` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    status VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `orders` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    customer_id INT UNSIGNED NOT NULL,
+    channel_id INT UNSIGNED NOT NULL,
+    order_status_id INT UNSIGNED NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (customer_id)
+        REFERENCES customers(id),
+
+    FOREIGN KEY (channel_id)
+        REFERENCES channels(id),
+
+    FOREIGN KEY (order_status_id)
+        REFERENCES order_statuses(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `menu_groups` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    menu_group_name VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `menu_categories` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    menu_group_id INT UNSIGNED NOT NULL,
+    menu_category_name VARCHAR(100) NOT NULL,
+    is_lunch_discounted TINYINT(1) NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (menu_group_id)
+        REFERENCES menu_groups(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `prices` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    price INT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `boxes` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    price_id INT UNSIGNED NOT NULL,
+    box_name VARCHAR(100) NOT NULL,
+    box_description VARCHAR(255) NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (price_id)
+        REFERENCES prices(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `discounts` (
+     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+     discount_value INT UNSIGNED NULL,
+     discount_rate INT UNSIGNED NULL,
+     discount_reason VARCHAR(255) NOT NULL,
+     begin_at DATETIME NOT NULL,
+     end_at DATETIME NULL,
+     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+     PRIMARY KEY (id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `products` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    menu_category_id INT UNSIGNED NOT NULL,
+    price_id INT UNSIGNED NOT NULL,
+    box_id INT UNSIGNED NULL,
+    discount_id INT UNSIGNED NULL,
+    product_name VARCHAR(100) NOT NULL,
+    product_description VARCHAR(1000) NULL,
+    is_available TINYINT(1) NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (menu_category_id)
+        REFERENCES menu_categories(id),
+
+    FOREIGN KEY (price_id)
+        REFERENCES prices(id),
+
+    FOREIGN KEY (box_id)
+        REFERENCES boxes(id),
+
+    FOREIGN KEY (discount_id)
+        REFERENCES discounts(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `products_discounts` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    product_id INT UNSIGNED NULL,
+    discount_id INT UNSIGNED NULL,
+    is_deleted TINYINT(1) NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (product_id)
+        REFERENCES products(id),
+
+    FOREIGN KEY (discount_id)
+        REFERENCES discounts(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `foods` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    food_name VARCHAR(255) NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `product_foods` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    product_id INT UNSIGNED NOT NULL,
+    food_id INT UNSIGNED NOT NULL,
+    food_quantity INT NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (product_id)
+        REFERENCES products(id),
+
+    FOREIGN KEY (food_id)
+        REFERENCES foods(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE `order_details` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    order_id INT UNSIGNED NOT NULL,
+    product_id INT UNSIGNED NOT NULL,
+    discount_id INT UNSIGNED NULL,
+    is_without_wasabi TINYINT(1) NOT NULL DEFAULT 0,
+    is_less_rice TINYINT(1) NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (order_id)
+        REFERENCES orders(id),
+
+    FOREIGN KEY (product_id)
+        REFERENCES products(id),
+
+    FOREIGN KEY (discount_id)
+        REFERENCES discounts(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
