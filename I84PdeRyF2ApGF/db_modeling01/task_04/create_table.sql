@@ -94,7 +94,8 @@ CREATE TABLE orders(
     FOREIGN KEY (guest_customer_id) REFERENCES guest_customers(id),
     FOREIGN KEY (tax_rate_id) REFERENCES tax_rate(id) ON DELETE NO ACTION,
     FOREIGN KEY (used_coupon_id) REFERENCES coupons(id) ON DELETE SET NULL,
-    FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id) ON DELETE NO ACTION
+    FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id) ON DELETE NO ACTION,
+    CHECK (registered_customer_id IS NOT NULL OR guest_customer_id IS NOT NULL)
 );
 
 -- 梱包マスタ
