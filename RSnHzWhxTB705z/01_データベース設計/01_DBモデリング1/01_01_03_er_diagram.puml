@@ -1,0 +1,170 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title DB設計
+
+entity "customers : 顧客テーブル" as customers {
+  *id
+  --
+  *family_name : 氏
+  *first_name : 名
+  *tel : 電話番号
+  *app_user_id : アプリのユーザーid
+  *created_at
+  *updated_at
+}
+
+entity "channels : 注文経路テーブル" as channels {
+  *id
+  --
+  *channel_name : 注文経路名
+  *created_at
+  *updated_at
+}
+
+entity "order_statuses : 注文状態テーブル" as order_statuses {
+  *id
+  --
+  *status : 注文状態 : 注文受付、支払い済み、受け渡し済み
+  *created_at
+  *updated_at
+}
+
+entity "orders : 注文テーブル" as orders {
+  *id
+  --
+  #customer_id : 顧客id
+  #channel_id : 注文経路id
+  #order_status_id : 注文状態id
+  *created_at
+  *updated_at
+}
+
+entity "menu_groups : メニューグループテーブル" as menu_groups {
+  *id
+  --
+  *menu_group_name : メニューグループ名（セットメニュー、お好みすしなど）
+  *created_at
+  *updated_at
+}
+
+entity "menu_categories : メニューカテゴリーテーブル" as menu_categories {
+  *id
+  --
+  #menu_group_id : メニューグループid
+  *menu_category_name : メニューカテゴリー名（盛り込み、にぎり、丼、お好みなど）
+  *is_lunch_discounted : ランチタイムの割引対象かどうか
+  *created_at
+  *updated_at
+}
+
+entity "prices : 税抜価格テーブル" as prices {
+  *id
+  --
+  *price : 税抜価格
+  *created_at
+  *updated_at
+}
+
+entity "boxes : 化粧箱テーブル" as boxes {
+  *id
+  --
+  #price_id : 税抜価格
+  *box_name : 箱の名前
+  box_description : 箱の説明
+  *created_at
+  *updated_at
+}
+
+entity "products : 商品テーブル" as products {
+  *id
+  --
+  #menu_category_id : メニューカテゴリーid
+  #price_id : 税抜価格id
+  #discount_id : 割引ID？
+  #box_id : 化粧箱を付けるか
+  *product_name: 商品名
+  product_description: 商品説明
+  *is_available : 商品を提供中かどうか
+  *created_at
+  *updated_at
+}
+
+entity "discounts : 割引テーブル" as discounts {
+  *id
+  --
+  discount_value : 割引価格
+  discount_rate : 割引割合
+  *discount_reason : 割引理由
+  *begin_at : 開始日時
+  end_at : 終了日時
+  *created_at
+  *updated_at
+}
+
+entity "products_discounts : 商品割引中間テーブル" as products_discounts {
+  *id
+  --
+  #product_id : 商品id
+  #discount_id : 割引id
+  *is_deleted : 論理削除フラグ
+  *created_at
+  *updated_at
+}
+
+entity "foods : 食材テーブル" as foods {
+  *id
+  --
+  *food_name : 食材名
+  *stock : 在庫数
+  *expiration_date : 消費期限
+  *created_at
+  *updated_at
+}
+
+entity "product_foods : 商品食材テーブル" as product_foods {
+  *id
+  --
+  #product_id : 商品id
+  #food_id : 食材id
+  *food_quantity : 食材量
+  *created_at
+  *updated_at
+}
+
+entity "order_details : 注文詳細テーブル" as order_details {
+  *id
+  --
+  #order_id : 注文id
+  #product_id : 商品id
+  #discount_id : 割引id
+  *is_without_wasabi : さび抜きかどうか
+  *is_less_rice : シャリ小かどうか
+  *created_at
+  *updated_at
+}
+
+customers ||--|{ orders
+channels ||--|{ orders
+order_statuses ||--|{ orders
+
+orders ||------|{ order_details
+products ||---o{ order_details
+discounts |o---o{ order_details
+
+menu_groups ||--|{ menu_categories
+
+menu_categories ||--|{ products
+prices ||---|{ products
+prices ||--|{ boxes
+boxes ||--o{ products
+
+products |o-r-o{ products_discounts
+discounts |o-l-o{ products_discounts
+
+products ||--|{ product_foods
+foods ||--|{ product_foods
+
+@enduml
