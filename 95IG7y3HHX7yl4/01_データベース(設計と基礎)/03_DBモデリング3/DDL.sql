@@ -32,9 +32,7 @@ CREATE TABLE content_histories (
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     operation ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
-    operation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (content_id) REFERENCES accounts(id),
-    FOREIGN KEY (account_id) REFERENCES accounts(id) 
+    operation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE content_paths (
@@ -52,10 +50,10 @@ CREATE TRIGGER contents_insert_history
 AFTER INSERT ON contents
 FOR EACH ROW
 BEGIN
-    INSERT INTO contents_history
-    (content_id, content_type, account_id, content_title, content_body, created_at, updated_at, operation, operation_date)
+    INSERT INTO content_histories
+    (content_id, account_id, content_type, content_title, content_body, created_at, updated_at, operation, operation_date)
     VALUES
-    (NEW.id, NEW.content_type, NEW.account_id, NEW.content_title, NEW.content_body, NEW.created_at, NEW.updated_at, 'INSERT', NOW());
+    (NEW.id, NEW.account_id, NEW.content_type, NEW.content_title, NEW.content_body, NEW.created_at, NEW.updated_at, 'INSERT', NOW());
 END;;
 DELIMITER ;
 -- -- UPDATE操作用のトリガー
@@ -64,10 +62,10 @@ CREATE TRIGGER contents_update_history
 AFTER UPDATE ON contents
 FOR EACH ROW
 BEGIN
-    INSERT INTO contents_history
-    (content_id, content_type, account_id, content_title, content_body, created_at, updated_at, operation, operation_date)
+    INSERT INTO content_histories
+    (content_id, account_id, content_type, content_title, content_body, created_at, updated_at, operation, operation_date)
     VALUES
-    (NEW.id, NEW.content_type, NEW.account_id, NEW.content_title, NEW.content_body, NEW.created_at, NEW.updated_at, 'UPDATE', NOW());
+    (NEW.id, NEW.account_id, NEW.content_type, NEW.content_title, NEW.content_body, NEW.created_at, NEW.updated_at, 'UPDATE', NOW());
 END;;
 DELIMITER ;
 -- -- DELETE操作用のトリガー
@@ -76,10 +74,10 @@ CREATE TRIGGER contents_delete_history
 BEFORE DELETE ON contents
 FOR EACH ROW
 BEGIN
-    INSERT INTO contents_history
-    (content_id, content_type, account_id, content_title, content_body, created_at, updated_at, operation, operation_date)
+    INSERT INTO content_histories
+    (content_id, account_id, content_type, content_title, content_body, created_at, updated_at, operation, operation_date)
     VALUES
-    (OLD.id, OLD.content_type, OLD.account_id, OLD.content_title, OLD.content_body, OLD.created_at, OLD.updated_at, 'DELETE', NOW());
+    (OLD.id, OLD.account_id, OLD.content_type,  OLD.content_title, OLD.content_body, OLD.created_at, OLD.updated_at, 'DELETE', NOW());
 END;;
 DELIMITER ;
 
