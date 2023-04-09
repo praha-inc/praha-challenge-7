@@ -74,79 +74,219 @@ WHERE id = 100;
 
 ---- SELECT
 -- messagesとthreadsの横断検索（文字）
-SELECT'message' as type, m.id, m.user_id, m.channel_id, m.content, m.created_at
-FROM messages m
-WHERE m.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND m.content LIKE '%hello%'
-UNION ALL
-SELECT 'thread' as type, t.id, t.user_id, parent_msg.channel_id, t.content, t.created_at
-FROM threads t
-JOIN messages parent_msg ON t.parent_message_id = parent_msg.id
-WHERE parent_msg.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND t.content LIKE '%hello%'
-ORDER BY created_at ASC;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            'message' as type,
+            m.id,
+            m.user_id,
+            m.channel_id,
+            m.content,
+            m.created_at
+        FROM
+            messages m
+        UNION ALL
+        SELECT
+            'thread' as type,
+            t.id,
+            t.user_id,
+            parent_msg.channel_id,
+            t.content,
+            t.created_at
+        FROM
+            threads t
+            JOIN
+                messages parent_msg
+            ON  t.parent_message_id = parent_msg.id
+    ) AS combined_data
+WHERE
+    channel_id IN(
+        SELECT
+            channel_id
+        FROM
+            channel_members
+        WHERE
+            user_id = 4
+    )
+AND content LIKE '%hello%'
+ORDER BY
+    created_at ASC
+;
 
 -- messagesとthreadsの横断検索（送信者）
-SELECT'message' as type, m.id, m.user_id, m.channel_id, m.content, m.created_at
-FROM messages m
-WHERE m.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND m.user_id = 1
-UNION ALL
-SELECT 'thread' as type, t.id, t.user_id, parent_msg.channel_id, t.content, t.created_at
-FROM threads t
-JOIN messages parent_msg ON t.parent_message_id = parent_msg.id
-WHERE parent_msg.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND t.user_id = 1
-ORDER BY created_at ASC;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            'message' as type,
+            m.id,
+            m.user_id,
+            m.channel_id,
+            m.content,
+            m.created_at
+        FROM
+            messages m
+        UNION ALL
+        SELECT
+            'thread' as type,
+            t.id,
+            t.user_id,
+            parent_msg.channel_id,
+            t.content,
+            t.created_at
+        FROM
+            threads t
+            JOIN
+                messages parent_msg
+            ON  t.parent_message_id = parent_msg.id
+    ) AS combined_data
+WHERE
+    channel_id IN(
+        SELECT
+            channel_id
+        FROM
+            channel_members
+        WHERE
+            user_id = 4
+    )
+AND user_id = 1
+ORDER BY
+    created_at ASC
+;
 
 -- messagesとthreadsの横断検索（チャンネル）
-SELECT'message' as type, m.id, m.user_id, m.channel_id, m.content, m.created_at
-FROM messages m
-WHERE m.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND m.channel_id = 1
-UNION ALL
-SELECT 'thread' as type, t.id, t.user_id, parent_msg.channel_id, t.content, t.created_at
-FROM threads t
-JOIN messages parent_msg ON t.parent_message_id = parent_msg.id
-WHERE parent_msg.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND parent_msg.channel_id = 1
-ORDER BY created_at ASC;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            'message' as type,
+            m.id,
+            m.user_id,
+            m.channel_id,
+            m.content,
+            m.created_at
+        FROM
+            messages m
+        UNION ALL
+        SELECT
+            'thread' as type,
+            t.id,
+            t.user_id,
+            parent_msg.channel_id,
+            t.content,
+            t.created_at
+        FROM
+            threads t
+            JOIN
+                messages parent_msg
+            ON  t.parent_message_id = parent_msg.id
+    ) AS combined_data
+WHERE
+    channel_id IN(
+        SELECT
+            channel_id
+        FROM
+            channel_members
+        WHERE
+            user_id = 4
+    )
+AND channel_id = 1
+ORDER BY
+    created_at ASC
+;
 
 -- messagesとthreadsの横断検索（日時）
-SELECT'message' as type, m.id, m.user_id, m.channel_id, m.content, m.created_at
-FROM messages m
-WHERE m.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND m.created_at >= '2019-01-19 12:30:00'
-AND m.created_at <= '2020-03-02 09:15:00'
-UNION ALL
-SELECT 'thread' as type, t.id, t.user_id, parent_msg.channel_id, t.content, t.created_at
-FROM threads t
-JOIN messages parent_msg ON t.parent_message_id = parent_msg.id
-WHERE parent_msg.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND t.created_at >= '2019-01-19 12:30:00'
-AND t.created_at <= '2020-03-02 09:15:00'
-ORDER BY created_at ASC;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            'message' as type,
+            m.id,
+            m.user_id,
+            m.channel_id,
+            m.content,
+            m.created_at
+        FROM
+            messages m
+        UNION ALL
+        SELECT
+            'thread' as type,
+            t.id,
+            t.user_id,
+            parent_msg.channel_id,
+            t.content,
+            t.created_at
+        FROM
+            threads t
+            JOIN
+                messages parent_msg
+            ON  t.parent_message_id = parent_msg.id
+    ) AS combined_data
+WHERE
+    channel_id IN(
+        SELECT
+            channel_id
+        FROM
+            channel_members
+        WHERE
+            user_id = 4
+    )
+AND created_at >= '2019-01-19 12:30:00'
+AND created_at <= '2020-03-02 09:15:00'
+ORDER BY
+    created_at ASC
+;
 
 -- messagesとthreadsの横断検索（文字 & 送信者 & チャンネル & 日時）
-SELECT'message' as type, m.id, m.user_id, m.channel_id, m.content, m.created_at
-FROM messages m
-WHERE m.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND m.content LIKE '%hello%'
-AND m.user_id = 2
-AND m.channel_id = 1
-AND m.created_at >= '2019-01-19 12:30:00'
-AND m.created_at <= '2020-03-02 09:15:00'
-UNION ALL
-SELECT 'thread' as type, t.id, t.user_id, parent_msg.channel_id, t.content, t.created_at
-FROM threads t
-JOIN messages parent_msg ON t.parent_message_id = parent_msg.id
-WHERE parent_msg.channel_id IN (SELECT channel_id FROM channel_members WHERE user_id = 4)
-AND t.content LIKE '%hello%'
-AND t.user_id = 2
-AND parent_msg.channel_id = 1
-AND t.created_at >= '2019-01-19 12:30:00'
-AND t.created_at <= '2020-03-02 09:15:00'
-ORDER BY created_at ASC;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            'message' as type,
+            m.id,
+            m.user_id,
+            m.channel_id,
+            m.content,
+            m.created_at
+        FROM
+            messages m
+        UNION ALL
+        SELECT
+            'thread' as type,
+            t.id,
+            t.user_id,
+            parent_msg.channel_id,
+            t.content,
+            t.created_at
+        FROM
+            threads t
+            JOIN
+                messages parent_msg
+            ON  t.parent_message_id = parent_msg.id
+    ) AS combined_data
+WHERE
+    channel_id IN(
+        SELECT
+            channel_id
+        FROM
+            channel_members
+        WHERE
+            user_id = 4
+    )
+AND content LIKE '%hello%'
+AND user_id = 2
+AND channel_id = 1
+AND created_at >= '2019-01-19 12:30:00'
+AND created_at <= '2020-03-02 09:15:00'
+ORDER BY
+    created_at ASC
+;
 
 -- 特定のmessageよりthreadのメッセージを取得
 SELECT * 
