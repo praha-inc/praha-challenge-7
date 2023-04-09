@@ -1,4 +1,4 @@
-@startuml osushi_table
+@startuml chat_table
 
 !define MASTER F9DFD5
 !define TRANSACTION CAE7F2
