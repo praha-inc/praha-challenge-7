@@ -20,7 +20,7 @@
 erDiagram
 
   "お客さん" {
-    int customer_id PK "お客さんID"
+    uuid customer_id PK "お客さんID"
     int phone "電話番号"
     string name "名前"
     date created_at "作成日"
@@ -28,16 +28,16 @@ erDiagram
   }
 
   "商品" {
-    int item_id PK "商品ID"
-    int sushi_id FK "お好みすしID"
-    int set_id FK "セットメニュID"
+    uuid item_id PK "商品ID"
+    uuid sushi_id FK "お好みすしID"
+    uuid set_id FK "セットメニュID"
     boolean is_deleted "削除されたか"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
   "お好みすし" {
-    int sushi_id PK "お好みすしID"
+    uuid sushi_id PK "お好みすしID"
     string name "お好みすし名"
     int price "値段"
     date created_at "作成日"
@@ -45,8 +45,8 @@ erDiagram
   }
 
   "セットメニュ" {
-    int set_id PK "セットメニュID"
-    int set_type_id FK "セットメニュ区分（0:盛り込み…）"
+    uuid set_id PK "セットメニュID"
+    uuid set_type_id FK "セットメニュ区分（0:盛り込み…）"
     string name "セットメニュ名"
     int price "値段"
     date created_at "作成日"
@@ -54,18 +54,18 @@ erDiagram
   }
 
   "お好みすし_セットメニュ_中間テーブル" {
-    int sushi_set_id PK "お好みすし_セットメニュ_中間テーブルID"
-    int sushi_id FK "お好みすしID"
-    int set_id FK "セットメニュID"
+    uuid sushi_set_id PK "お好みすし_セットメニュ_中間テーブルID"
+    uuid sushi_id FK "お好みすしID"
+    uuid set_id FK "セットメニュID"
     int sushi_count "お好みすしが1セットに何個入っているか" 
     date created_at "作成日"
     date updated_at "更新日"
   }
 
   "注文" {
-    int order_id PK "注文ID"
-    int customer_id FK "お客さんID"
-    int total_coupon_id FK "全体割引クーポンID"
+    uuid order_id PK "注文ID"
+    uuid customer_id FK "お客さんID"
+    uuid total_coupon_id FK "全体割引クーポンID"
     int payment_method "注文方法（0:電話、1:アプリ）"
     boolean is_paid "支払い済みか"
     date created_at "作成日"
@@ -73,11 +73,11 @@ erDiagram
   }
 
   "注文詳細" {
-    int order_detail_id PK "注文詳細ID"
-    int order_id FK "注文ID"
-    int item_id FK "商品ID"
-    int shari_size_id FK "シャリサイズID"
-    int item_coupon_id FK "商品割引クーポンID"
+    uuid order_detail_id PK "注文詳細ID"
+    uuid order_id FK "注文ID"
+    uuid item_id FK "商品ID"
+    uuid shari_size_id FK "シャリサイズID"
+    uuid item_coupon_id FK "商品割引クーポンID"
     int count "個数"
     boolean is_without_wasabi "さびぬきか"
     date created_at "作成日"
@@ -85,21 +85,21 @@ erDiagram
   }
 
   "シャリサイズ区分" {
-    int shari_size_id PK "シャリサイズID"
+    uuid shari_size_id PK "シャリサイズID"
     string name "シャリサイズ名"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
   "セットタイプ" {
-    int set_type_id PK "セットメニュ区分（0:盛り込み…）"
+    uuid set_type_id PK "セットメニュ区分（0:盛り込み…）"
     string name "セットタイプ名"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
   "全体割引クーポン" {
-    int total_coupon_id PK "全体割引クーポンID"
+    uuid total_coupon_id PK "全体割引クーポンID"
     string name "クーポン名"
     int discount_rate "割引率"
     date available_from "有効期限開始日"
@@ -109,7 +109,7 @@ erDiagram
   }
 
   "商品割引クーポン" {
-    int item_coupon_id PK "商品割引クーポンID"
+    uuid item_coupon_id PK "商品割引クーポンID"
     string name "クーポン名"
     int discount_rate "割引率"
     date available_from "有効期限開始日"
