@@ -46,7 +46,7 @@ erDiagram
 
   "セットメニュ" {
     uuid set_id PK "セットメニュID"
-    uuid set_type_id FK "セットメニュ区分（0:盛り込み…）"
+    uuid set_type_id FK "セットメニュ区分ID"
     string name "セットメニュ名"
     int price "値段"
     date created_at "作成日"
@@ -92,7 +92,7 @@ erDiagram
   }
 
   "セットタイプ" {
-    uuid set_type_id PK "セットメニュ区分（0:盛り込み…）"
+    uuid set_type_id PK "セットメニュ区分ID"
     string name "セットタイプ名"
     date created_at "作成日"
     date updated_at "更新日"
