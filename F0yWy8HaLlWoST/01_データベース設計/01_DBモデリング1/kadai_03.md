@@ -19,15 +19,15 @@
 ```mermaid
 erDiagram
 
-  "お客さん" {
+  M_CUSTOMERS {
     uuid customer_id PK "お客さんID"
-    int phone "電話番号"
+    string phone "電話番号"
     string name "名前"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
-  "商品" {
+  M_ITEMS {
     uuid item_id PK "商品ID"
     uuid sushi_id FK "お好みすしID"
     uuid set_id FK "セットメニュID"
@@ -36,7 +36,7 @@ erDiagram
     date updated_at "更新日"
   }
 
-  "お好みすし" {
+  M_SUSHI_MENUS {
     uuid sushi_id PK "お好みすしID"
     string name "お好みすし名"
     int price "値段"
@@ -44,7 +44,7 @@ erDiagram
     date updated_at "更新日"
   }
 
-  "セットメニュ" {
+  M_SET_MENUS {
     uuid set_id PK "セットメニュID"
     uuid set_type_id FK "セットメニュ区分ID"
     string name "セットメニュ名"
@@ -53,7 +53,7 @@ erDiagram
     date updated_at "更新日"
   }
 
-  "お好みすし_セットメニュ_中間テーブル" {
+  R_SUSHI_AND_SET {
     uuid sushi_set_id PK "お好みすし_セットメニュ_中間テーブルID"
     uuid sushi_id FK "お好みすしID"
     uuid set_id FK "セットメニュID"
@@ -62,7 +62,7 @@ erDiagram
     date updated_at "更新日"
   }
 
-  "注文" {
+  T_ORDERS {
     uuid order_id PK "注文ID"
     uuid customer_id FK "お客さんID"
     uuid total_coupon_id FK "全体割引クーポンID"
@@ -72,7 +72,7 @@ erDiagram
     date updated_at "更新日"
   }
 
-  "注文詳細" {
+  T_ORDER_DETAILS {
     uuid order_detail_id PK "注文詳細ID"
     uuid order_id FK "注文ID"
     uuid item_id FK "商品ID"
@@ -84,51 +84,53 @@ erDiagram
     date updated_at "更新日"
   }
 
-  "シャリサイズ区分" {
+  M_SHARI_SIZES {
     uuid shari_size_id PK "シャリサイズID"
     string name "シャリサイズ名"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
-  "セットタイプ" {
+  M_SET_TYPES {
     uuid set_type_id PK "セットメニュ区分ID"
     string name "セットタイプ名"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
-  "全体割引クーポン" {
+  M_TOTAL_COUPON {
     uuid total_coupon_id PK "全体割引クーポンID"
     string name "クーポン名"
-    int discount_rate "割引率"
+    int discount_rate "割引率（割引率または割引額どちらかが必須）"
+    int discount_amount "割引額（割引率または割引額どちらかが必須）"
     date available_from "有効期限開始日"
     date expired_at "有効期限終了日"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
-  "商品割引クーポン" {
+  M_ITEM_COUPON {
     uuid item_coupon_id PK "商品割引クーポンID"
     string name "クーポン名"
-    int discount_rate "割引率"
+    int discount_rate "割引率（割引率または割引額どちらかが必須）"
+    int discount_amount "割引額（割引率または割引額どちらかが必須）"
     date available_from "有効期限開始日"
     date expired_at "有効期限終了日"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
-  "お客さん" ||--|{ "注文": "1人のお客さんは1つ以上の注文をもつ"
-  "注文" ||--|{ "注文詳細": "1つの注文は1つ以上の注文詳細をもつ"
-  "注文詳細" ||--|| "商品": "1つの注文詳細は1つの商品をもつ"
-  "商品" ||--o| "お好みすし": "1つの商品は0または1つのお好みすしをもつ"
-  "商品" ||--o| "セットメニュ": "1つの商品は0または1つのセットメニュをもつ"
-  "お好みすし" ||--o{ "お好みすし_セットメニュ_中間テーブル": ""
-  "セットメニュ" ||--o{ "お好みすし_セットメニュ_中間テーブル": ""
-  "注文詳細" ||--|| "シャリサイズ区分": "1つの注文詳細は1つのシャリサイズをもつ"
-  "セットメニュ" ||--|| "セットタイプ": "1つのセットメニュは1つのセットメニュタイプをもつ"
-  "注文" ||--o{ "全体割引クーポン": "1つの注文は0以上の全体割引クーポンをもつ"
-  "注文詳細" ||--o{ "商品割引クーポン": "1つの注文詳細は0以上の商品割引クーポンをもつ"
+  M_CUSTOMERS ||--|{ T_ORDERS: "1人のお客さんは1つ以上の注文をもつ"
+  T_ORDERS ||--|{ T_ORDER_DETAILS: "1つの注文は1つ以上の注文詳細をもつ"
+  T_ORDER_DETAILS ||--|| M_ITEMS: "1つの注文詳細は1つの商品をもつ"
+  M_ITEMS ||--o| M_SUSHI_MENUS: "1つの商品は0または1つのお好みすしをもつ"
+  M_ITEMS ||--o| M_SET_MENUS: "1つの商品は0または1つのセットメニュをもつ"
+  M_SUSHI_MENUS ||--o{ R_SUSHI_AND_SET: ""
+  M_SET_MENUS ||--o{ R_SUSHI_AND_SET: ""
+  T_ORDER_DETAILS ||--|| M_SHARI_SIZES: "1つの注文詳細は1つのシャリサイズをもつ"
+  M_SET_MENUS ||--|| M_SET_TYPES: "1つのセットメニュは1つのセットメニュタイプをもつ"
+  T_ORDERS ||--o{ M_TOTAL_COUPON: "1つの注文は0以上の全体割引クーポンをもつ"
+  T_ORDER_DETAILS ||--o{ M_ITEM_COUPON: "1つの注文詳細は0以上の商品割引クーポンをもつ"
 ```
 
 ## 疑問点メモ
