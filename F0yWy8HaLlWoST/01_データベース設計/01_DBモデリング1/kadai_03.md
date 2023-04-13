@@ -136,3 +136,9 @@ erDiagram
 ## 疑問点メモ
 
 - クーポンの金額への反映はどうする？
+- MySQL
+  - now()とcurrent_timestamp, current_timestamp()の違い
+  - datetime/timestampの違い
+  - uuid
+    - binary(16)/char(36)
+    - uuidのバージョン
