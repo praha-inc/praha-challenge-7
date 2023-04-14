@@ -35,10 +35,13 @@ CREATE TABLE content_histories (
     operation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- ancestor: 先祖
+-- descendant: 子孫
+-- path_length: 祖先 ~ 子孫までの距離
 CREATE TABLE content_paths (
     ancestor INT NOT NULL,
     descendant INT NOT NULL,
-    depth INT NOT NULL,
+    path_length INT NOT NULL,
     PRIMARY KEY (ancestor, descendant),
     FOREIGN KEY (ancestor) REFERENCES contents(id),
     FOREIGN KEY (descendant) REFERENCES contents(id)

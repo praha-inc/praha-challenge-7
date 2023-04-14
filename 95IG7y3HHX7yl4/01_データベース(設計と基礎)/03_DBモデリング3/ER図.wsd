@@ -45,7 +45,7 @@ entity content_paths as "content_paths" <<T,TRANSACTION>> {
     --
     - ancestor: INT <<FK>>
     - descendant: INT <<FK>>
-    depth: INT
+    path_length: INT
 }
 
 accounts ||--o{ contents
