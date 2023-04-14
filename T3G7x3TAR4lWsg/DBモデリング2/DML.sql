@@ -38,17 +38,12 @@ VALUES (1, 1),
   (2, 3);
 INSERT INTO Channel (id, name, workspace_id)
 VALUES (null, 'お仕事相談', 1),
-  --1
   (null, '会議', 1),
-  --2
   (null, 'プロジェクトX', 1),
-  --3
   (null, '公園でテニスしませんか', 2),
-  --4
   (null, '朝の散歩', 2),
-  --5
   (null, '茶道愛好会', 2);
---6
+
 INSERT INTO ChannelMember (channel_id, member_user_id)
 VALUES (1, 1),
   (1, 2),
@@ -70,15 +65,15 @@ INSERT INTO Message (
     channel_id
   )
 VALUES (
-    null,
+    1,
     'こんにちは。転職しようと思ってます。',
     1,
-    null,
+    1,
     now(),
     1
   ),
   (
-    null,
+    2,
     'そうなんですね。頑張ってください。',
     2,
     1,
@@ -86,58 +81,58 @@ VALUES (
     1
   ),
   (
-    null,
+    3,
     '会議は次は何時ですか？',
     1,
-    null,
+    3,
     now(),
     2
   ),
   (
-    null,
+    4,
     '自分で調べてください。',
     2,
-    null,
+    3,
     now(),
     2
   ),
   (
-    null,
+    5,
     '今度の日曜日公園でテニスしませんか。',
     1,
-    null,
+    5,
     now(),
     4
   ),
   (
-    null,
+    6,
     'いいですね。いつにしますか？',
     4,
-    null,
+    5,
     now(),
     4
   ),
   (
-    null,
+    7,
     '今度の茶道は欠席します。',
     1,
-    null,
+    7,
     now(),
     6
   ),
   (
-    null,
+    8,
     'そうですか？どうしてですか？',
     3,
-    null,
+    7,
     now(),
     6
   ),
   (
-    null,
+    9,
     '茶道に興味がなくなりました。',
     1,
-    null,
+    7,
     now(),
     6
   );

@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS `WorkSpaceMember`;
+DROP TABLE IF EXISTS `ChannelMember`;
+DROP TABLE IF EXISTS `Message`;
+DROP TABLE IF EXISTS `Channel`;
+DROP TABLE IF EXISTS `WorkSpace`;
+DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
@@ -8,27 +14,27 @@ CREATE TABLE `User` (
 CREATE TABLE `Message` (
   `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `content` text,
-  `user_id` bigint,
-  `parent_message_id` bigint,
+  `user_id` bigint not null,
+  `parent_message_id` bigint not null,
   `post_datetime` datetime DEFAULT (now()),
-  `channel_id` bigint
+  `channel_id` bigint not null
 );
 CREATE TABLE `Channel` (
   `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
-  `workspace_id` bigint
+  `workspace_id` bigint not null
 );
 CREATE TABLE `ChannelMember` (
-  `channel_id` bigint,
-  `member_user_id` bigint
+  `channel_id` bigint not null,
+  `member_user_id` bigint not null
 );
 CREATE TABLE `WorkSpace` (
   `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255)
 );
 CREATE TABLE `WorkSpaceMember` (
-  `workspace_id` bigint,
-  `member_user_id` bigint
+  `workspace_id` bigint not null,
+  `member_user_id` bigint not null
 );
 ALTER TABLE `Message`
 ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`id`);
