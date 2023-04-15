@@ -25,14 +25,14 @@ entity order_details as "order_details\n注文詳細" {
 entity menu_shshi as "menu_shshi\n寿司メニュー" {
   * <u>sushi_id (pk)</u> [寿司ID]
   --
-  shushi_name [寿司名]
+  name [寿司名]
   price [金額]
 }
 
 entity menu_sets as "menu_sets\nセットメニュー" {
-  * <u>course_id</u> (pk) [セットメニューID]
+  * <u>menu_id</u> (pk) [セットメニューID]
   --
-  menu_name [セットメニュー名]
+  name [セットメニュー名]
   sushi_id (fk) [寿司ID]
 }
 
@@ -40,7 +40,7 @@ entity menu_sets as "menu_sets\nセットメニュー" {
 entity cosmetic_ceses as "cosmetic_ceses\n化粧箱" {
   * <u>cosmetic_cese_id</u> (pk) [化粧箱ID]
   --
-  case_name [化粧箱名]
+  name [化粧箱名]
   price [金額]
 }
 
