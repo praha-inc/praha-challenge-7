@@ -23,6 +23,8 @@ docker-compose up -d
 docker-compose exec サービス名 bash
 #### MySQLの場所
 - /var/lib/mysql/
+#### error_logの場所
+- /var/log/php/php_error.log
 
 ### 終了
 docker-compose stop
