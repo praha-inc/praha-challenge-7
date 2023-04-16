@@ -22,6 +22,8 @@ entity contents as "contents" <<T,TRANSACTION>> {
     content_type: UNSIGNED
     content_title: VARCHAR(255)
     content_body: TEXT
+    prev_content_id: INT 
+    next_content_id: INT 
     created_at: TIMESTAMP
     updated_at: TIMESTAMP
 }
@@ -34,6 +36,8 @@ entity content_histories as "content_histories" <<T,TRANSACTION>> {
     content_type: UNSIGNED
     content_title: VARCHAR(255)
     content_body: TEXT
+    prev_content_id: INT 
+    next_content_id: INT 
     created_at: TIMESTAMP
     updated_at: TIMESTAMP
     operation: enum('INSERT', 'UPDATE', 'DELETE')

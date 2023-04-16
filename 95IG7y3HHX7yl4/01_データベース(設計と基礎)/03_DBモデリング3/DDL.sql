@@ -17,6 +17,8 @@ CREATE TABLE contents (
     content_type TINYINT UNSIGNED NOT NULL,
     content_title VARCHAR(255) NOT NULL,
     content_body TEXT,
+    prev_content_id INT,
+    next_content_id INT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (account_id) REFERENCES accounts(id)
@@ -29,6 +31,8 @@ CREATE TABLE content_histories (
     content_type TINYINT UNSIGNED NOT NULL,
     content_title VARCHAR(255) NOT NULL,
     content_body TEXT,
+    prev_content_id INT,
+    next_content_id INT,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     operation ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
