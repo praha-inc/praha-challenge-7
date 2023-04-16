@@ -1,9 +1,14 @@
 START TRANSACTION;
 
+DROP TABLE IF EXISTS `content_paths`;
+DROP TABLE IF EXISTS `content_histories`;
+DROP TABLE IF EXISTS `contents`;
+DROP TABLE IF EXISTS `accounts`;
+
 CREATE TABLE accounts (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     username VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     display_name VARCHAR(255) NOT NULL,
     profile_image_url VARCHAR(255) NULL,
@@ -13,7 +18,7 @@ CREATE TABLE accounts (
 
 CREATE TABLE contents (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    account_id INT NOT NULL,
+    account_id INT NULL,
     content_type TINYINT UNSIGNED NOT NULL,
     content_title VARCHAR(255) NOT NULL,
     content_body TEXT,
@@ -21,7 +26,7 @@ CREATE TABLE contents (
     next_content_id INT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (account_id) REFERENCES accounts(id)
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE SET NULL
 );
 
 CREATE TABLE content_histories (
