@@ -313,6 +313,48 @@ insert into T_ORDER_DETAILS(order_id, item_id, shari_size_id, item_coupon_id, co
     ),
     (
         (select order_id from T_ORDERS where customer_id=(select customer_id from M_CUSTOMERS where phone='(278) 260-9508')),
+        (select item_id from M_ITEMS where sushi_id=(select sushi_id from M_SUSHI_MENUS where name='玉子')),
+        (select shari_size_id from M_SHARI_SIZES where name='小'),
+        NULL,
+        2
+    ),
+    (
+        (select order_id from T_ORDERS where customer_id=(select customer_id from M_CUSTOMERS where phone='(278) 260-9508')),
+        (select item_id from M_ITEMS where set_id=(select set_id from M_SET_MENUS where name='いさりび')),
+        (select shari_size_id from M_SHARI_SIZES where name='小'),
+        NULL,
+        1
+    ),
+    (
+        (select order_id from T_ORDERS where customer_id=(select customer_id from M_CUSTOMERS where phone='(278) 260-9508')),
+        (select item_id from M_ITEMS where sushi_id=(select sushi_id from M_SUSHI_MENUS where name='いなり')),
+        (select shari_size_id from M_SHARI_SIZES where name='小'),
+        (select item_coupon_id from M_ITEM_COUPONS where name='10%割引'),
+        1
+    ),
+    (
+        (select order_id from T_ORDERS where customer_id=(select customer_id from M_CUSTOMERS where phone='(278) 260-9508')),
+        (select item_id from M_ITEMS where sushi_id=(select sushi_id from M_SUSHI_MENUS where name='うに')),
+        (select shari_size_id from M_SHARI_SIZES where name='小'),
+        (select item_coupon_id from M_ITEM_COUPONS where name='100円割引'),
+        1
+    ),
+    (
+        (select order_id from T_ORDERS where customer_id=(select customer_id from M_CUSTOMERS where phone='(278) 260-9508')),
+        (select item_id from M_ITEMS where sushi_id=(select sushi_id from M_SUSHI_MENUS where name='いくら')),
+        (select shari_size_id from M_SHARI_SIZES where name='小'),
+        NULL,
+        2
+    ),
+    (
+        (select order_id from T_ORDERS where customer_id=(select customer_id from M_CUSTOMERS where phone='(278) 260-9508')),
+        (select item_id from M_ITEMS where sushi_id=(select sushi_id from M_SUSHI_MENUS where name='あなご一本すし')),
+        (select shari_size_id from M_SHARI_SIZES where name='小'),
+        NULL,
+        1
+    ),
+    (
+        (select order_id from T_ORDERS where customer_id=(select customer_id from M_CUSTOMERS where phone='(278) 260-9508')),
         (select item_id from M_ITEMS where sushi_id=(select sushi_id from M_SUSHI_MENUS where name='ホタテ貝')),
         (select shari_size_id from M_SHARI_SIZES where name='小'),
         NULL,
