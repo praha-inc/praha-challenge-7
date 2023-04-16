@@ -29,6 +29,7 @@ INSERT INTO users_workspaces (id, user_id, workspace_id) VALUES
 
 -- チャンネル ----------------
 -- 全操作ワークスペース「praha2」で実行されたものとする
+-- （UI的に表示しているワークスペースでしかチャンネルを作成できないのと、アプリ側で不正な値が送られてきている場合バリデーションではじく想定のため）
 
 -- ユーザー「Mio Saito」がチャンネル「general」を作成
 INSERT INTO channels (id, workspace_id, name) VALUES
