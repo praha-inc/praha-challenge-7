@@ -122,13 +122,13 @@ CREATE TABLE products(
 -- 注文商品
 CREATE TABLE order_products(
     order_id BIGINT UNSIGNED,
-    order_product_seq INT UNSIGNED,
+    order_branch_number INT UNSIGNED,
     product_id INT NOT NULL,
     product_price INT NOT NULL,
     package_id INT,
     package_price INT, 
     quantity INT NOT NULL DEFAULT 0,
-    PRIMARY KEY (order_id, order_product_seq),
+    PRIMARY KEY (order_id, order_branch_number),
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE NO ACTION,
     FOREIGN KEY (package_id) REFERENCES packages(id) ON DELETE NO ACTION
@@ -145,10 +145,10 @@ CREATE TABLE options(
 CREATE TABLE order_options(
     id INT UNSIGNED AUTO_INCREMENT,
     order_id INT NOT NULL,
-    order_product_seq INT NOT NULL,
+    order_branch_number INT NOT NULL,
     option_id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id, order_product_seq) REFERENCES order_products(order_id, order_product_seq) ON DELETE CASCADE,
+    FOREIGN KEY (order_id, order_branch_number) REFERENCES order_products(order_id, order_branch_number) ON DELETE CASCADE,
     FOREIGN KEY (option_id) REFERENCES options(id)
 );
 

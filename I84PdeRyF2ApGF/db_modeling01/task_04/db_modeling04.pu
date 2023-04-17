@@ -76,7 +76,7 @@
 
     Entity "order_products\n注文商品" as order_details {
         order_id [PK, FK] : INT : 注文ID 
-        order_detail_id [PK] : INT : 注文明細番号 
+        order_branch_number [PK] : INT : 注文枝番 
         --
         product_id [FK] : INT : 販売商品ID
         product_price : INT : 商品価格
@@ -89,7 +89,7 @@
         id [PK] : INT : 注文オプションID
         --
         order_id [FK] : INT : 注文ID
-        order_detail_id [FK] : INT : 注文明細ID
+        order_branch_number [FK] : INT : 注文枝番
         option_id [FK] : INT : オプションID
     }
 
