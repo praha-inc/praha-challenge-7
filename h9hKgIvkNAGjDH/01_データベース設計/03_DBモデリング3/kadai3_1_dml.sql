@@ -22,6 +22,16 @@ SET time_zone = "+00:00";
 --
 
 --
+-- テーブルのデータのダンプ `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updaetd_at`, `deleted_at`) VALUES
+(1, '篠原りょうこ', 'sample1@example.com', 'password1', '2023-04-13 05:13:28', '2023-04-13 05:13:28', NULL),
+(2, '斎藤たくみ', 'sample1@example.com', 'password2', '2023-04-13 05:13:28', '2023-04-13 05:13:28', NULL),
+(3, '加藤まさと', 'sample1@example.com', 'password3', '2023-04-13 05:13:28', '2023-04-13 05:13:28', NULL);
+COMMIT;
+
+--
 -- テーブルのデータのダンプ `directories`
 --
 
@@ -59,15 +69,7 @@ INSERT INTO `documents` (`id`, `directory_id`, `title`, `content`, `user_id`, `c
 (13, 11, '4/13　練習記録', '100m全力を5本、1500mをキロ4分で走った', NULL, '2023-04-13 05:22:32', '2023-04-13 06:59:29'),
 (14, 11, '4/14 　練習記録', '3000mをキロ4分半で走った。クールダウンをさぼってしまった。', NULL, '2023-04-13 05:22:32', '2023-04-13 06:59:29');
 
---
--- テーブルのデータのダンプ `users`
---
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updaetd_at`, `deleted_at`) VALUES
-(1, '篠原りょうこ', 'sample1@example.com', 'password1', '2023-04-13 05:13:28', '2023-04-13 05:13:28', NULL),
-(2, '斎藤たくみ', 'sample1@example.com', 'password2', '2023-04-13 05:13:28', '2023-04-13 05:13:28', NULL),
-(3, '加藤まさと', 'sample1@example.com', 'password3', '2023-04-13 05:13:28', '2023-04-13 05:13:28', NULL);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
