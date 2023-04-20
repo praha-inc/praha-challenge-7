@@ -85,13 +85,13 @@ BEGIN;
 -- 1. 古いパスを削除
 DELETE content_paths
     FROM content_paths
-WHERE descendant IN (SELECT x.id FROM (SELECT descendant AS id
+WHERE descendant IN (SELECT descendant AS id
                     FROM content_paths
-                    WHERE ancestor = 7)AS x)
-AND ancestor IN (SELECT y.id FROM (SELECT ancestor AS id
+                    WHERE ancestor = 7)
+AND ancestor IN (SELECT ancestor AS id
                 FROM content_paths
                 WHERE descendant = 7
-                AND ancestor != descendant) AS y);
+                AND ancestor != descendant);
 
 -- 2. 新しい親へのパスを追加
 INSERT INTO content_paths (ancestor, descendant, path_length)
@@ -216,13 +216,13 @@ COMMIT;
 -- 1. 古い親からのパスを削除
 DELETE content_paths
     FROM content_paths
-WHERE descendant IN (SELECT x.id FROM (SELECT descendant AS id
+WHERE descendant IN (SELECT descendant AS id
                     FROM content_paths
-                    WHERE ancestor = 11)AS x)
-AND ancestor IN (SELECT y.id FROM (SELECT ancestor AS id
+                    WHERE ancestor = 11)
+AND ancestor IN (SELECT ancestor AS id
                 FROM content_paths
                 WHERE descendant = 11
-                AND ancestor != descendant) AS y);
+                AND ancestor != descendant);
 
 -- 2. 新しい親へのパスを追加
 INSERT INTO content_paths (ancestor, descendant, path_length)
