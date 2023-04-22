@@ -137,7 +137,7 @@ INSERT INTO provide_methods (id, name) VALUES
   提供方法も再インサートが必要。
 */
 INSERT INTO product_logs (id, name, price, tax_rate_id, product_id, created_at) VALUES
-(68, 'はな', 70000, 2, 1, NOW());
+(68, 'はな', 70000, 2, 1, DATE_ADD(NOW(), INTERVAL 1 DAY));
 
 INSERT INTO product_log_categories (id, product_log_id, category_id) VALUES
 (DEFAULT, 68, 1), (DEFAULT, 68, 2);
@@ -187,11 +187,14 @@ INSERT INTO card_brands (id, name) VALUES
 -- ユーザーのクレジットカード(ゲストユーザーの分もインサートする)
 INSERT INTO user_credit_cards (id, user_id, guest_user_id, card_brand_id, card_number, card_validation_code, expires_at) VALUES
 (DEFAULT, 1, NULL, 1, "4242424242424242", "453", DATE_ADD(NOW(), INTERVAL 1 YEAR)),
-(DEFAULT, NULL, 1, 3, "5555555555554444", "403",wDATE_ADD(NOW(), INTERVAL 1 YEAR));
+(DEFAULT, NULL, 1, 3, "5555555555554444", "403", DATE_ADD(NOW(), INTERVAL 1 YEAR));
+
+INSERT INTO payment_kinds (id, name) VALUES
+(DEFAULT, "cash"), (DEFAULT, "credit_card"), (DEFAULT, "PayPay");
 
 -- 支払い方法(ゲストユーザーの分もインサートする)
-INSERT INTO payment_methods (id, user_id, guest_user_id, user_credit_card_id) VALUES
-(DEFAULT, 1, NULL, 1), (DEFAULT, NULL, 1, 2);
+INSERT INTO payment_methods (id, user_id, guest_user_id, payment_kind_id, user_credit_card_id) VALUES
+(DEFAULT, 1, NULL, 2, 1), (DEFAULT, NULL, 1, 2, 2);
 
 -- 支払いのステータス
 INSERT INTO payment_statuses (id, name) VALUES

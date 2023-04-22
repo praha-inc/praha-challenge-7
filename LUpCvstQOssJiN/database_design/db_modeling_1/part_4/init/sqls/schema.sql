@@ -76,6 +76,12 @@ CREATE TABLE user_credit_cards (
 
 ALTER TABLE user_credit_cards RENAME INDEX guest_user_id TO index_user_credit_cards_on_guest_user_id;
 
+CREATE TABLE payment_kinds(
+  id BIGINT UNSIGNED AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id)
+) COMMENT="支払いの種類";
+
 /*
   guest_user_idを新しく追加した
   guest_userと支払い方法は一対一の関係なので、ユニーク制約をつけた
@@ -84,11 +90,13 @@ CREATE TABLE payment_methods(
   id BIGINT UNSIGNED AUTO_INCREMENT,
   user_id BIGINT UNSIGNED,
   guest_user_id BIGINT UNSIGNED UNIQUE,
+  payment_kind_id BIGINT UNSIGNED,
   user_credit_card_id BIGINT UNSIGNED,
   PRIMARY KEY(id),
   FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY(user_credit_card_id) REFERENCES user_credit_cards(id) ON DELETE CASCADE,
   FOREIGN KEY(guest_user_id) REFERENCES guest_users(id) ON DELETE CASCADE,
+  FOREIGN KEY(payment_kind_id) REFERENCES payment_kinds(id) ON DELETE SET NULL,
   CHECK (user_id IS NOT NULL OR guest_user_id IS NOT NULL)
 ) COMMENT="ユーザーの支払い方法";
 
