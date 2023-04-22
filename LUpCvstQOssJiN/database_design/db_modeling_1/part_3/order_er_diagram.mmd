@@ -12,6 +12,7 @@ orders }o--|| tax_rates: ""
 orders }o--|| provide_methods: ""
 orders }o--|| packagings: ""
 orders }o--o| payment_methods: ""
+payment_methods }o--|| payment_kinds: ""
 order_items ||--o{ order_item_optional_menus: ""
 order_item_optional_menus }o--|| optional_menus: ""
 order_items }|--|| products: ""
@@ -81,11 +82,17 @@ user_credit_cards {
   expires_at datetime
 }
 
+payment_kinds {
+  id bigint PK
+  name varchar(255)
+}
+
 %% guest_user_idを追加した
 payment_methods {
   id bigint PK
   user_id bigint FK
   guest_user_id bigint FK
+  payment_kind_id bigint
   user_credit_card_id bigint FK
 }
 
