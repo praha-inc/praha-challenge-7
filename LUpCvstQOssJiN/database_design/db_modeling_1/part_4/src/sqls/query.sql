@@ -45,7 +45,7 @@ ON ordered_product_logs_view.id = product_log_families.parent_id
 LEFT JOIN products
 ON product_log_families.child_id = products.id
 LEFT JOIN product_logs AS pl
-ON products.id = pl.product_id
+ON products.id = pl.product_id;
 
 -- 4月に注文された寿司ネタ(セットの寿司も含む)の名前、販売数、寿司ごとの総売り上げを総売り上げの降順で取得するクエリ
 SELECT
