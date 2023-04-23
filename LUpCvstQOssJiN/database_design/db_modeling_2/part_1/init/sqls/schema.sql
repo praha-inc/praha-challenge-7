@@ -34,11 +34,9 @@ CREATE TABLE chat_channels (
   name VARCHAR(255) NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   is_public BOOLEAN NOT NULL DEFAULT 1,
-  user_id BIGINT UNSIGNED,
   created_by BIGINT UNSIGNED,
   work_space_id BIGINT UNSIGNED,
   PRIMARY KEY(id),
-  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY(created_by) REFERENCES users(id) ON DELETE SET NULL,
   FOREIGN KEY(work_space_id) REFERENCES work_spaces(id) ON DELETE CASCADE
 ) COMMENT="チャンネル";
