@@ -1,1 +1,1 @@
-CREATE DATABASE store_development;
+CREATE DATABASE chat_development;

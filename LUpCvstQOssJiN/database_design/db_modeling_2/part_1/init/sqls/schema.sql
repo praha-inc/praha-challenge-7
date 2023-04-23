@@ -1,4 +1,4 @@
-USE store_development;
+USE chat_development;
 
 CREATE TABLE users (
   id BIGINT UNSIGNED AUTO_INCREMENT,
