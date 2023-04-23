@@ -216,8 +216,8 @@ INSERT INTO orders (
   id, total_quantity, sub_total_price, total_price, ordered_at, payment_completed_at, user_id,
   guest_user_id, user_address_id, payment_method_id, provide_method_id, payment_status_id, tax_rate_id, packaging_id
 ) VALUES
-(DEFAULT, 2, 8750, 9450, NOW(), DATE_ADD(NOW(), INTERVAL 5 SECOND), 1, NULL, 1, 1, 3, 2, 2, NULL),
-(DEFAULT, 2, 8750, 9050, NOW(), DATE_ADD(NOW(), INTERVAL 5 SECOND), NULL, 1, 2, 2, 3, 2, 2, NULL);
+(DEFAULT, 2, 8750, 9450, DEFAULT, DATE_ADD(NOW(), INTERVAL 5 SECOND), 1, NULL, 1, 1, 3, 2, 2, NULL),
+(DEFAULT, 2, 8750, 9050, DEFAULT, DATE_ADD(NOW(), INTERVAL 5 SECOND), NULL, 1, 2, 2, 3, 2, 2, NULL);
 
 -- 注文商品
 INSERT INTO order_items (id, quantity, cancel_quantity, sub_total_price, total_price, order_id, product_id) VALUES

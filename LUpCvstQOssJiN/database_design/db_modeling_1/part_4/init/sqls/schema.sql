@@ -136,7 +136,7 @@ CREATE TABLE orders(
   total_quantity INT UNSIGNED NOT NULL,
   sub_total_price INT UNSIGNED NOT NULL,
   total_price INT UNSIGNED NOT NULL,
-  ordered_at DATETIME,
+  ordered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   payment_completed_at DATETIME,
   user_id BIGINT UNSIGNED,
   guest_user_id BIGINT UNSIGNED,
