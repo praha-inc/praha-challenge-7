@@ -3,7 +3,7 @@
 !define MASTER F9DFD5
 !define TRANSACTION CAE7F2
 
-entity users as "users\nユーザー" <<T, TRANSACTION>> {
+entity users as "users\nユーザー" <<M, MASTER>> {
     +uuid VARCHAR(255)
     --
     name VARCHAR(30) [名前]
@@ -31,7 +31,7 @@ entity users_channels as "users_channels\n所属(チャンネル)" <<T, TRANSACT
     updated_at TIMESTAMP
 }
 
-entity posts as "posts\n投稿" <<T, TRANSACTION>>  {
+entity posts as "posts\n投稿" <<M, MASTER>>  {
     +uuid VARCHAR(255)
     --
     user_id VARCHAR(255) [ユーザーID]
@@ -43,7 +43,7 @@ entity posts as "posts\n投稿" <<T, TRANSACTION>>  {
     updated_at TIMESTAMP
 }
 
-entity channels as "channels\nチャンネル" <<T, TRANSACTION>>  {
+entity channels as "channels\nチャンネル" <<M, MASTER>>  {
     +uuid VARCHAR(255)
     --
     name VARCHAR(30) [名前]
@@ -51,7 +51,7 @@ entity channels as "channels\nチャンネル" <<T, TRANSACTION>>  {
     updated_at TIMESTAMP
 }
 
-entity workspaces as "workspaces\nワークスペース" <<T, TRANSACTION>>  {
+entity workspaces as "workspaces\nワークスペース" <<M, MASTER>>  {
     +uuid VARCHAR(255)
     --
     name VARCHAR(30) [名前]
