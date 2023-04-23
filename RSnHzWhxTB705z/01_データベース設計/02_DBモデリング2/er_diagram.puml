@@ -1,9 +1,19 @@
 @startuml
 
 ' hide the spot
+
+' カラム名の前の「#」はFKです
+' カラム名の前の「*」は必須項目です
+
 hide circle
 
-title DB設計
+title
+DB設計
+
+（カラム名の前の「#」はFKです）
+（カラム名の前の「*」は必須項目です）
+
+endtitle
 
 entity "users : ユーザーテーブル" as users {
   *id
@@ -42,7 +52,7 @@ entity "channels : チャンネルテーブル" as channels {
   *updated_at
 }
 
-entity "users_channels : ユーザー チャンネル テーブル" as users_channels {
+entity "users_channels : ユーザー チャンネル 中間テーブル" as users_channels {
   *id
   --
   #user_id
@@ -57,7 +67,7 @@ entity "messages : メッセージテーブル" as messages {
   --
   #user_id
   #channel_id
-  content
+  *content
   *is_deleted
   *created_at
   *updated_at
@@ -68,7 +78,7 @@ entity "thread_messages : スレッドメッセージテーブル" as thread_mes
   --
   #user_id
   #mesage_id
-  content
+  *content
   *is_deleted
   *created_at
   *updated_at
