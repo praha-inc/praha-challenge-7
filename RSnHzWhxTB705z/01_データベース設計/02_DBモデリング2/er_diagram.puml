@@ -1,0 +1,100 @@
+@startuml
+
+' hide the spot
+
+' カラム名の前の「#」はFKです
+' カラム名の前の「*」は必須項目です
+
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#」はFKです）
+（カラム名の前の「*」は必須項目です）
+
+endtitle
+
+entity "users : ユーザーテーブル" as users {
+  *id
+  --
+  *name
+  *created_at
+  *updated_at
+}
+
+entity "workspaces : ワークスペーステーブル" as workspaces {
+  *id
+  --
+  *name
+  *is_deleted
+  *created_at
+  *updated_at
+}
+
+entity "users_workspaces : ユーザー ワークスペース 中間テーブル" as users_workspaces {
+  *id
+  --
+  #user_id
+  #workspace_id
+  *is_deleted
+  *created_at
+  *updated_at
+}
+
+entity "channels : チャンネルテーブル" as channels {
+  *id
+  --
+  #workspace_id
+  *name
+  *is_deleted
+  *created_at
+  *updated_at
+}
+
+entity "users_channels : ユーザー チャンネル 中間テーブル" as users_channels {
+  *id
+  --
+  #user_id
+  #channel_id
+  *is_deleted
+  *created_at
+  *updated_at
+}
+
+entity "messages : メッセージテーブル" as messages {
+  *id
+  --
+  #user_id
+  #channel_id
+  *content
+  *is_deleted
+  *created_at
+  *updated_at
+}
+
+entity "thread_messages : スレッドメッセージテーブル" as thread_messages {
+  *id
+  --
+  #user_id
+  #mesage_id
+  *content
+  *is_deleted
+  *created_at
+  *updated_at
+}
+
+users ||-r-|{ users_workspaces
+workspaces ||-l-|{ users_workspaces
+workspaces ||--d-|{ channels
+
+users ||--d-|{ users_channels
+channels ||-l-|{ users_channels
+
+users ||--o{ messages
+channels ||-d-o{ messages
+
+users ||--o{ thread_messages
+messages ||-d-o{ thread_messages
+
+@enduml
