@@ -1,0 +1,26 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "post" as post <<M,MASTER>> {
+    + id: Int <<PK>>
+    --
+    text: VARCHAR(255)
+}
+
+entity "tag" as tag <<M,MASTER>> {
+    + id: Int <<PK>>
+    --
+    content: VARCHAR(255)
+}
+
+entity "post_tag" as post_tag <<M,MASTER>> {
+    + post_id: Int <<FK>>
+    + tag_id: Int <<FK>>
+}
+
+post ||-right-o{ post_tag
+tag ||-left-o{ post_tag
+@enduml
+
