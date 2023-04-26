@@ -1,0 +1,37 @@
+// 課題1の解答
+// dbdiagramで開くとER図ができる
+// https://dbdiagram.io/d
+
+// DBML
+// https://www.dbml.org/docs/#project-definition
+
+// 注文
+table order {
+  id int [pk]
+  ordererId int [not null, ref: > orderer.id]
+  status int [not null]
+  totalorderCount int [not null]
+  amount decimal(9,0)
+}
+
+// 注文詳細
+table orderDetail {
+  orderId int [not null, ref: > order.id]
+  productId int [not null, ref: > product.id]
+  orderCount int [not null]
+  wasabiCount int [not null]
+}
+
+// 商品
+table product {
+  id int [pk]
+  name varchar(100) [unique, not null]
+  price decimal(5,0) [not null]
+}
+
+// 注文者
+table orderer {
+  id int [pk]
+  name varchar(100) [not null]
+  phoneNumber varchar(20)
+}
