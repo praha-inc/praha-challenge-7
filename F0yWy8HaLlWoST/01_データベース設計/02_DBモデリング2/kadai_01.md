@@ -5,49 +5,54 @@ erDiagram
 
   M_WORKSPACES {
     uuid workspace_id PK "ワークスペースID"
-    varchar name "名前"
-    date created_at "作成日"
+    varchar name "<Not null> 名前"
+    date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
   M_USERS {
     uuid user_id PK "ユーザID"
-    uuid workspace_id FK "ワークスペースID"
-    varchar name "名前"
-    date created_at "作成日"
+    uuid workspace_id FK "<Not null> ワークスペースID"
+    varchar name "<Not null> 名前"
+    boolean is_deleted "<Not null> 削除されたか"
+    date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
   M_CHANNELS {
     uuid channel_id PK "チャネルID"
-    uuid workspace_id FK "ワークスペースID"
-    varchar name "名前"
-    date created_at "作成日"
+    uuid workspace_id FK "<Not null> ワークスペースID"
+    varchar name "<Not null> 名前"
+    boolean is_deleted "<Not null> 削除されたか"
+    date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
   R_USERS_AND_CHANNELS {
     uuid users_and_channels_id PK "ユーザ_チャネル_中間テーブルID"
-    uuid user_id FK "ユーザID"
-    uuid channel_id FK "チャネルID"
-    date created_at "作成日"
+    uuid user_id FK "<Not null> ユーザID"
+    uuid channel_id FK "<Not null> チャネルID"
+    boolean is_deleted "<Not null> 削除されたか"
+    date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
   T_MESSAGES {
     uuid message_id PK "メッセージID"
-    uuid user_id FK "ユーザID"
-    varchar message "メッセージ"
-    date created_at "作成日"
+    uuid user_id FK "<Not null> ユーザID"
+    varchar message "<Not null> メッセージ"
+    boolean is_deleted "<Not null> 削除されたか"
+    date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
   T_THREADS {
     uuid thread_id PK "スレッドメッセージID"
-    uuid user_id FK "ユーザID"
-    uuid message_id FK "メッセージID"
-    varchar thread_message "スレッドメッセージ"
-    date created_at "作成日"
+    uuid user_id FK "<Not null> ユーザID"
+    uuid message_id FK "<Not null> メッセージID"
+    varchar thread_message "<Not null> スレッドメッセージ"
+    boolean is_deleted "<Not null> 削除されたか"
+    date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
