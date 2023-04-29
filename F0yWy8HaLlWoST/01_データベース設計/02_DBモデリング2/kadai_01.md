@@ -3,7 +3,7 @@
 ```mermaid
 erDiagram
 
-  M_WORKSPACES {
+  M_WORKSPACE_CONFIGS {
     uuid workspace_id PK "ワークスペースID"
     varchar name "<Not null> 名前"
     date created_at "<Not null> 作成日"
@@ -40,6 +40,7 @@ erDiagram
   T_MESSAGES {
     uuid message_id PK "メッセージID"
     uuid user_id FK "<Not null> ユーザID"
+    uuid channel_id FK "<Not null> チャネルID"
     varchar message "<Not null> メッセージ"
     boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
@@ -56,8 +57,8 @@ erDiagram
     date updated_at "更新日"
   }
 
-  M_WORKSPACES ||--o{ M_CHANNELS: "1つのワークスペースは0以上のチャネルをもつ"
-  M_WORKSPACES ||--o{ M_USERS: "1つのワークスペースは0以上のユーザをもつ"
+  M_WORKSPACE_CONFIGS ||--o{ M_CHANNELS: "1つのワークスペースは0以上のチャネルをもつ"
+  M_WORKSPACE_CONFIGS ||--o{ M_USERS: "1つのワークスペースは0以上のユーザをもつ"
   M_USERS ||--o{ R_USERS_AND_CHANNELS: ""
   M_CHANNELS ||--o{ R_USERS_AND_CHANNELS: ""
   M_CHANNELS ||--o{ T_MESSAGES: "1つのチャネルは0以上のメッセージを持つ"
