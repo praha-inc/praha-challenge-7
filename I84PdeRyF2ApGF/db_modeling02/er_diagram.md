@@ -14,7 +14,7 @@ erDiagram
 	users ||--o{ post_channel_messages : ""
 	channels ||--o{ post_channel_messages : ""
 	users ||--o{ post_thread_messages : ""
-	post_channel_messages ||--o{ channel_messages : ""
+	post_channel_messages ||--|| channel_messages : ""
 	channel_messages ||--o{ delete_channel_messages : ""
 	channel_messages ||--o{ edit_channel_messages : ""
 	channel_messages ||--o{ thread_messages : ""
