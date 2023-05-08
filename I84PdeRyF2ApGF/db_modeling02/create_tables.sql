@@ -87,8 +87,10 @@ DROP TABLE IF EXISTS channel_messages CASCADE;
 
 CREATE TABLE channel_messages (
   id BIGINT UNSIGNED AUTO_INCREMENT,
+  post_channel_message_id BIGINT UNSIGNED NOT NULL UNIQUE,
   content VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
+  FOREIGN KEY (post_channel_message_id) REFERENCES post_channel_message (id) ON DELETE CASCADE,
   INDEX index_channel_messages_on_content (content)
 ) comment 'チャンネルメッセージ';
 
@@ -98,9 +100,11 @@ DROP TABLE IF EXISTS thread_messages CASCADE;
 CREATE TABLE thread_messages (
   id BIGINT UNSIGNED AUTO_INCREMENT,
   channel_message_id BIGINT UNSIGNED NOT NULL,
+  post_thread_message_id BIGINT UNSIGNED NOT NULL UNIQUE,
   content VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY (channel_message_id) REFERENCES channel_messages(id) ON DELETE CASCADE,
+  FOREIGN KEY (post_thread_message_id) REFERENCES post_thread_message (id) ON DELETE CASCADE,
   INDEX index_thread_messages_on_content (content)
 ) comment 'スレッドメッセージ';
 
@@ -111,12 +115,10 @@ CREATE TABLE post_channel_message (
   id BIGINT UNSIGNED AUTO_INCREMENT,
   user_id BIGINT UNSIGNED,
   channel_id BIGINT UNSIGNED,
-  channel_message_id BIGINT UNSIGNED,
   posted_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY(id, user_id, channel_id, channel_message_id),
+  PRIMARY KEY(id, user_id, channel_id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE,
-  FOREIGN KEY (channel_message_id) REFERENCES channel_messages(id) ON DELETE CASCADE,
   INDEX index_post_channel_message_on_posted_at (posted_at)
 ) comment 'チャンネルメッセージ投稿';
 
@@ -151,11 +153,9 @@ DROP TABLE IF EXISTS post_thread_message CASCADE;
 CREATE TABLE post_thread_message (
   id BIGINT UNSIGNED AUTO_INCREMENT,
   user_id BIGINT UNSIGNED,
-  thread_message_id BIGINT UNSIGNED,
   posted_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY(id, user_id, thread_message_id),
+  PRIMARY KEY(id, user_id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (thread_message_id) REFERENCES thread_messages(id) ON DELETE CASCADE,
   INDEX index_post_thread_message_on_posted_at (posted_at)
 ) comment 'スレッドメッセージ投稿';
 

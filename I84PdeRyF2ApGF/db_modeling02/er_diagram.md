@@ -73,7 +73,6 @@ erDiagram
 	post_thread_messages{
         bigint id PK
         bigint user_id FK
-        bigint thread_message_id FK
         datetime posted_at
     }
 
@@ -103,7 +102,6 @@ erDiagram
         bigint id PK
         bigint user_id FK
 		bigint channel_id FK
-        bigint channel_message_id FK
         datetime posted_at
     }
 
