@@ -18,7 +18,7 @@ erDiagram
 	channel_messages ||--o{ delete_channel_messages : ""
 	channel_messages ||--o{ edit_channel_messages : ""
 	channel_messages ||--o{ thread_messages : ""
-	post_thread_messages ||--o{ thread_messages : ""
+	post_thread_messages ||--|| thread_messages : ""
 	thread_messages }o--|| delete_thread_messages : ""
 	thread_messages }o--|| edit_thread_messages : ""
 
@@ -87,6 +87,7 @@ erDiagram
 	thread_messages{
         bigint id PK
 		bigint channel_message_id FK
+		bigint post_thread_message_id FK
 		varchar content
 	}
 
@@ -108,6 +109,7 @@ erDiagram
 
 	channel_messages{
         bigint id PK
+		bigint post_channel_message_id FK
 		varchar content
 	}	
 	
