@@ -1,0 +1,22 @@
+@startuml
+title ディレクトリ構成図
+skinparam TitleFontSize 0
+
+salt
+
+{
+    {T
+        + 1: 社内資料(root)
+            ++ 2: プロジェクトA
+                +++ 4: プロジェクトA要件定義
+                +++ 5: プロジェクトA詳細設計
+            ++ 3: プロジェクトB
+                +++ 6: プロジェクトB要件定義
+                +++ 7: プロジェクトB詳細設計
+                    ++++ 8: プロジェクトB詳細設計 version1
+                    ++++ 9: プロジェクトB詳細設計 version2
+            ++ 10: ユースケースdirectory
+    }
+}
+
+@enduml
