@@ -13,7 +13,7 @@ create table M_USERS (
     user_id binary(16) primary key default (UUID_TO_BIN(UUID(), 1)),
     workspace_id binary(16) references M_WORKSPACE_CONFIGS(workspace_id),
     name varchar(100) not null,
-    is_deleted boolean default false,
+    is_deleted boolean not null default false,
     created_at datetime not null default current_timestamp(),
     updated_at datetime not null default current_timestamp() on update current_timestamp()
 );
@@ -22,7 +22,7 @@ create table M_CHANNELS (
     channel_id binary(16) primary key default (UUID_TO_BIN(UUID(), 1)),
     workspace_id binary(16) references M_WORKSPACE_CONFIGS(workspace_id),
     name varchar(100) not null,
-    is_deleted boolean default false,
+    is_deleted boolean not null default false,
     created_at datetime not null default current_timestamp(),
     updated_at datetime not null default current_timestamp() on update current_timestamp()
 );
@@ -31,7 +31,7 @@ create table R_USERS_AND_CHANNELS (
     users_and_channels_id  binary(16) primary key default (UUID_TO_BIN(UUID(), 1)),
     user_id binary(16) not null references M_USERS(user_id),
     channel_id binary(16) not null references M_CHANNELS(channel_id),
-    is_deleted boolean default false,
+    is_deleted boolean not null default false,
     created_at datetime not null default current_timestamp(),
     updated_at datetime not null default current_timestamp() on update current_timestamp()
 );
@@ -41,7 +41,7 @@ create table T_MESSAGES (
     user_id binary(16) not null references M_USERS(user_id),
     channel_id binary(16) not null references M_CHANNELS(channel_id),
     message varchar(10000) not null,
-    is_deleted boolean default false,
+    is_deleted boolean not null default false,
     created_at datetime not null default current_timestamp(),
     updated_at datetime not null default current_timestamp() on update current_timestamp()
 );
@@ -51,7 +51,7 @@ create table T_THREADS (
     user_id binary(16) not null references M_USERS(user_id),
     message_id binary(16) not null references T_MESSAGES(message_id),
     thread_message varchar(10000) not null,
-    is_deleted boolean default false,
+    is_deleted boolean not null default false,
     created_at datetime not null default current_timestamp(),
     updated_at datetime not null default current_timestamp() on update current_timestamp()
 );
