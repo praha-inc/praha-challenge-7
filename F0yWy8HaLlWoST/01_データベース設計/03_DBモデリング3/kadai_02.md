@@ -5,7 +5,6 @@ erDiagram
 
   M_USERS {
     uuid user_id PK "ユーザID"
-    uuid workspace_id FK "<Not null> ワークスペースID"
     varchar name "<Not null> 名前"
     boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
