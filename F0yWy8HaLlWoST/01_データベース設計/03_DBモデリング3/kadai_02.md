@@ -1,4 +1,4 @@
-# 課題1
+# 課題2
 
 ```mermaid
 erDiagram
@@ -15,7 +15,7 @@ erDiagram
   M_DIRECTORIES {
     uuid directory_id PK "ディレクトリID"
     uuid user_id FK "<Not null> ユーザID"
-    uuid parent_directory_id FK "<Not null><デフォルト: root> 親ディレクトリID"
+    uuid parent_directory_id FK "<Not null><default: root> 親ディレクトリID"
     varchar name "<Not null> 名前"
     boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
@@ -25,9 +25,10 @@ erDiagram
   M_DOCUMENTS {
     uuid document_id PK "ドキュメントID"
     uuid user_id FK "<Not null> ユーザID"
-    uuid directory_id FK "<Not null><デフォルト: root> ディレクトリID"
+    uuid directory_id FK "<Not null><default: root> ディレクトリID"
     varchar name "<Not null> 名前"
     varchar detail "<Not null> 内容"
+    int index "<Not null><default: 最大index+1> ディレクトリ内での順番"
     boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
@@ -40,5 +41,4 @@ erDiagram
 
 ## 疑問点メモ
 
-- CRUDの履歴とかっているんだろうか…DBのHistoryとかあるだろうし二重管理になる気がするのだが…
-- ディレクトリが「一つ以上のドキュメントを含む階層構造」となっているが、別にドキュメントは０を許容していい気がする
+- 「色んなサービスのAPIリクエストを眺めてみると面白いかもしれません。例えばtrelloやairtableで要素を並び替えてみた時、どんなリクエストが送られているでしょうか？」どうやって調べる？Network見るってこと？
