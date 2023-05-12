@@ -88,7 +88,7 @@ INSERT INTO chat_threads (id, created_at) VALUES
 INSERT INTO user_chat_threads (id, user_id, chat_thread_id) VALUES
 -- プラハアカデミー
 -- 登場人物が一人だけのスレッド
-(DEFAULT, 1, 1),
+(DEFAULT, 3, 1),
 -- 登場人物が三人のスレッド
 (DEFAULT, 1, 2), (DEFAULT, 2, 2), (DEFAULT, 3, 2);
 
@@ -96,13 +96,16 @@ INSERT INTO user_chat_threads (id, user_id, chat_thread_id) VALUES
 INSERT INTO chat_messages (id, body, send_at, user_id, chat_channel_id, chat_thread_id) VALUES
 -- プラハアカデミー
 -- times_satoで発生した登場人物一人のスレッド
-(DEFAULT, "仕事したくねえー", DEFAULT, 3, 5, 1),
+(DEFAULT, "MySQLの設定しないとなー。仕事したくねえー", DEFAULT, 3, 5, 1),
 (DEFAULT, "どうやったらサボれるかを追求したい", ADDTIME(NOW(), "00:10:00"), 3, 5, 1),
-(DEFAULT, "3時間の労働で8時間分のパフォーマンスが出せれば最高。", ADDTIME(NOW(), "00:20:00"), 3, 5, 1),
+(DEFAULT, "3時間の労働で8時間分のパフォーマンスが出せれば最高。MySQL", ADDTIME(NOW(), "00:20:00"), 3, 5, 1),
 (DEFAULT, "経験と自己研磨を重ねて早くその状態に到達したい。あとは自動化するか誰かを雇うか", ADDTIME(NOW(), "00:30:00"), 3, 5, 1),
+-- times_satoでの佐藤プラハの発言
+(DEFAULT, "MySQLでインデックス貼る場合、どういうカラムに貼った方が良いんだろうか", ADDTIME(NOW(), "00:40:00"), 3, 5, NULL),
 -- generalで発生した登場人物が三人のスレッド
 (DEFAULT, "仕事したくねえー", DEFAULT, 3, 1, 2),
-(DEFAULT, "わかるわー", ADDTIME(NOW(), "00:10:00"), 2, 1, 2),
+(DEFAULT, "わかるわー。そういやMySQLの設定やった?", ADDTIME(NOW(), "00:10:00"), 2, 1, 2),
+(DEFAULT, "いや、結局やってないわ", DEFAULT, 3, 1, 2),
 (DEFAULT, "コラ！サボってないで働きなさい！", ADDTIME(NOW(), "00:20:00"), 1, 1, 2),
 -- Goアカデミー
 -- times_tanakaで発生した一人つぶやき
