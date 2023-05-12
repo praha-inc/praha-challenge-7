@@ -78,7 +78,8 @@ CREATE TABLE chat_messages (
   PRIMARY KEY(id),
   FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY(chat_channel_id) REFERENCES chat_channels(id) ON DELETE CASCADE,
-  FOREIGN KEY(chat_thread_id) REFERENCES chat_threads(id) ON DELETE CASCADE
+  FOREIGN KEY(chat_thread_id) REFERENCES chat_threads(id) ON DELETE CASCADE,
+  FULLTEXT KEY ft_index_chat_messages_on_body (body) WITH PARSER ngram
 ) COMMENT="チャットメッセージ";
 
 CREATE TABLE chat_message_families (
