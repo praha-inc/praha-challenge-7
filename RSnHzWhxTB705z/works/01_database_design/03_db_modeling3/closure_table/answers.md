@@ -77,7 +77,27 @@ closure_table/check.sql
 <br>
 closure_table/check.sql
 
-4. DB削除
+## 課題2
+1. マイグレーション
+   <br>
+   closure_table/migration.sql
+
+2. ユースケース
+   <br>
+   以下の構成になるようにデータを並べ替えます。
+   <br>
+   closure_table/usecase2.sql
+```
+.
+└── 中村_階層0                                 
+    ├── 中村_階層0_ドキュメント1
+    ├── 中村_階層0_ドキュメント3                    // 並べ替え
+    ├── 中村_階層0_ドキュメント2                    // 並べ替え
+```
+確認用SQL
+<br>
+closure_table/check.sql
+
+3. DB削除
    <br>
    closure_table/drop.sql
-   
