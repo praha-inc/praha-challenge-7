@@ -1,0 +1,143 @@
+erDiagram
+
+users ||--|| user_status: ""
+users ||--o{ authors: ""
+%% 誰によって作られたかを表す
+users ||--|| documents: ""
+authors }|--|| documents: ""
+documents ||--o{ document_likes: ""
+document_likes }o--|| users: ""
+documents ||--o{ comments: ""
+comments ||--o{ comment_families: ""
+comment_families }o--|| comments: ""
+%% 誰によって作られたかを表す
+users ||--|| comments: ""
+users ||--|{ user_teams: ""
+user_teams }o--|| teams: ""
+teams ||--|{ groups: ""
+groups ||--|{ user_groups: ""
+user_groups }o--|| users: ""
+groups ||--o{ folders: ""
+folders ||--o{ folder_hierarchies: ""
+folder_hierarchies }o--|| folders: ""
+folders ||--|{ documents: ""
+
+
+
+%% テーブル定義の上のコメントは、物理設計で実装する物を書いています
+
+%% ユーザー権限
+%% ユーザー権限とユーザーは一対一
+%% owner, admin, member, guestが入る
+user_status {
+  id BIGINT PK
+  name VARCHAR(255)
+}
+
+%% id: primary key 制約
+%% name: フルテキストインデックス
+%% email: ユニーク制約
+%% display_name: フルテキストインデックス
+users {
+  id BIGINT PK
+  name VARCHAR(255)
+  display_name VARCHAR(255)
+  introduction TEXT
+  email VARCHAR(255)
+  avatar_url VARCHAR(255)
+  user_status_id BIGINT FK
+}
+
+%% id: primary key 制約
+%% title, body: フルテキストインデックス
+%% 記事が公開されたか公開されてないかは、published_atの値で判断する
+documents {
+  id BIGINT PK
+  title VARCHAR(255)
+  body TEXT
+  created_at DATETIME
+  authored_by BIGINT FK
+  published_at DATETIME
+  display_priority BIGINT
+}
+
+%% id: primary key 制約
+%% user_id, document_id: 外部キー制約
+%% document_idにユニーク制約をつける
+authors {
+  id BIGINT PK
+  user_id BIGINT FK
+  document_id BIGINT FK
+}
+
+
+%% 記事は複数のユーザーによっていいねされている
+document_likes {
+  id BIGINT PK
+  document_id BIGINT FK
+  user_id BIGINT FK
+  created_at DATETIME
+}
+
+%% 記事はコメントを書ける。また、コメントに対してコメントをしたりもできる
+comments {
+  id BIGINT PK
+  body TEXT
+  authored_by BIGINT FK
+  created_at DATETIME
+}
+
+comment_families {
+  id BIGINT PK
+  parent_id BIGINT FK
+  child_id BIGINT FK
+}
+
+%% チームの中に複数のグループがある
+teams {
+  id BIGINT PK
+  name VARCHAR(255)
+  explanation TEXT
+  created_at DATETIME
+}
+
+%% ユーザーは複数のチームに所属している
+user_teams {
+  id BIGINT PK
+  user_id BIGINT FK
+  team_id BIGINT FK
+  created_at DATETIME
+}
+
+%% グループは公開非公開が設定できる
+groups {
+  id BIGINT PK
+  name VARCHAR(255)
+  explanation TEXT
+  created_at DATETIME
+  is_public BOOLEAN
+  team_id BIGINT FK
+}
+
+%% ユーザーは複数のグループに所属している
+user_groups {
+  id BIGINT PK
+  user_id BIGINT FK
+  group_id BIGINT FK
+  created_at DATETIME
+}
+
+%% グループの中に複数のフォルダがある
+%% フォルダの中に複数の記事とサブフォルダがある
+folders {
+  id BIGINT PK
+  name VARCHAR(255)
+  created_at DATETIME
+  group_id BIGINT FK
+}
+
+folder_hierarchies {
+  id BIGINT PK
+  parent_id BIGINT FK
+  child_id BIGINT FK
+}
