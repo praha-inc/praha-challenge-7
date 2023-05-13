@@ -1,53 +1,59 @@
 ```mermaid
 erDiagram
 
+%% ディレクトリ関連
 users ||--|| create_directory : ""
-users ||--|| update_directory : ""
-users ||--|| delete_directory : ""
+users ||--o{ update_directory : ""
+users ||--o| delete_directory : ""
 create_directory ||--|| directories : ""
 directories ||--o{ update_directory : ""
 directories ||--o| delete_directory : ""
+directories ||--o{ documents : ""
+directories ||--o{ update_document : ""
 
-directories ||--o{ directory_documents : ""
-directory_documents }o--|| documents : ""
-
-directory_tree_paths ||--|| directories : ""
-directories ||--|| directory_tree_paths : ""
-
+%% ドキュメント関連
 users ||--|| create_document : ""
-users ||--|| delete_document : ""
-users ||--|| update_document : ""
+users ||--o{ update_document : ""
+users ||--o| delete_document : ""
 create_document ||--|| documents : ""
 documents ||--o{ update_document : ""
 documents ||--o| delete_document : ""
 
+%% ディレクトリーサブディレクトリ関連
+directory_tree_paths }|--|| directories : ""
+directories ||--|{ directory_tree_paths : ""
 
-
-
+%% リソース
+%% ユーザー
 users{
     id BIGINT PK
-    first_name VARCHAR
-    last_name VARCHAR
+    first_name VARCHAR(255)
+    last_name VARCHAR(255)
     email VARCHAR
 }
 
+%% ディレクトリ
 directories{
     id BIGINT PK
-    name VARCHAR
+    name VARCHAR(255)
 }
 
+%% ドキュメント
 documents{
     id BIGINT PK
-    title VARCAHR
+    title VARCAHR(255)
     content TEXT
-    directory_id BIGINT
+    directory_id BIGINT FK
 }
 
-directory_documents{
-    directory_id BIGINT PK
-    document_id BIGINT PK
+ %% ディレクトリとサブディレクトリの閉包テーブル
+directory_tree_paths{
+    ancestor_directory_id BIGINT PK
+    descendant_directory_id BIGINT PK
 }
 
+%% イベント
+%% ディレクトリ作成
 create_directory{
     id BIGINT PK
     user_id BIGINT FK
@@ -55,6 +61,7 @@ create_directory{
     created_at DATETIME
 }
 
+%% ディレクトリ削除
 delete_directory{
     id BIGINT PK
     user_id BIGINT FK
@@ -62,20 +69,17 @@ delete_directory{
     deleted_at DATETIME
 }
 
+%% ディレクトリ更新
 update_directory{
     id BIGINT PK
     user_id BIGINT FK
     directory_id BIGINT FK
-    before_update_name VARCHAR
+    before_update_name VARCHAR(255)
     before_update_ancestor_directory_id BIGINT FK
     updated_at DATETIME
 }
 
-directory_tree_paths{
-    ancestor_directory_id BIGINT PK
-    descendant_directory_id BIGINT PK
-}
-
+%% ドキュメント作成
 create_document{
     id BIGINT PK
     user_id BIGINT FK
@@ -83,6 +87,7 @@ create_document{
     created_at DATETIME
 }
 
+%% ドキュメント削除
 delete_document{
     id BIGINT PK
     uset_id BIGINT FK
@@ -90,16 +95,15 @@ delete_document{
     deleted_at DATETIME
 }
 
+%% ドキュメント更新
 update_document{
     id BIGINT PK
     user_id BIGINT FK
     document_id BIGINT FK
-    before_update_title VARCHAR
+    before_update_title VARCHAR(255)
     before_update_content TEXT
     before_update_directory_id BIGINT FK
     updated_at DATETIME
 }
-
-
 
 ```
