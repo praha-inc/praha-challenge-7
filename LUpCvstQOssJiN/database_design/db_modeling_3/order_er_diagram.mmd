@@ -1,6 +1,6 @@
 erDiagram
 
-users ||--|| user_status: ""
+users ||--|| user_statuses: ""
 users ||--o{ authors: ""
 %% 誰によって作られたかを表す
 users ||--|| documents: ""
@@ -29,7 +29,7 @@ folders ||--|{ documents: ""
 %% ユーザー権限
 %% ユーザー権限とユーザーは一対一
 %% owner, admin, member, guestが入る
-user_status {
+user_statuses {
   id BIGINT PK
   name VARCHAR(255)
 }
