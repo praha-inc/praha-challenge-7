@@ -5,7 +5,7 @@
   EXPLAIN済み(問題なし)
   とはいえ、最初にEXPLAINをしたときは中間一致をしていたので、フルテキストインデックスで書き直した
 */
-SELECT specific_chat_messages.*
+SELECT specific_chat_messages.id, specific_chat_messages.body
 FROM (
   SELECT *
   FROM work_spaces
@@ -32,7 +32,7 @@ ON specific_chat_channels.id = specific_chat_messages.chat_channel_id;
   フルテキストインデックスをbodyに貼ったら、改善された
   日本語というのもあって、検索対象文字列との完璧な一致が保証されるわけではないが、類似性が高いものが取得できる
 */
-SELECT specific_chat_messages.*
+SELECT specific_chat_messages.id, specific_chat_messages.body
 FROM (
   SELECT *
   FROM work_spaces
