@@ -2,7 +2,9 @@ erDiagram
 
 users ||--|| user_statuses: ""
 users ||--o{ authors: ""
-%% 誰によって作られたかを表す
+%% 最初に誰によってドキュメントが作られたかを表す
+users ||--|| documents: ""
+%% 誰によってドキュメントが更新されたかを表す
 users ||--|| documents: ""
 authors }|--|| documents: ""
 documents ||--o{ document_likes: ""
@@ -10,9 +12,13 @@ document_likes }o--|| users: ""
 documents ||--o{ comments: ""
 comments ||--o{ comment_families: ""
 comment_families }o--|| comments: ""
-%% 誰によって作られたかを表す
+%% 誰によってコメントが作られたかを表す
 users ||--|| comments: ""
 users ||--|{ user_teams: ""
+%% 誰によってフォルダが作られたかを表す
+users ||--|| folders: ""
+%% 誰によってフォルダが更新されたかを表す
+users ||--|| folders: ""
 user_teams }o--|| teams: ""
 teams ||--|{ groups: ""
 groups ||--|{ user_groups: ""
@@ -54,7 +60,9 @@ documents {
   title VARCHAR(255)
   body TEXT
   created_at DATETIME
-  authored_by BIGINT FK
+  created_by BIGINT FK
+  updated_at DATETIME
+  updated_by BIGINT FK
   published_at DATETIME
   display_priority BIGINT
 }
@@ -67,7 +75,6 @@ authors {
   user_id BIGINT FK
   document_id BIGINT FK
 }
-
 
 %% 記事は複数のユーザーによっていいねされている
 document_likes {
@@ -131,6 +138,9 @@ folders {
   id BIGINT PK
   name VARCHAR(255)
   created_at DATETIME
+  created_by BIGINT FK
+  updated_at DATETIME
+  updated_by BIGINT FK
   group_id BIGINT FK
 }
 
