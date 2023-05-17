@@ -1,0 +1,40 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "customer" as customer <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+entity "call_history" as call_history <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - customer_id: INT <<FK>>
+    memo: VARCHAR(255)
+    called_at: TIMESTAMP
+}
+
+entity "meet_history" as meet_history <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - customer_id: INT <<FK>>
+    memo: VARCHAR(255)
+    met_at: TIMESTAMP
+}
+
+entity "contract" as contract <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - customer_id: INT <<FK>>
+    memo: VARCHAR(255)
+    contracted_at: TIMESTAMP
+}
+
+customer ||-down-o{ call_history
+customer ||-down-o{ meet_history
+customer ||-down-o{ contract
+
+@enduml
