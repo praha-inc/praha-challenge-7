@@ -20,8 +20,8 @@ documents ||--o{ update_document : ""
 documents ||--o| delete_document : ""
 
 %% ディレクトリーサブディレクトリ関連
-directory_tree_paths }|--|| directories : ""
-directories ||--|{ directory_tree_paths : ""
+directory_tree_paths }o--|| directories : ""
+directories ||--o{ directory_tree_paths : ""
 
 %% リソース
 %% ユーザー
@@ -56,7 +56,7 @@ directory_tree_paths{
 %% ディレクトリ作成
 create_directory{
     id BIGINT PK
-    user_id BIGINT FK
+    created_by BIGINT FK
     directory_id BIGINT FK
     created_at DATETIME
 }
@@ -64,7 +64,7 @@ create_directory{
 %% ディレクトリ削除
 delete_directory{
     id BIGINT PK
-    user_id BIGINT FK
+    deleted_by BIGINT FK
     directory_id BIGINT FK
     deleted_at DATETIME
 }
@@ -72,7 +72,7 @@ delete_directory{
 %% ディレクトリ更新
 update_directory{
     id BIGINT PK
-    user_id BIGINT FK
+    updated_by BIGINT FK
     directory_id BIGINT FK
     before_update_name VARCHAR(255)
     before_update_ancestor_directory_id BIGINT FK
@@ -82,7 +82,7 @@ update_directory{
 %% ドキュメント作成
 create_document{
     id BIGINT PK
-    user_id BIGINT FK
+    created_by BIGINT FK
     document_id BIGINT FK
     created_at DATETIME
 }
@@ -90,7 +90,7 @@ create_document{
 %% ドキュメント削除
 delete_document{
     id BIGINT PK
-    uset_id BIGINT FK
+    deleted_by BIGINT FK
     document_id BIGINT FK
     deleted_at DATETIME
 }
@@ -98,7 +98,7 @@ delete_document{
 %% ドキュメント更新
 update_document{
     id BIGINT PK
-    user_id BIGINT FK
+    updated_by BIGINT FK
     document_id BIGINT FK
     before_update_title VARCHAR(255)
     before_update_content TEXT
