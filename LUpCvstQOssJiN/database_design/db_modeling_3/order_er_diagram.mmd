@@ -22,8 +22,6 @@ folders ||--o{ folder_hierarchies: ""
 folder_hierarchies }o--|| folders: ""
 folders ||--|{ documents: ""
 
-
-
 %% テーブル定義の上のコメントは、物理設計で実装する物を書いています
 
 %% ユーザー権限
@@ -106,7 +104,7 @@ user_teams {
   id BIGINT PK
   user_id BIGINT FK
   team_id BIGINT FK
-  created_at DATETIME
+  joined_at DATETIME
 }
 
 %% グループは公開非公開が設定できる
@@ -124,7 +122,7 @@ user_groups {
   id BIGINT PK
   user_id BIGINT FK
   group_id BIGINT FK
-  created_at DATETIME
+  joined_at DATETIME
 }
 
 %% グループの中に複数のフォルダがある
