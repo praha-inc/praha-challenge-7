@@ -1,0 +1,32 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "post" as post <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    text: VARCHAR(255)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity "tagging" as tagging <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - post_id: INT <<FK>>
+    - tag_id: INT <<FK>>
+}
+
+entity "tag" as tag <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+post ||-right-o{ tagging
+tag ||-left-o{ tagging
+
+@enduml
