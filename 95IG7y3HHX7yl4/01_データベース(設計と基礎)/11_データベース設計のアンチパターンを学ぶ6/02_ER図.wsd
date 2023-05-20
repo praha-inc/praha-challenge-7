@@ -1,0 +1,21 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "student" as student <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+entity "student_status" as student_status <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+    created_at: TIMESTAMP
+}
+
+student }|-right-o| student_status
+
+@enduml
