@@ -6,9 +6,7 @@
 entity "comment" as comment <<T,TRANSACTION>> {
     + id: INT <<PK>>
     --
-    name: VARCHAR(255)
-    belongs_to_id: INT
-    type: VARCHAR(255)
+    text: VARCHAR(255)
 }
 
 entity "manga" as manga <<M,MASTER>> {
