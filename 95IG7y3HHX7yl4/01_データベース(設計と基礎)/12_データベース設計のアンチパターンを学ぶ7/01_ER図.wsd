@@ -1,0 +1,13 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "student" as student <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+    taikai_flag: Boolean
+}
+
+@enduml
