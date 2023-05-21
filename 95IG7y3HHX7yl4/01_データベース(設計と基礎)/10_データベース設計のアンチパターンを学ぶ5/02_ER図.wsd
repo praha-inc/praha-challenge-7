@@ -31,6 +31,7 @@ entity "contract" as contract <<T,TRANSACTION>> {
     - customer_id: INT <<FK>>
     memo: VARCHAR(255)
     contracted_at: TIMESTAMP
+    canceled_at: TIMESTAMP
 }
 
 customer ||-down-o{ call_history
