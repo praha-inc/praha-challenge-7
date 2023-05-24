@@ -48,6 +48,7 @@ package database <<Database>> {
     request TEXT
     updated_at TIMESTAMP
     created_at TIMESTAMP
+    deleted_at TIMESTAMP
   }
   
   entity order_menu as "order_menu\n注文詳細テーブル" <<T,TRANSACTION>> {
