@@ -1,0 +1,37 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity accounts as "accounts" <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    username: VARCHAR(255)
+    email: VARCHAR(255)
+    password: VARCHAR(255)
+    display_name: VARCHAR(255)
+    profile_image_url: VARCHAR(255)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity contents as "contents" <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - account_id: INT <<FK>>
+}
+
+entity content_details as "content_details" <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - content_id: INT <<FK>>
+    content_title: VARCHAR(255)
+    content_body: TEXT
+    created_at: TIMESTAMP
+    deleted_at: TIMESTAMP
+}
+
+accounts ||-right-o{ contents
+contents ||-right-|{ content_details
+
+@enduml
