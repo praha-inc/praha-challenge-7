@@ -1,0 +1,12 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "product" as product <<M,MASTER>> {
+    + product_code: VARCHAR(255) <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+@enduml
