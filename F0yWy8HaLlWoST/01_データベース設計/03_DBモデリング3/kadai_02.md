@@ -25,7 +25,8 @@ erDiagram
 
   M_DOCUMENTS {
     uuid document_id PK "ドキュメントID"
-    uuid user_id FK "<Not null> ユーザID"
+    uuid created_user_id FK "<Not null> 作成したユーザID"
+    uuid updated_user_id FK "<Not null> 更新したユーザID"
     uuid directory_id FK "<Not null><default: root> ディレクトリID"
     varchar name "<Not null> 名前"
     varchar detail "<Not null> 内容"

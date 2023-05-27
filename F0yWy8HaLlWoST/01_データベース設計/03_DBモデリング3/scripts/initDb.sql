@@ -22,7 +22,8 @@ create table M_DIRECTORIES (
 
 create table M_DOCUMENTS (
     document_id binary(16) primary key default (UUID_TO_BIN(UUID(), 1)),
-    user_id binary(16) not null references M_USERS(user_id),
+    created_user_id binary(16) not null references M_USERS(user_id),
+    updated_user_id binary(16) not null references M_USERS(user_id),
     directory_id binary(16) not null references M_DIRECTORIES(directory_id),
     name varchar(100) not null,
     detail varchar(1000) not null,
@@ -68,22 +69,22 @@ insert into M_DIRECTORIES(directory_id, user_id, parent_directory_id, name) valu
     (UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ディレクトリ18'),
     (UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c8', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ディレクトリ19');
 
-insert into M_DOCUMENTS(document_id, user_id, directory_id, name, detail, index_in_directory) values
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ab', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル1', 'ファイル1の詳細', 0),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ac', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル2', 'ファイル2の詳細', 1),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ad', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル3', 'ファイル3の詳細', 2),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ae', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル4', 'ファイル4の詳細', 3),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2af', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル5', 'ファイル5の詳細', 0),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b0', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル6', 'ファイル6の詳細', 1),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b1', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル7', 'ファイル7の詳細', 2),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b2', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル8', 'ファイル8の詳細', 3),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b3', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル9', 'ファイル9の詳細', 4),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b4', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368bf', 1), 'ファイル10', 'ファイル10の詳細', 0),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b5', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c0', 1), 'ファイル11', 'ファイル11の詳細', 0),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b6', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c1', 1), 'ファイル12', 'ファイル12の詳細', 0),
-    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b7', 1), UUID_TO_BIN('de02349a-f87f-5b4e-a7ed-2d0861f98bf0', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 0),
-    (UUID_TO_BIN('bb767201-9f23-51ea-98f2-46a4bd1cef30', 1), UUID_TO_BIN('de02349a-f87f-5b4e-a7ed-2d0861f98bf0', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 1),
-    (UUID_TO_BIN('648c8107-d559-553a-b409-eab8c801431c', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 2),
-    (UUID_TO_BIN('f1d0a7b8-27a1-5e2d-9c8c-8d62391da8fb', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 3),
-    (UUID_TO_BIN('059d280e-8564-524b-8b6f-91d747ae46d6', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 4),
-    (UUID_TO_BIN('60463016-e078-5c38-86fe-937a066dca61', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 5);
+insert into M_DOCUMENTS(document_id, created_user_id, updated_user_id, directory_id, name, detail, index_in_directory) values
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ab', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル1', 'ファイル1の詳細', 0),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ac', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル2', 'ファイル2の詳細', 1),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ad', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル3', 'ファイル3の詳細', 2),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2ae', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368b6', 1), 'ファイル4', 'ファイル4の詳細', 3),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2af', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル5', 'ファイル5の詳細', 0),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b0', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル6', 'ファイル6の詳細', 1),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b1', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル7', 'ファイル7の詳細', 2),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b2', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル8', 'ファイル8の詳細', 3),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b3', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368ba', 1), 'ファイル9', 'ファイル9の詳細', 4),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b4', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('530c7220-e65d-596b-aa0d-9d80ea5d26c2', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368bf', 1), 'ファイル10', 'ファイル10の詳細', 0),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b5', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c0', 1), 'ファイル11', 'ファイル11の詳細', 0),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b6', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c1', 1), 'ファイル12', 'ファイル12の詳細', 0),
+    (UUID_TO_BIN('2280a86b-ad8b-5121-bcb8-1bcc8c82b2b7', 1), UUID_TO_BIN('de02349a-f87f-5b4e-a7ed-2d0861f98bf0', 1), UUID_TO_BIN('de02349a-f87f-5b4e-a7ed-2d0861f98bf0', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 0),
+    (UUID_TO_BIN('bb767201-9f23-51ea-98f2-46a4bd1cef30', 1), UUID_TO_BIN('de02349a-f87f-5b4e-a7ed-2d0861f98bf0', 1), UUID_TO_BIN('de02349a-f87f-5b4e-a7ed-2d0861f98bf0', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 1),
+    (UUID_TO_BIN('648c8107-d559-553a-b409-eab8c801431c', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 2),
+    (UUID_TO_BIN('f1d0a7b8-27a1-5e2d-9c8c-8d62391da8fb', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 3),
+    (UUID_TO_BIN('059d280e-8564-524b-8b6f-91d747ae46d6', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 4),
+    (UUID_TO_BIN('60463016-e078-5c38-86fe-937a066dca61', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('68f2c671-5792-5bf8-81b9-636bf90054d7', 1), UUID_TO_BIN('e4fc0e58-674c-5683-8c81-ddff02f368c2', 1), 'ファイル13', 'ファイル13の詳細', 5);
