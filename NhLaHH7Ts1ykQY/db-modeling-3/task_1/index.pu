@@ -1,0 +1,32 @@
+@startuml chat_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity users as "users\nユーザー" <<M, MASTER>> {
+    +uuid VARCHAR(255)
+    --
+    name VARCHAR(30) [名前]
+    display_name VARCHAR(30) [表示名]
+    email VARCHAR(30) UNIQUE [メールアドレス]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity users_workspaces as "directories\nディレクトリ" <<M, MASTER>>  {
+    +uuid VARCHAR(255)
+    --
+    path: TEXT [ディレクトり]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity users_channels as "documents\nドキュメント" <<M, MASTER>>  {
+    +uuid VARCHAR(255)
+    --
+    user_id VARCHAR(255) [ユーザID]
+    body TEXT [内容]
+    directory_id VARCHAR(255) [ディレクトリID]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
