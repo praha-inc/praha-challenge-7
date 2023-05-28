@@ -1,0 +1,36 @@
+@startuml reminder_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity users as "users\nユーザー" <<M, MASTER>> {
+    +id VARCHAR(255)
+    --
+    name VARCHAR(30) [名前]
+    slack_id VARCHAR(30) UNIQUE [slackのユーザID]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity reminders as "reminders\nリマインダー" <<M, MASTER>>  {
+    +user_id: VARCHAR(30) [ユーザーID]
+    +recipient_id VARCHAR(30) [受信者ID]
+    --
+    message TEXT [投稿内容]
+    frequency ENUM [投稿頻度(daily, every monday,...,  )]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity reminder_log as "reminder_log\nリマインダーのログ" <<T, TRANSACTION>>  {
+    +reminder_id VARCHAR(255) [ユーザーID]
+    +recipient_id VARCHAR(255) [受信者ID]
+    --
+    sent_datetime TIMESTAMP [配信日時]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+
+
+
