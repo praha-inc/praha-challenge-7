@@ -9,6 +9,7 @@
 table order {
   id int [pk]
   ordererId int [not null, ref: > orderer.id]
+  date datetime
   status int [not null]
   totalorderCount int [not null]
   amount decimal(9,0)
