@@ -1,0 +1,28 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity assignee as "assignee" <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+entity issue as "issue" <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    text: VARCHAR(255)
+}
+
+entity assign_issue as "issue_assigned" <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - assignee_id: INT <<FK>>
+    - issue_id: INT <<FK>>
+}
+
+assignee ||-left-o{ assign_issue
+issue ||-right-o{ assign_issue
+
+@enduml
