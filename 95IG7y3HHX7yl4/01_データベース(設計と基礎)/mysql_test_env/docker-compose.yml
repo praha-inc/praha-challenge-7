@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8
+    container_name: db_modeling
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      TZ: ${TZ}
+    ports:
+        - ${DB_PORT}:3306
+    volumes:
+        - db-store:/var/lib/mysql
+        - ./conf/my.cnf:/etc/mysql/conf.d/my.cnf
+volumes:
+  db-store:

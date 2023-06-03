@@ -1,0 +1,13 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "message" as message <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    path: VARCHAR(255)
+    text: VARCHAR(255)
+}
+
+@enduml

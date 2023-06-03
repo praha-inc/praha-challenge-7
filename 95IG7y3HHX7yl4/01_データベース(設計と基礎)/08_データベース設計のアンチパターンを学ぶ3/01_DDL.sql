@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS `manga`;
+DROP TABLE IF EXISTS `novel`;
+DROP TABLE IF EXISTS `comment`;
+
+CREATE TABLE manga (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE novel (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE comment (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    text VARCHAR(255) UNIQUE NOT NULL,
+    belongs_to_id INT NOT NULL COMMENT 'manga_id or novel_id',
+    type VARCHAR(255) NOT NULL COMMENT 'manga or novel'
+);

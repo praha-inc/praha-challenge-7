@@ -1,0 +1,29 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "manga" as manga <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+entity "novel" as novel <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+entity "comment" as comment <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+    belongs_to_id: INT
+    type: VARCHAR(255)
+}
+
+comment ||-up-o{ novel
+comment ||-up-o{ manga
+
+@enduml

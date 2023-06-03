@@ -1,0 +1,19 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "new_customer" as new_customer <<M,MASTER>> {
+    + id: VARCHAR(255) <<PK>>
+    --
+    called: Boolean
+    callNote: VARCHAR(255)
+    metOnce: Boolean
+    metAt: TIMESTAMP
+    closed: Boolean
+    closedAt: Boolean
+    path: VARCHAR(255)
+    text: VARCHAR(255)
+}
+
+@enduml
