@@ -23,6 +23,10 @@ documents ||--o| delete_document : ""
 directory_tree_paths }o--|| directories : ""
 directories ||--o{ directory_tree_paths : ""
 
+%% ドキュメントの順番を管理
+document_order }o--|| documents : ""
+document_order }o--|| directories : ""
+
 %% リソース
 %% ユーザー
 users{
@@ -46,10 +50,17 @@ documents{
     directory_id BIGINT FK
 }
 
- %% ディレクトリとサブディレクトリの閉包テーブル
+%% ディレクトリとサブディレクトリの閉包テーブル
 directory_tree_paths{
     ancestor_directory_id BIGINT PK
     descendant_directory_id BIGINT PK
+}
+
+%% ドキュメントの順番を管理するテーブル
+document_order{
+    directory_id BIGINT PK
+    document_id BIGINT PK
+    positon DOUBLE
 }
 
 %% イベント
