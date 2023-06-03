@@ -4,9 +4,9 @@ namespace Database;
 
 abstract class Connection
 {
-
+    // ローカルでのみ実行するので、プログラム内に記入しています。
     private const DB_USER = 'root';
-    private const DB_PASS = 'root';
+    private const DB_PASS = 'praha_root';
 
     private $db_name;
 
