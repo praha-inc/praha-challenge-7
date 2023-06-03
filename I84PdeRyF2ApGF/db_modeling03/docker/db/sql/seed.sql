@@ -60,10 +60,10 @@ VALUES
 -- create_document
 INSERT INTO `create_document` (`id`, `created_by`, `document_id`, `created_at`)
 VALUES
-	(1, 1, 1, '2023-05-29 23:42:44'),
-	(2, 2, 2, '2023-05-31 00:00:54'),
-	(3, 3, 3, '2023-05-31 00:01:16'),
-	(4, 3, 4, '2023-05-31 00:44:08'),
+    (1, 1, 1, '2023-05-29 23:42:44'),
+    (2, 2, 2, '2023-05-31 00:00:54'),
+    (3, 3, 3, '2023-05-31 00:01:16'),
+    (4, 3, 4, '2023-05-31 00:44:08'),
     (5, 3, 5, '2023-05-31 00:50:08'),
     (6, 2, 6, '2023-06-01 00:50:08'),
     (7, 2, 7, '2023-06-01 00:51:08');
@@ -81,19 +81,19 @@ VALUES
 -- delete_directory
 INSERT INTO `delete_directory` (`id`, `deleted_by`, `directory_id`, `deleted_at`)
 VALUES
-	(1, 3, 5, '2023-06-02 00:17:55');
+    (1, 3, 5, '2023-06-02 00:17:55');
 
 -- delete_document
 INSERT INTO `delete_document` (`id`, `deleted_by`, `document_id`, `deleted_at`)
 VALUES
-	(1, 3, 5, '2023-05-31 00:45:33');
+    (1, 3, 5, '2023-05-31 00:45:33');
 
 -- update_directory
 INSERT INTO `update_directory` (`id`, `updated_by`, `directory_id`, `before_update_name`, `before_update_ancestor_directory_id`, `updated_at`)
 VALUES
-	(1, 2, 3, '趣味', 5, '2023-06-02 00:02:59');
+    (1, 2, 3, '趣味', 5, '2023-06-02 00:02:59');
 
 -- update_document
 INSERT INTO `update_document` (`id`, `updated_by`, `document_id`, `before_update_title`, `before_update_content`, `before_update_ancestor_directory_id`, `before_update_position`, `updated_at`)
 VALUES
-	(1, 3, 3, '大阪旅行計画（仮）', '大阪旅行でどこに行くか…', 3, 1, '2023-06-02 00:12:29');
+    (1, 3, 3, '大阪旅行計画（仮）', '大阪旅行でどこに行くか…', 3, 1, '2023-06-02 00:12:29');
