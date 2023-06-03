@@ -1,0 +1,43 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "comment" as comment <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    text: VARCHAR(255)
+}
+
+entity "manga" as manga <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+entity "novel" as novel <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+}
+
+entity "manga_comment" as manga_comment <<T,TRANSACTION>> {
+    + manga_id, comment_id <<PK>>
+    --
+    - manga_id: INT <<FK>>
+    - comment_id: INT <<FK>>
+}
+
+entity "novel_comment" as novel_comment <<T,TRANSACTION>> {
+    + novel_id, comment_id <<PK>>
+    --
+    - novel_id: INT <<FK>>
+    - comment_id: INT <<FK>>
+}
+
+comment ||-down-o{ manga_comment
+comment ||-down-o{ novel_comment
+manga_comment }o-down-|| manga
+novel_comment }o-down-|| novel
+
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity accounts as "accounts" <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    username: VARCHAR(255)
+    email: VARCHAR(255)
+    password: VARCHAR(255)
+    display_name: VARCHAR(255)
+    profile_image_url: VARCHAR(255)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity contents as "contents" <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - account_id: INT <<FK>>
+    content_title: VARCHAR(255)
+    content_body: TEXT
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity content_histories as "content_histories" <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - account_id: INT <<FK>>
+    - content_id: INT <<FK>>
+    content_title: VARCHAR(255)
+    content_body: TEXT
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+    operation: enum('INSERT', 'UPDATE', 'DELETE')
+    operation_date: TIMESTAMP
+}
+
+accounts ||--o{ contents
+accounts ||--o{ content_histories
+contents ||-right-|{ content_histories
+
+@enduml
