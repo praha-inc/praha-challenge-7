@@ -5,16 +5,16 @@ MySQL利用想定です！
 ## 課題1
 
 ### スケッチ
-[ER図（svg）](./01_01_01_er_diagram.svg)<br>
-[ER図（puml）](./01_01_01_er_diagram.puml)
+[ER図（svg）](01_01_01_er_diagram.svg)<br>
+[ER図（puml）](01_01_01_er_diagram.puml)
 
 ### DB構造
-[DB構造（md）](./01_01_01_db_structure.md)
+[DB構造（md）](01_01_01_db_structure.md)
   
 ### 利用想定
 
 #### あらかじめデータを登録しておくテーブル（マスター系）
-登録しておくデータの例は [DB構造（md）](./01_01_01_db_structure.md) の備考欄に記載しています。
+登録しておくデータの例は [DB構造（md）](01_01_01_db_structure.md) の備考欄に記載しています。
 - channels
 - order_statuses
 - products
@@ -80,11 +80,11 @@ MySQL利用想定です！
 ## 課題2
 
 ### スケッチ
-[ER図（svg）](./01_01_02_er_diagram.svg)<br>
-[ER図（puml）](./01_01_02_er_diagram.puml)
+[ER図（svg）](01_01_02_er_diagram.svg)<br>
+[ER図（puml）](01_01_02_er_diagram.puml)
 
 ### DB構造
-[DB構造（md）](./01_01_02_db_structure.md)
+[DB構造（md）](01_01_02_db_structure.md)
 
 #### 処理流れ
 1. シャリ小の場合、 order_details.is_less_rice に1を格納する
@@ -101,11 +101,11 @@ MySQL利用想定です！
 ## 課題3
 
 ### スケッチ
-[ER図（svg）](./01_01_03_er_diagram.svg)<br>
-[ER図（puml）](./01_01_03_er_diagram.puml)
+[ER図（svg）](01_01_03_er_diagram.svg)<br>
+[ER図（puml）](01_01_03_er_diagram.puml)
 
 ### DB構造
-[DB構造（md）](./01_01_03_db_structure.md)
+[DB構造（md）](01_01_03_db_structure.md)
 
 ### 今後発生しそうな追加仕様
 
