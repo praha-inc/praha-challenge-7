@@ -23,6 +23,6 @@ entity assign_issue as "issue_assigned" <<T,TRANSACTION>> {
 }
 
 assignee ||-left-o{ assign_issue
-issue ||-right-o{ assign_issue
+issue ||-right-o| assign_issue
 
 @enduml
