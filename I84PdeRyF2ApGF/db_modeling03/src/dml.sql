@@ -47,9 +47,12 @@ INSERT INTO `create_document` (`id`, `created_by`, `document_id`, `created_at`)
 VALUES
   (DEFAULT, 2, @document_id, DEFAULT);
 
-SET @position := SELECT COALESCE(MAX(`position`),0) + 1 
-                   FROM `document_order`
-                  WHERE `directory_id` = 2;
+-- SET @position := SELECT COALESCE(MAX(`position`),0) + 1 
+--                    FROM `document_order`
+--                   WHERE `directory_id` = 2;
+
+-- 変数の代入誤りを修正
+SELECT @position := COALESCE(MAX(`position`), 0) + 1 FROM `document_order` WHERE `directory_id` = 2;
 
 INSERT INTO `document_order` (`directory_id`, `document_id`, `position`)
 VALUES
@@ -57,9 +60,9 @@ VALUES
 
 -- ドキュメントを編集する（内容を編集し、別ディレクトリへ移動）
 -- 「5月収支」(id:8)を編集し、「家計簿」ディレクトリ(id:6)に移動
-INSERT INTO `update_document` (`id`, `updated_by`, `document_id`, `before_update_title`, `before_update_content`, `before_update_ancestor_directory_id`, `before_update_prev_document_id`, `before_update_next_document_id`, `updated_at`)
+INSERT INTO `update_document` (`id`, `updated_by`, `document_id`, `before_update_title`, `before_update_content`, `before_update_ancestor_directory_id`, `before_update_position`, `updated_at`)
 VALUES
-  (DEFAULT, 2, 8, '5月収支', '収入：200,000 支出：180,000 20,000プラスで終えました！', 2, 8, 8, DEFAULT);
+  (DEFAULT, 2, 8, '5月収支', '収入：200,000 支出：180,000 20,000プラスで終えました！', 2, 8, DEFAULT);
 
 UPDATE `documents`
 SET `title` = '5月収支',
@@ -69,22 +72,42 @@ WHERE id = 8;
 
 -- 「プライベート」ディレクトリ(id:2)の中身を閲覧する
 -- （ディレクトリ構造の取得）
-SELECT
-   d_d.`id` AS id
-  ,d_d.name AS name
+-- SELECT
+--    d_d.`id` AS id
+--   ,d_d.name AS name
+-- FROM `directory_tree_paths` dtp
+-- LEFT JOIN `directories` d_a ON dtp.`ancestor_directory_id` = d_a.`id`
+-- LEFT JOIN `directories` d_d ON dtp.`descendant_directory_id` = d_d.`id`
+-- WHERE dtp.`ancestor_directory_id` = 2
+
+-- 削除されていないディレクトリを参照できるようにビューと結合するように修正 
+SELECT 
+   edv_d.`directory_id` AS id
+  ,edv_d.`name` AS name
 FROM `directory_tree_paths` dtp
-LEFT JOIN `directories` d_a ON dtp.`ancestor_directory_id` = d_a.`id`
-LEFT JOIN `directories` d_d ON dtp.`descendant_directory_id` = d_d.`id`
-WHERE dtp.`ancestor_directory_id` = 2
+LEFT JOIN `enabled_directories_view` edv_a ON dtp.`ancestor_directory_id` = edv_a.`directory_id`
+LEFT JOIN `enabled_directories_view` edv_d ON dtp.`descendant_directory_id` = edv_d.`directory_id`
+WHERE dtp.`ancestor_directory_id` = 2;
 
 -- 「プロジェクトA」ディレクトリ(id:1)内のドキュメントを取得する
+-- SELECT
+--    d.`id`
+--   ,d.`title`
+--   ,d.`content`
+--   ,do.`position`
+-- FROM documents d
+-- LEFT JOIN `document_order` do ON d.`id` = do.`document_id`
+-- WHERE d.`directory_id` = 1
+-- ORDER BY do.`position` ASC;
+
+-- 削除されていないドキュメントを参照できるようにビューと結合するように修正
 SELECT
-   d.`id`
+   d.`document_id`
   ,d.`title`
   ,d.`content`
   ,do.`position`
-FROM documents d
-LEFT JOIN `document_order` do ON d.`id` = do.`document_id`
+FROM `enabled_documents_view` d
+LEFT JOIN `document_order` do ON d.`document_id` = do.`document_id`
 WHERE d.`directory_id` = 1
 ORDER BY do.`position` ASC;
 

@@ -127,3 +127,50 @@ CREATE TABLE document_order (
   FOREIGN KEY (directory_id) REFERENCES directories(id) ON DELETE CASCADE,
   FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE
 ) comment 'ドキュメント順番管理テーブル';
+
+-- レビュー後追加
+
+-- 削除されていないディレクトリ一覧ビュー
+CREATE VIEW enabled_directories_view(directory_id, name, created_by, created_at, updated_by, last_updated_at) AS
+SELECT
+   dir.`id`
+  ,dir.`name`
+  ,cdir.`created_by`
+  ,cdir.`created_at`
+  ,COALESCE(udir.`updated_by`, cdir.`created_by`) updated_by 
+  ,COALESCE(MAX(udir.`updated_at`), cdir.`created_at`) last_updated_at
+FROM directories dir
+INNER JOIN `create_directory` cdir ON dir.`id` = cdir.`directory_id`
+LEFT JOIN `update_directory` udir ON dir.`id` = udir.`directory_id`
+LEFT JOIN `delete_directory` ddir ON dir.`id` = ddir.`directory_id`
+WHERE NOT EXISTS(
+  SELECT 'X' FROM `delete_directory` ddir
+  WHERE ddir.`directory_id` = dir.`id`
+  AND ddir.`deleted_at` IS NOT NULL
+  AND ddir.`deleted_at` >= COALESCE(udir.`updated_at`, 0)
+)
+GROUP BY dir.id, dir.name, cdir.created_by, cdir.`created_at`, `updated_by`; 
+
+-- 削除されていないドキュメント一覧ビュー
+CREATE VIEW enabled_documents_view(document_id, title, content, directory_id, created_by, created_at, updated_by, last_updated_at) AS
+SELECT
+   doc.`id`
+  ,doc.`title`
+  ,doc.`content`
+  ,doc.`directory_id`
+  ,cdoc.`created_by`
+  ,cdoc.`created_at`
+  ,COALESCE(udoc.`updated_by`, cdoc.`created_by`) updated_by
+  ,COALESCE(MAX(udoc.`updated_at`), cdoc.`created_at`) last_updated_at
+FROM documents doc
+INNER JOIN `enabled_directories_view` edir_v ON doc.`directory_id` = edir_v.`directory_id`
+INNER JOIN `create_document` cdoc ON doc.`id` = cdoc.`document_id`
+LEFT JOIN `update_document` udoc ON doc.`id` = udoc.`document_id`
+LEFT JOIN `delete_document` ddoc ON doc.`id` = ddoc.`document_id`
+WHERE NOT EXISTS(
+  SELECT 'X' FROM `delete_document` ddoc
+   WHERE ddoc.`document_id` = doc.`id`
+     AND ddoc.`deleted_at` IS NOT NULL
+     AND ddoc.`deleted_at` >= COALESCE(udoc.`updated_at`, 0)
+)
+GROUP BY doc.`id`, doc.`title`, doc.`content`, doc.`directory_id`, cdoc.`created_by`, cdoc.`created_at`, `updated_by`;
