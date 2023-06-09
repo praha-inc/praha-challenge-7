@@ -62,13 +62,23 @@ VALUES
 -- 「5月収支」(id:8)を編集し、「家計簿」ディレクトリ(id:6)に移動
 INSERT INTO `update_document` (`id`, `updated_by`, `document_id`, `before_update_title`, `before_update_content`, `before_update_ancestor_directory_id`, `before_update_position`, `updated_at`)
 VALUES
-  (DEFAULT, 2, 8, '5月収支', '収入：200,000 支出：180,000 20,000プラスで終えました！', 2, 8, DEFAULT);
+  (DEFAULT, 2, 8, '5月収支', '収入：200,000 支出：180,000 20,000プラスで終えました！', 2, 1, DEFAULT);
 
 UPDATE `documents`
 SET `title` = '5月収支',
     `content` = '収入：200,000 支出：230,000 本当は30,000マイナスで終えました…',
     `directory_id` = 6
 WHERE id = 8;
+
+-- ドキュメント編集に伴うドキュメントの順番更新処理等の追加
+DELETE FROM `document_order`
+WHERE `document_id` = 8;
+
+SELECT @position := COALESCE(MAX(`position`), 0) + 1 FROM `document_order` WHERE `directory_id` = 6;
+
+INSERT INTO `document_order` (`directory_id`, `document_id`, `position`)
+VALUES
+  (6, 8, @position);
 
 -- 「プライベート」ディレクトリ(id:2)の中身を閲覧する
 -- （ディレクトリ構造の取得）
