@@ -20,6 +20,7 @@ erDiagram
     int cycle_x FK "周期 <毎日の場合はnull/x日おきの場合はint/毎週X曜日は0-6/毎月X日は1-31>"
     varchar detail "<Not null> 内容"
     boolean is_deleted "<Not null> 削除されたか"
+    date reminded_at "前回のリマインド日時"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
