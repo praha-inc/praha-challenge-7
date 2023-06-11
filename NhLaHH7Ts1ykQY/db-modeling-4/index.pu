@@ -3,30 +3,46 @@
 !define MASTER F9DFD5
 !define TRANSACTION CAE7F2
 
-entity users as "users\nユーザー" <<M, MASTER>> {
-    +id VARCHAR(255)
+// 毎日、毎週、毎月
+entity frequencies as "frequencies\n周期" <<M, MASTER>> {
+    +id uuid
     --
-    name VARCHAR(30) [名前]
-    slack_id VARCHAR(30) UNIQUE [slackのユーザID]
+    label VARCHAR(30) [表示名](毎日)
+    name: VARCHAR(30) [名前]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
 
-entity reminders as "reminders\nリマインダー" <<M, MASTER>>  {
-    +user_id: VARCHAR(30) [ユーザーID]
-    +recipient_id VARCHAR(30) [受信者ID]
+entity week_day as "week_day\n曜日" <<M, MASTER>> {
+    +id uuid
+    --
+    label VARCHAR(30) [表示名](毎日)
+    name: VARCHAR(30) [名前]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity frequencies as "frequencies\" <<T, TRANSACTION>> {
+    +id uuid
+    --
+    frequency_id uuid
+    week_day_id uuid
+    date int [日付]
+    time int [時刻]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity reminders as "reminders\nリマインダー" <<T, TRANSACTION>>  {
+    +reminder_id uuid
     --
     message TEXT [投稿内容]
-    frequency ENUM [投稿頻度(daily, every monday,...,  )]
-    created_at TIMESTAMP
-    updated_at TIMESTAMP
-}
-
-entity reminder_log as "reminder_log\nリマインダーのログ" <<T, TRANSACTION>>  {
-    +reminder_id VARCHAR(255) [ユーザーID]
-    +recipient_id VARCHAR(255) [受信者ID]
-    --
-    sent_datetime TIMESTAMP [配信日時]
+    is_finished: BOOLEAN [終了フラグ]
+    time VARCHAR(30) [リマインド時刻]
+    frequency_id uuid [周期ID]
+    user_id: uuid [送信者(slackのID)]
+    recipient_id uuid [受信者(slackのID)]
+    remided_at TIMESTAMP [前回のリマインド日時]
     created_at TIMESTAMP
     updated_at TIMESTAMP
 }
