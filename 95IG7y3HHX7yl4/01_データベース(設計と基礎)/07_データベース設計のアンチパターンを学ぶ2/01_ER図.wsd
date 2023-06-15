@@ -1,0 +1,23 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "post" as post <<M,MASTER>> {
+    + id: VARCHAR(255) <<PK>>
+    --
+    - tag1: VARCHAR(255)
+    - tag2: VARCHAR(255)
+    - tag3: VARCHAR(255)
+    text: VARCHAR(255)
+}
+
+entity "tag" as tag <<M,MASTER>> {
+    + id: VARCHAR(255) <<PK>>
+    --
+    content: VARCHAR(255)
+}
+
+post ||-right-o{ tag
+
+@enduml

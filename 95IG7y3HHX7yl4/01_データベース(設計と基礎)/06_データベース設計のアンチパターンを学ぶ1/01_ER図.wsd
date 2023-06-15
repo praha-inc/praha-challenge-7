@@ -1,0 +1,25 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "post" as post <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    text: VARCHAR(255)
+    tags: VARCHAR(255)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity "tag" as tag <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    name: VARCHAR(255)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+post ||-right-o{ tag
+
+@enduml

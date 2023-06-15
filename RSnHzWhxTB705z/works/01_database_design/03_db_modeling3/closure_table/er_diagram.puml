@@ -1,0 +1,55 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+（全テーブルにcreated_atとupdated_atカラムが付きます）
+
+endtitle
+
+
+entity "m_users : ユーザーテーブル" as m_users {
+  *id
+  --
+  *family_name : 氏
+  *first_name : 名
+  *email : メールアドレス
+}
+
+entity "t_directories : ディレクトリテーブル" as t_directories {
+  *id
+  --
+  #create_user_id
+  #update_user_id
+  *name
+}
+
+entity "t_documents : ドキュメントテーブル" as t_documents {
+  *id
+  --
+  #directory_id
+  *display_order
+  #create_user_id
+  #update_user_id
+  *name
+  *content
+  *is_deleted
+}
+
+entity "t_directory_closures : ディレクトリ 閉包テーブル" as t_directory_closures {
+  #ancestor
+  #descendant
+  --
+}
+
+m_users ||---o{ t_directories : m_users : t_directories.create_user_id\n = 1 : 0以上、\nm_users : t_directories.update_user_id\n = 1 : 0以上
+m_users ||--o{ t_documents : m_users : t_documents.create_user_id\n = 1 : 0以上、\nm_users : t_documents.update_user_id\n = 1 : 0以上
+t_directories ||-r-|{ t_documents
+t_directories ||-d-|{ t_directory_closures
+
+@enduml

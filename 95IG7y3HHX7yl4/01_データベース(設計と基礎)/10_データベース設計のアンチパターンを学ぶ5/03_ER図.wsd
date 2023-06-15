@@ -1,0 +1,18 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity "asset" as asset <<M,MASTER>> {
+    + id: VARCHAR(255) <<PK>>
+    --
+    name: VARCHAR(255)
+    product_id: VARCHAR(255)
+    asset_type: VARCHAR(255)
+    purchase_date: TIMESTAMP
+    purchase_price: DECAMAL(10,2)
+    borrower: VARCHAR(255)
+    return_date: TIMESTAMP
+}
+
+@enduml

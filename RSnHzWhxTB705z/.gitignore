@@ -1,10 +1,7 @@
-/**/*/mydocs/
+/**/*/_mydocs/
 /**/*/.env
 
 /praha_docker/db/*
-!/praha_docker/db/praha_data/
-/praha_docker/db/praha_data/*
-!/praha_docker/db/praha_data/migrations/
 
 praha_docker/web/log
 praha_docker/web/php.ini

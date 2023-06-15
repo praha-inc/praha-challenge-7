@@ -1,0 +1,1 @@
+DROP DATABASE IF EXISTS praha_igarashi_confluence_naive;

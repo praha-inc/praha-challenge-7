@@ -7,9 +7,9 @@
       "previewLimit": 50,
       "server": "localhost",
       "port": 3306,
-      "driver": "MariaDB",
-      "name": "slack_hirakawa",
-      "database": "slack",
+      "driver": "MySQL",
+      "name": "praha",
+      "database": "hirakawa_document",
       "username": "root",
       "password": "root"
     }
