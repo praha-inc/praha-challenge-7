@@ -38,4 +38,12 @@ erDiagram
 
 ## 疑問点メモ
 
-- 
+# ユースケースを想定したクエリ
+
+特定記事の過去の記事一覧を取得する
+
+```sql
+select * from T_ARTICLE_HISTORIES 
+  where latest_article_id=UUID_TO_BIN('389949d6-83ac-5f16-8e7a-cda7ea205b5b', 1) AND is_deleted=false
+  order by created_at;
+```
