@@ -1,7 +1,5 @@
 # 課題2
 
-- 記事が更新された場合は、旧データをT_ARTICLE_HISTORIESにレコード追加し、T_ARTICLESを更新する
-
 ```mermaid
 erDiagram
 
@@ -15,7 +13,7 @@ erDiagram
 
   T_ARTICLES {
     uuid article_id PK "ID"
-    uuid parent_article_id FK "親記事ID（最新記事の場合はnull）"
+    uuid latest_article_id FK "最新記事ID（最新記事の場合はnull）"
     uuid user_id FK "<Not null> ユーザID"
     varchar title "<Not null><100> 名前"
     varchar detail "<Not null><1000> 詳細"

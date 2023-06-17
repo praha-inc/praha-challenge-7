@@ -25,7 +25,7 @@ erDiagram
 
   T_ARTICLE_HISTORIES {
     uuid article_history_id PK "ID"
-    uuid parent_article_id FK "<Not null> 親（更新元）記事ID"
+    uuid latest_article_id FK "<Not null> 最新記事ID"
     varchar title "<Not null><100> 名前"
     varchar detail "<Not null><1000> 詳細"
     boolean is_deleted "<Not null> 削除されたか"
