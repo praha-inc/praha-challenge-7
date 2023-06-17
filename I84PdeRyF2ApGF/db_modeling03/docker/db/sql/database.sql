@@ -1,0 +1,1 @@
+CREATE DATABASE document_management;
