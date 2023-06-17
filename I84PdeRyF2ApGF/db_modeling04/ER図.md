@@ -4,37 +4,65 @@ erDiagram
 
 %% テーブル
 users{
-    id BIGINT PK
+    id VARCHAR PK
     name VARCHAR
-    email VARCHAR
-    created_at DATETIME
-    updated_at DATETIME
+    channel_id VARCHAR
+    created_at TIMESTAMP
+}
+
+teams{
+    id VARCHAR PK
+    name VARCHAR
+    access_token VARCHAR
+}
+
+team_users{
+    team_id VARCHAR PK
+    user_id VARCHAR PK
 }
 
 reminders{
-    id BIGINT PK
-    created_by BIGINT FK
+    id SERIAL PK
+    created_by VARCHAR FK
     message VARCHAR
     frequency_pattern VARCHAR
     nortification_day_interval INT
     nortification_weekday　VARCHAR
     nortification_date INT
-    nortification_time DATETIME
-    last_sent_at DATETIME
-    created_at DATETIME
-    updated_at DATETIME
+    nortification_time TIMESTAMP
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
 }
 
-user_tasks{
-    id BIGINT PK
-    user_id BIGINT FK
-    reminder_id BIGINT FK
+user_reminders{
+    id SERIAL PK
+    user_id VARCHAR FK
+    reminder_id SERIAL FK
     status VARCHAR
+}
+
+send_reminder{
+    id SERIAL PK
+    user_id VARCHAR FK
+    reminder_id SERIAL FK
+    sent_at TIMESTAMP
+}
+
+will_send_reminder{
+    user_id VARCHAR PK
+    reminder_id SERIAL PK
+    will_send_at TIMESTAMP
 }
 
 %% リレーション
 users ||--o{ reminders : ""
-reminders ||--o{ user_tasks : ""
-users ||--o{ user_tasks : ""
+reminders ||--o{ user_reminders : ""
+users ||--o{ send_reminder : ""
+reminders ||--o{ send_reminder : ""
+users ||--o{ will_send_reminder : ""
+reminders ||--o{ will_send_reminder : ""
+users ||--o{ user_reminders : ""
+users ||--o{ team_users : ""
+teams ||--o{ team_users : ""
 
 ```
