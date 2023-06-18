@@ -25,7 +25,7 @@ erDiagram
     uuid tag_id PK "ID"
     uuid post_id FK "<Not null> ポストID"
     varchar name "<Not null> タグ名"
-    boolean is_deleted "<Not null> 削除されたか 完了を含む"
+    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
