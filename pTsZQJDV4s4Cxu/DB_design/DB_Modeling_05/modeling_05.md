@@ -62,3 +62,8 @@ update article set title = '', content = '' WHERE id = 1;
 
 ### 最新状態の記事を一覧表示できる
 SELECT * FROM article;
+
+
+# 課題2
+## ER図
+![ER図](task_02/articleManagementSystem.png)
