@@ -12,7 +12,7 @@ entity users as "users\nユーザー" <<M, MASTER>> {
     updated_at TIMESTAMP
 }
 
-entity articles as "\n記事" <<M, MASTER>> {
+entity articles as "\n記事" <<T, TRANSACTION>> {
     +uuid VARCHAR(255)
     --
     title VARCHAR(255) [記事タイトル]
@@ -22,7 +22,7 @@ entity articles as "\n記事" <<M, MASTER>> {
     updated_at TIMESTAMP
 }
 
-entity article_logs as "\n記事履歴" <<M, MASTER>> {
+entity article_logs as "\n記事履歴" <<T, TRANSACTION>> {
     +uuid VARCHAR(255)
     --
     article_id: articles.uuid
