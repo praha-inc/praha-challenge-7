@@ -1,0 +1,53 @@
+-- DBを作成
+DROP DATABASE IF EXISTS praha_igarashi_blog;
+CREATE DATABASE IF NOT EXISTS praha_igarashi_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE praha_igarashi_blog;
+
+# \! echo 'DDL実行'
+
+-- テーブルを作成
+CREATE TABLE `m_users`
+(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_name VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE `t_articles`
+(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id INT UNSIGNED NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
+    post_date DATETIME,
+    archived_updated_date DATETIME,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (user_id) REFERENCES m_users(id)
+);
+
+CREATE TABLE `t_article_histories`
+(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    article_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
+    post_date DATETIME NOT NULL,
+    update_date DATETIME NOT NULL,
+    archived_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    FOREIGN KEY (article_id) REFERENCES t_articles(id)
+);
+
+SHOW FULL COLUMNS FROM m_users;
+SHOW FULL COLUMNS FROM t_articles;
+SHOW FULL COLUMNS FROM t_article_histories;

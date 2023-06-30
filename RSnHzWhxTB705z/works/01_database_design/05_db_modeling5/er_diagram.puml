@@ -1,0 +1,51 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+
+entity "m_users : ユーザーマスター" as m_users {
+  *id
+  --
+  *user_name : ユーザー名
+  *created_at : 作成日
+  *updated_at : 更新日
+}
+
+entity "t_articles : 記事テーブル" as t_articles {
+  *id
+  --
+  #user_id : ユーザーID
+  *title : タイトル
+  *content : 本文
+  post_date : 投稿日（記事を公開するタイミング）
+  archived_updated_date : 過去記事が履歴になった時点での更新日時
+  *created_at : 作成日（記事の公開状態に依らず、レコードを作成したタイミング）
+  *updated_at : 更新日
+}
+
+entity "t_article_histories : 記事履歴テーブル" as t_article_histories {
+  *id
+  --
+  #article_id : 記事ID
+  *user_id : ユーザーID
+  *title : タイトル
+  *content : 本文
+  *post_date : 投稿日
+  *update_date : 更新日
+  *archived_at : 履歴作成日
+}
+
+
+m_users ||--o{ t_articles
+t_articles ||--o{ t_article_histories
+
+@enduml
