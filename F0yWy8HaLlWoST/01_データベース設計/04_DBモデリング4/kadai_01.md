@@ -34,3 +34,18 @@ erDiagram
 ```
 
 ## 疑問点メモ
+
+# ユースケースを想定したクエリ
+
+ある時点で必要なリマインダ一覧取得
+
+```sql
+SELECT * FROM T_REMINDERS
+  WHERE is_deleted = false
+  AND (
+    (cycle_id = UUID_TO_BIN('d96cae55-3c90-504c-9d7c-d46469567fef', 1) AND DATE_ADD(reminded_at, INTERVAL 1 DAY) < NOW())
+    OR (cycle_id = UUID_TO_BIN('96daef1b-6295-52ad-805b-98cb46a308f1', 1) AND DATE_ADD(reminded_at, INTERVAL cycle_x DAY) < NOW())
+    OR (cycle_id = UUID_TO_BIN('fadd5842-c54a-56af-90d1-70d4db4a81cf', 1) AND cycle_x = WEEKDAY(NOW()))
+    OR (cycle_id = UUID_TO_BIN('78db889f-138c-5e8a-bc6c-572a2abf4ccd', 1) AND cycle_x = DAY(NOW()))
+    );
+```
