@@ -24,6 +24,7 @@ Close{
     id varchar PK
     customer_id varchar FK
     closedAt timestamp
+    cancelledAt timestamp
 }
 
 NewCustomer ||--o{ Call : ""
