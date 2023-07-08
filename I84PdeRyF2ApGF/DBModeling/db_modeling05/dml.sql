@@ -50,3 +50,54 @@ WHERE article_id = 1
 ORDER BY posted_at ASC, edited_at ASC;
 
 END;
+
+-- 各記事の変更履歴を古いものから順に採番して抽出するビュー
+-- article_idごとにグルーピングされているので、article_idとedit_history_numberを指定することで
+-- 特定の変更履歴の情報を取得できる
+START TRANSACTION;
+
+CREATE VIEW modeling05.article_edit_histories AS SELECT
+  ROW_NUMBER() OVER(PARTITION BY article_id ORDER BY edited_at) edit_history_number
+ ,article_id
+ ,edited_by
+ ,title
+ ,content
+ ,edited_at
+FROM
+	(SELECT 
+	   a.id article_id
+	  ,p_a.posted_by edited_by
+	  ,p_a.title
+	  ,p_a.content
+	  ,p_a.posted_at edited_at
+	FROM modeling05.articles a
+	LEFT JOIN modeling05.post_article p_a ON a.post_article_id = p_a.id
+	UNION
+	SELECT
+	  article_id
+	 ,edited_by
+	 ,title
+	 ,content
+	 ,edited_at
+	FROM modeling05.edit_article e_a) wk
+ORDER BY article_id ASC, edited_at ASC;
+
+END;
+
+-- 変更履歴ビューから取得した特定の変更履歴情報を
+-- edit_articleに挿入する
+-- article_id:1を2️番目に古い記事情報に戻す
+START TRANSACTION;
+
+INSERT INTO modeling05.edit_article(article_id, edited_by, title, content)
+SELECT
+   article_id
+  ,edited_by
+  ,title
+  ,content
+FROM modeling05.article_edit_histories
+WHERE article_id = 1
+  AND edit_history_number = 2;
+
+END;
+
