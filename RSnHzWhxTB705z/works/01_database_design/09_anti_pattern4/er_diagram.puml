@@ -1,0 +1,28 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+entity "messages : 投稿" as messages {
+  *id
+  --
+  text
+}
+
+entity "message_closures : 投稿_閉包テーブル" as message_closures {
+  #ancestor : messages.id が入る
+  #descendant : messages.id が入る
+  ※ descendant カラムには親子ノード及び孫ノードを格納する。また、自身のidも格納する。
+}
+
+messages ||--|{ message_closures
+
+@enduml
