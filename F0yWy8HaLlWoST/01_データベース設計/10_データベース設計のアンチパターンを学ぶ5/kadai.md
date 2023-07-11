@@ -29,14 +29,23 @@ erDiagram
   T_INTERVIEWS {
     uuid interview_id PK "ID"
     uuid project_id FK "プロジェクトID"
+    uuid interview_type_id FK "インタビュータイプID"
     varchar detail FK "内容"
-    boolean is_face_to_face "<Not null> 対面か"
+    date created_at "<Not null> 作成日"
+    date updated_at "更新日"
+  }
+
+  M_INTERVIEW_TYPES {
+    uuid interview_type_id PK "ID"
+    varchar type FK "名前（一旦「対面」、「電話」を想定）"
+    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
   M_CUSTOMERS ||--o{ T_PROJECTS: "1人の顧客は0以上の商談を持つ"
   T_PROJECTS ||--o{ T_INTERVIEWS: "1つのプロジェクトは0以上の面談記録を持つ"
+  T_INTERVIEWS ||--|| M_INTERVIEW_TYPES: "1つの面談は1つの面談タイプを持つ"
 ```
 
 # 課題3
