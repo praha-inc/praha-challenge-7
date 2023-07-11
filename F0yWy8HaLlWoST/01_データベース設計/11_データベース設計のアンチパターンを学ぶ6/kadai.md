@@ -21,7 +21,6 @@ erDiagram
     uuid student_id PK "ID"
     varchar name "<Not null> 名前"
     uuid status_id FK "ステータスID"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
