@@ -20,15 +20,14 @@ erDiagram
     date updated_at "更新日"
   }
 
-  T_PATH {
+  T_TREE_PATHS {
     uuid ancestor_message_id PK "先祖メッセージID（FK）"
     uuid descendant_message_id PK "子孫メッセージID（FK）"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
 
-  T_MESSAGES ||--o{ T_PATH: "1つのメッセージは0以上のパスを持つ"
+  T_MESSAGES ||--o{ T_TREE_PATHS: "1つのメッセージは0以上のパスを持つ"
 ```
 
 # 課題3
