@@ -1,0 +1,45 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+entity "categories : カテゴリー" as categories {
+  *id
+  --
+  name
+}
+
+entity "manga : マンガ" as manga {
+  *id
+  --
+  #category_id
+  name
+}
+
+entity "novel : 小説" as novel {
+  *id
+  --
+  #category_id
+  name
+}
+
+entity "comments : コメント" as comments {
+  *id
+  --
+  #category_id
+  text
+}
+
+categories ||--o{ manga
+categories ||--o{ novel
+categories ||-r-o{ comments
+
+@enduml
