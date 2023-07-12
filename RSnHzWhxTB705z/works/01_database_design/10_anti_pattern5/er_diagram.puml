@@ -1,0 +1,44 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+entity "customers : 顧客" as customers {
+  *id
+  --
+  company : 会社名
+  name : 氏名
+}
+
+entity "projects : プロジェクト" as projects {
+  *id
+  --
+  #customer_id
+  name : プロジェクト名
+  called : [boolean] 電話をかけたらTRUEになる。FALSEの人には電話をかけなければいけない
+  callNote : 電話での会話内容メモ（※ 2回目以降の会話については、内容を追記編集し更新する想定）
+  closed : [boolean] 成約した
+  closedAt : 成約日時
+}
+
+entity "meetings : 商談" as meetings {
+  *id
+  --
+  #customer_id
+  #project_id
+  memo : 内容
+  metAt : 面談日
+}
+
+customers ||--o{ projects
+projects ||--o{ meetings
+
+@enduml
