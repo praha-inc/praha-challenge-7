@@ -23,16 +23,14 @@ entity "students : 生徒" as students {
   name
 }
 
-entity "statuses_students : ステータス_生徒_中間テーブル" as statuses_students {
+entity "student_statuses : 生徒ステータステーブル" as student_statuses {
   *id
   --
-  #status_id
   #student_id
-  *status_from : あるステータスを適用した日時
-  *status_to : あるステータスの適用が終了した日時
+  #status_id
 }
 
-statuses ||--|{ statuses_students
-students ||--|{ statuses_students
+statuses ||--o{ student_statuses
+students ||--|| student_statuses
 
 @enduml
