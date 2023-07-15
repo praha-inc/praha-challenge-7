@@ -1,0 +1,185 @@
+@startuml dbModeling1
+    Entity "tax_rate\n消費税率マスタ" as t_r{
+        id [PK] : INT : 消費税区分ID
+        --
+        tax_rate : DECIMAL : 消費税率
+        starts_at : DATE : 適用開始日
+    }
+
+    Entity "customers\n顧客" as cst {
+        id [PK] : BINARY : ゲストID
+        --
+        last_name : VARCHAR : 苗字
+        first_name : VARCHAR : 名前
+        phone_number : VARCHAR : 電話番号
+        email : VARCHAR : メールアドレス
+        customer_type_id [FK] : INT : 顧客種別ID
+    }
+
+    Entity "customer_types\n顧客種別" as c_t{
+        id [PK] : INT : 顧客種別ID
+        --
+        name : VARCHAR : 種別名称
+    }
+
+    Entity "customer_addresses\n顧客住所" as c_a{
+        id [PK] : INT : 住所ID
+        --
+        customer_id [FK] : BINARY : 顧客ID
+        postal_code : VARCHAR : 郵便番号
+        address1 : VARCHAR : 住所1
+        address2 : VARCHAR : 住所2
+    }
+
+    Entity "customer_coupons\n顧客保有クーポン" as c_c{
+        id [PK] : INT : 顧客保有クーポンID
+        --
+        customer_id [FK] : BINARY : 顧客ID
+        coupon_id [FK] : INT : クーポンID
+    }
+
+    Entity "payment_methods\n決済方法" as p_m{
+        id [PK] : INT : 決済方法ID
+        --
+        name : VARCHAR : 名称
+    }
+
+    Entity "coupons\nクーポン" as cpn{
+        id [PK] : INT : クーポンID
+        --
+        name : VARCHAR : クーポン名称
+        discount_price : INT : 割引額
+        starts_at : DATETIME : 適用開始日
+        ends_at : DATETIME : 適用終了日
+    }
+
+    Entity "orders\n注文票" as o {
+        id [PK] : INT : 注文ID
+        --
+        customer_id [FK] : BINARY : 登録顧客ID
+        tax_rate_id [FK] : INT : 消費税ID
+        coupon_id [FK] : INT : クーポンID
+        subtotal_price : INT : 小計金額
+        total_price : INT : 合計金額
+        order_method : INT : 注文方法
+        postal_code : VARCHAR : 配達先郵便番号
+        address1 : VARCHAR : 住所1
+        address2 : VARCHAR : 住所2
+        payment_method_id [FK] : INT : 決済方法
+        ordered_at : DATETIME : 注文日時
+        payed_at : DATETIME : 支払日時
+    }
+
+    Entity "order_products\n注文商品" as o_p {
+        order_id [PK, FK] : INT : 注文ID 
+        order_branch_number [PK] : INT : 注文枝番 
+        --
+        product_id [FK] : INT : 商品ID
+        product_price : INT : 商品価格
+        package_id [FK] : INT : 梱包ID 
+        option_price : INT : 梱包価格
+        quantity : INT : 個数
+    }
+
+    Entity "order_options\n注文オプション" as o_o {
+        id [PK] : INT : 注文オプションID
+        --
+        order_id [FK] : INT : 注文ID
+        order_branch_number [FK] : INT : 注文枝番
+        option_id [FK] : INT : オプションID
+    }
+
+    Entity "options\nオプション" as opt{
+        id [PK] : INT : オプションID
+        --
+        name : VARCHAR : オプション名称
+    }
+
+    Entity "packages\n梱包" as pck{
+        id [PK] : INT : 梱包ID
+        --
+        name : VARCHAR : 梱包名称
+        price : INT : 梱包代
+    }
+
+    Entity "products\n商品" as p{
+        id [PK] : INT : 商品ID
+        --
+        name : VARCHAR : 商品名称
+        price : INT : 値段
+        sales_status_id [FK] : INT : 販売状況
+        inserted_at : DATETIME : 登録日時
+        updated_at : DATETIME : 更新日時
+    }
+
+    Entity "products_update_histories\n商品変更履歴" as p_h {
+        id [PK] : INT : 商品変更履歴ID
+        --
+        products_id [FK] : INT : 商品ID
+        name : VARCHAR : 商品名称
+        price : INT : 値段
+        sales_status_id [FK] : INT : 販売状況
+        product_inserted_at : DATETIME : 商品登録日時
+        product_updated_at : DATETIME : 商品更新日時
+    }
+
+    Entity "sales_status\n販売状況" as s_s{
+        id [PK] : INT : 販売状況ID
+        --
+        name : VARCHAR : 販売状況名称
+    }
+
+    Entity "set_details\nセット詳細" as s_d{
+        id [PK] : INT : セット詳細ID
+        --
+        set_id [FK] : INT : 商品ID
+        sushi_id [FK] : INT : 寿司ID
+    }
+
+    Entity "categories\nカテゴリー" as c {
+        id [PK] : INT : カテゴリーID
+        --
+        name : VARCHAR : カテゴリー名称
+    }
+
+    Entity "product_categories\n商品カテゴリー" as p_c {
+        id [PK] : INT : 商品カテゴリーID
+        --
+        product_id [FK] : INT : 商品ID
+        category_id [FK] : INT : カテゴリーID
+    }
+
+    cst ||--o{ o
+    cst ||--o{ c_c
+    cst ||--r--o{ c_a
+    c_t ||--r--o{ cst
+    cpn ||-r-o{ c_c
+    cpn ||--l--o{ o
+    t_r ||-r-o{ o
+    o   ||--|{ o_p
+    o   ||--o{ p_m
+    o_p }|--|| p
+    p   ||--l--o{ p_h
+    p   ||--|{ p_c
+    p_c }o--|| c
+    p   }o--l--|| s_s
+    s_s ||--o{ p_h
+    p   ||--o{ s_d
+    o_p }o--r--|| pck
+    p   ||--o{ o_o
+    o_o }o--|| opt
+
+    ' * 主キー
+    ' + 外部キー
+    ' カラム名 : 型 : 説明
+
+    ' 1対０また1
+    ' A ||--o| B
+    ' 1対1
+    ' A ||--|| B
+    ' 1対0以上
+    ' A ||--o{ B
+    ' 1対1以上
+    ' A ||--|{ B
+
+@enduml
