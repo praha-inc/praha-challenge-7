@@ -29,15 +29,13 @@ erDiagram
 
   M_ITEMS {
     uuid item_id PK "商品ID"
-    uuid sushi_id FK "お好みすしID"
-    uuid set_id FK "セットメニュID"
-    boolean is_deleted "削除されたか"
+    boolean is_deleted "削除されたか（過去伝票との整合性が取れなくなるので論理削除）"
     date created_at "作成日"
     date updated_at "更新日"
   }
 
   M_SUSHI_MENUS {
-    uuid sushi_id PK "お好みすしID"
+    uuid item_id PK "商品ID"
     string name "お好みすし名"
     int price "値段"
     date created_at "作成日"
@@ -45,7 +43,7 @@ erDiagram
   }
 
   M_SET_MENUS {
-    uuid set_id PK "セットメニュID"
+    uuid item_id PK "商品ID"
     uuid set_type_id FK "セットメニュ区分ID"
     string name "セットメニュ名"
     int price "値段"
@@ -55,8 +53,8 @@ erDiagram
 
   R_SUSHI_MENUS_AND_SET_MENUS {
     uuid sushi_set_id PK "お好みすし_セットメニュ_中間テーブルID"
-    uuid sushi_id FK "お好みすしID"
-    uuid set_id FK "セットメニュID"
+    uuid sushi_id FK "お好みすしID(item_id)"
+    uuid set_id FK "セットメニュID(item_id)"
     int sushi_count "お好みすしが1セットに何個入っているか" 
     date created_at "作成日"
     date updated_at "更新日"

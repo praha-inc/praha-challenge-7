@@ -6,7 +6,6 @@ erDiagram
   M_USERS {
     uuid user_id PK "ID"
     varchar name "<Not null> 名前"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "<Not null> 更新日"
   }
@@ -17,7 +16,6 @@ erDiagram
     uuid user_id FK "<Not null> ユーザID"
     varchar title "<Not null><100> 名前"
     varchar detail "<Not null><1000> 詳細"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "<Not null> 更新日"
   }
