@@ -1,0 +1,10 @@
+table student {
+  id varchar [pk, not null]
+  name varchar [unique, not null]
+  status_id varchar [not null, ref: < status.id]
+}
+
+table status {
+  id varchar [pk, not null]
+  description varchar [unique, not null]
+} 
