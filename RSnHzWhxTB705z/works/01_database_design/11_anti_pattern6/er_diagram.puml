@@ -1,0 +1,36 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+entity "statuses : ステータス" as statuses {
+  *id
+  --
+  name
+}
+
+entity "students : 生徒" as students {
+  *id
+  --
+  name
+}
+
+entity "student_statuses : 生徒ステータステーブル" as student_statuses {
+  *id
+  --
+  #student_id
+  #status_id
+}
+
+statuses ||--o{ student_statuses
+students ||--|| student_statuses
+
+@enduml
