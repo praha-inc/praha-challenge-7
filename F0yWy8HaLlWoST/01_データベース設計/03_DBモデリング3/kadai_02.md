@@ -16,9 +16,7 @@ erDiagram
   M_DIRECTORIES {
     uuid directory_id PK "ディレクトリID"
     uuid user_id FK "<Not null> ユーザID"
-    uuid parent_directory_id FK "<Not null><default: root> 親ディレクトリID"
     varchar name "<Not null> 名前"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
@@ -31,7 +29,13 @@ erDiagram
     varchar name "<Not null> 名前"
     varchar detail "<Not null> 内容"
     int index "<Not null><default: 最大index+1> ディレクトリ内での順番"
-    boolean is_deleted "<Not null> 削除されたか"
+    date created_at "<Not null> 作成日"
+    date updated_at "更新日"
+  }
+
+  T_TREE_PATHS {
+    uuid ancestor_directory_id PK "先祖ディレクトリID"
+    uuid descendant_directory_id PK "子孫ディレクトリID"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
@@ -39,6 +43,7 @@ erDiagram
   M_USERS ||--o{ M_DIRECTORIES: "1人のユーザは0以上のディレクトリをもつ"
   M_USERS ||--o{ M_DOCUMENTS: "1人のユーザは0以上のドキュメントをもつ"
   M_DIRECTORIES ||--|{ M_DOCUMENTS: "1つのディレクトリは1以上のドキュメントをもつ"
+  M_DIRECTORIES ||--|{ T_TREE_PATHS: "1つのディレクトリは1以上のパスをもつ"
 ```
 
 ## 疑問点メモ

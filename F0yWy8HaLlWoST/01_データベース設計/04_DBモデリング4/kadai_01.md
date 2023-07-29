@@ -12,7 +12,6 @@ erDiagram
   M_CYCLES {
     uuid cycle_id PK "ID"
     varchar name "<Not null> 名前"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
@@ -24,7 +23,6 @@ erDiagram
     varchar slack_to_user_name "<Not null> 送信先slackユーザ名"
     varchar slack_from_user_name "<Not null> 送信元slackユーザ名"
     varchar detail "<Not null> 内容"
-    boolean is_deleted "<Not null> 削除されたか 完了を含む"
     date reminded_at "前回のリマインド日時"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"

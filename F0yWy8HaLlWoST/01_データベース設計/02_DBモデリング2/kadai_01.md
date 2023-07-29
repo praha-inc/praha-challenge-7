@@ -14,7 +14,6 @@ erDiagram
     uuid user_id PK "ユーザID"
     uuid workspace_id FK "<Not null> ワークスペースID"
     varchar name "<Not null> 名前"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
@@ -23,7 +22,7 @@ erDiagram
     uuid channel_id PK "チャネルID"
     uuid workspace_id FK "<Not null> ワークスペースID"
     varchar name "<Not null> 名前"
-    boolean is_deleted "<Not null> 削除されたか"
+    boolean is_deleted "<Not null> 削除されたか（アーカイブされるので論理削除）"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
@@ -32,7 +31,7 @@ erDiagram
     uuid users_and_channels_id PK "ユーザ_チャネル_中間テーブルID"
     uuid user_id FK "<Not null> ユーザID"
     uuid channel_id FK "<Not null> チャネルID"
-    boolean is_deleted "<Not null> 削除されたか"
+    boolean is_deleted "<Not null> 削除されたか（アーカイブされるので論理削除）"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
@@ -42,7 +41,6 @@ erDiagram
     uuid user_id FK "<Not null> ユーザID"
     uuid channel_id FK "<Not null> チャネルID"
     varchar message "<Not null> メッセージ"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
@@ -52,7 +50,6 @@ erDiagram
     uuid user_id FK "<Not null> ユーザID"
     uuid message_id FK "<Not null> メッセージID"
     varchar thread_message "<Not null> スレッドメッセージ"
-    boolean is_deleted "<Not null> 削除されたか"
     date created_at "<Not null> 作成日"
     date updated_at "更新日"
   }
