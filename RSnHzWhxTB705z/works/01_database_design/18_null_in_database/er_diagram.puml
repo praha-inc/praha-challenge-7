@@ -1,0 +1,36 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+entity "assignee : 担当者" as assignee {
+  *id
+  --
+  name
+}
+
+entity "issue : 課題" as issue {
+  *id
+  --
+  text
+}
+
+entity "assignee_issue : 担当者_課題_中間テーブル" as assignee_issue {
+  *id
+  --
+  #assignee_id : 投稿ID
+  #issue_id : タグID
+}
+
+assignee ||--o{ assignee_issue
+issue ||--o{ assignee_issue
+
+@enduml
