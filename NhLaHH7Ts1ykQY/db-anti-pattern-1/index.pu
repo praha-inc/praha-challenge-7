@@ -1,0 +1,35 @@
+@startuml posts_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity posts as "posts\n投稿" <<T, TRANSACTION>>  {
+    +id uuid [ID]
+    --
+    body TEXT [投稿ID],
+    # tag_id uuid [タグID]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+
+entity tags as "tags\nタグ" <<M, MASTER>> {
+    + id uuid [ID]
+    --
+    label VARCHAR(30) [ラベル名]
+    value VARCHAR(30) [値]
+}
+
+
+entity posts_tags as "posts_tags" <<T, TRANSACTION>>  {
+    + post_id [FK]
+    + tag_id [FK]
+    --
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+posts --|{ posts_tags
+tags --|{ posts_tags
+
+@enduml

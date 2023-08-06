@@ -1,0 +1,35 @@
+@startuml sokysho_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity books as "books\n書籍" <<T, TRANSACTION>>  {
+    +id uuid [ID]
+    --
+    name VARCHAR(30) [書籍名],
+    # tag_id uuid [タグID]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+
+entity tags as "tags\nタグ" <<M, MASTER>> {
+    + id uuid [ID]
+    --
+    label VARCHAR(30) [ラベル名]
+    value VARCHAR(30) [値]
+}
+
+
+entity books_tags as "books_tags" <<T, TRANSACTION>>  {
+    + book_id [FK]
+    + tag_id [FK]
+    --
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+books --|{ books_tags
+tags --|{ books_tags
+
+@enduml
