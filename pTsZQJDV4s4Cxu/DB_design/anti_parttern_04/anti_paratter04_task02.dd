@@ -1,0 +1,10 @@
+table message {
+  id varchar [pk, not null]
+  text varchar [not null]
+}
+
+table message_closure {
+  parent_message_id int [not null, ref: > message.id]
+  child_message_id int [not null, ref: > message.id]
+}
+
