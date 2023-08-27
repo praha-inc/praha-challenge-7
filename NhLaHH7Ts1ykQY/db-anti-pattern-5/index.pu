@@ -1,0 +1,27 @@
+@startuml posts_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity customers as "customers\n顧客" <<T, TRANSACTION>>  {
+    +id varchar [ID]
+    --
+    phone_number varchar [電話番号],
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+
+entity logs as "logs\n面談履歴" <<M, MASTER>> {
+    + id uuid [ID]
+    --
+    customer_id varchar [顧客ID]
+    calledNote TEXT [面談内容]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+    closed BOOLEAN [誓約したかどうか]
+    closed_at [誓約日]
+}
+
+
+@enduml

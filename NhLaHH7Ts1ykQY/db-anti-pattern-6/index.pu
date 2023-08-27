@@ -1,0 +1,22 @@
+@startuml students_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity students as "students\n生徒" <<M, MASTER>>  {
+    +id varchar [ID]
+    --
+    name varchar [名前],
+    status_id
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity status as "status\nステータス" <<M, MASTER>>  {
+    +id varchar [ID]
+    --
+    label varchar [ステータスラベル],
+    status varchar [ステータス]
+}
+
+@enduml

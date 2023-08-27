@@ -1,0 +1,13 @@
+@startuml message_table
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity messages as "messages\nメッセージ" <<T, TRANSACTION>>  {
+    +id varchar [ID]
+    --
+    path TEXT [親IDから自身までのpath],
+    text uuid [投稿内容]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
