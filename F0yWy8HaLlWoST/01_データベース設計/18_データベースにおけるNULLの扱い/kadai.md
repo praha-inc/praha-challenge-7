@@ -32,7 +32,6 @@ erDiagram
   T_ISSUE {
     uuid id PK "ID"
     varchar text "<Not null> text"
-    uuid assigned_to_id FK "<Not null> assigned to ID"
   }
 
   R_ASSIGNEE_ISSUE {
