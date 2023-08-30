@@ -1,0 +1,26 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: mysql-praha
+    volumes:
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: praha
+      MYSQL_USER: praha
+      MYSQL_PASSWORD: praha
+      TZ: 'Asia/Tokyo'
+    ports:
+      - "3306:3306"
+  pma:
+    container_name: pma-praha
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 20480K
+      PMA_USER: praha
+      PMA_PASSWORD: praha
+    ports:
+      - "8080:80"
+    links:
+      - db

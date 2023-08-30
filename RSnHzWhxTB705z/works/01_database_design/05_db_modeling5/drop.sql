@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS praha_igarashi_blog;
+
+SHOW DATABASES;

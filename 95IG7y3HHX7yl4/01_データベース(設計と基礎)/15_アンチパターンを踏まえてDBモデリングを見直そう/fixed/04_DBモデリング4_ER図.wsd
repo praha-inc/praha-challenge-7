@@ -1,0 +1,27 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+entity "users" as users <<M,MASTER>> {
+    + id: INT <<PK>>
+    --
+    webhook_url: VARCHAR(255)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity "reminders" as reminders <<T,TRANSACTION>> {
+    + id: INT <<PK>>
+    --
+    - user_id: INT <<FK>>
+    message: TEXT
+    frequency_type: INT
+    frequency_value: INT
+    last_sent_time: TIMESTAMP
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+users ||-right-o{ reminders
+
+@enduml

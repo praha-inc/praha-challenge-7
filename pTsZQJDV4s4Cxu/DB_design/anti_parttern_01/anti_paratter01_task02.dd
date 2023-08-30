@@ -1,0 +1,14 @@
+table post {
+  id int [pk, not null]
+  text varchar [not null]
+}
+
+table tag {
+  id int [pk, not null]
+  tagName varcahr [not null]
+}
+
+table post_tag {
+  postId int [pk, not null, ref: > post.id]
+  tagId int [pk, not null, ref: > tag.id]
+}

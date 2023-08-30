@@ -1,16 +1,19 @@
 # hello PrAha Challenge
 
 ## Directories
+```
 .
 ├── praha_docker
 │   ├── db
 │   ├── web
 │   │   └── Dockerfile
 │   └── docker-compose.yml
+├── works                           // 課題ディレクトリ
 ├── www
 │   ├── app
 │   └── RSnHzWhxTB705z              // 公開ディレクトリ
 └── README.md
+```
 
 ## Docker
 ### 環境構築

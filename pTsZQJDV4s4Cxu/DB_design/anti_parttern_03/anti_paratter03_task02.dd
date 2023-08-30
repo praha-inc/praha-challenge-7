@@ -1,0 +1,16 @@
+table book {
+  id int [pk, not null]
+  name varchar [not null]
+  typeId int [not null]
+}
+
+table comment {
+  id int [pk, not null]
+  bookId int [not null, ref: > book.id]
+  text varcahr [not null]
+}
+
+table type {
+  id int [pk, not null, ref: > book.typeId]
+  description varchar [not null]
+}

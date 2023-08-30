@@ -1,0 +1,68 @@
+// 課題1の解答
+// dbdiagramで開くとER図ができる
+// https://dbdiagram.io/d
+
+// DBML
+// https://www.dbml.org/docs/#project-definition
+
+// 注文
+table order {
+  id int [pk]
+  orderer_id int [not null, ref: > orderer.id]
+  date datetime
+  status int [not null, ref: > status.id]
+  totalorder_count int [not null]
+  amount decimal(9,0)
+}
+
+// 注文詳細
+table order_detail {
+  order_detail_id int [pk]
+  order_id int [not null, ref: > order.id]
+  product_id int [not null, ref: > product.id]
+  is_wasabi boolean [not null]
+  size int [not null, ref: > size.id]
+}
+
+// 商品
+table product {
+  id int [pk]
+  from_date datetime [unique, not null]
+  to_date datetime [unique, not null]
+  name varchar(100) [unique, not null]
+  price decimal(5,0) [not null]
+  product_type_id int [not null, ref: > product_type.id]
+}
+
+// 注文者
+table orderer {
+  id int [pk]
+  name varchar(100) [not null]
+  phone_number varchar(20)
+}
+
+// サイズ
+table size {
+  id int [pk]
+  name varchar(20) [unique, not null]
+}
+
+// 商品区分
+table product_type {
+  id int [pk]
+  description varchar(200) [unique, not null]
+}
+
+// 消費税
+table tax {
+  id int [pk]
+  fromDate datetime [unique, not null]
+  toDate datetime [unique, not null] 
+  tax decimal(3,2)
+}
+
+// ステータス
+table status {
+  id int [pk]
+  name varchar(50) [unique, not null] // 注文完了、未払い、支払完了、受け渡し完了
+}

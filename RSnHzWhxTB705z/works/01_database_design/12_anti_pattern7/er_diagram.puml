@@ -1,0 +1,59 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+entity "statuses : ステータス" as statuses {
+  *id
+  --
+  name
+  ※ 「退会」はステータスとして持たず、関連レコードを退会関連テーブルにデータ移行する
+}
+
+entity "students : 生徒" as students {
+  *student_id
+  --
+  name
+  ※ 退会した生徒は quit_students テーブルにデータ移行する
+}
+
+entity "statuses_students : ステータス_生徒_中間テーブル" as statuses_students {
+  *id
+  --
+  #status_id
+  #student_id
+  *status_from : あるステータスを適用した日時
+  *status_to : あるステータスの適用が終了した日時
+  ※ 退会した生徒のidをもつレコードは statuses_quit_students テーブルにデータ移行する
+}
+
+entity "quit_students :  退会済み生徒" as quit_students {
+  *student_id
+  --
+  name
+  created_at
+  ※ 一定期間保持することをサービスの規約としておき、当該期間経過後に物理削除を行う
+}
+
+entity "statuses_quit_students : ステータス_退会済み生徒_中間テーブル" as statuses_quit_students {
+  *id
+  --
+  #status_id
+  #student_id
+  *status_from
+  *status_to
+  ※ 一定期間保持することをサービスの規約としておき、当該期間経過後に物理削除を行う
+}
+
+statuses ||--|{ statuses_students
+students ||--|{ statuses_students
+
+@enduml

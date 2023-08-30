@@ -1,0 +1,37 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+
+endtitle
+
+entity "posts : 投稿" as posts {
+  *id
+  --
+  text : 投稿内容
+}
+
+entity "tags : タグ" as tags {
+  *id
+  --
+  name : タグ名
+}
+
+entity "tags_posts : タグ_投稿_テーブル" as tags_posts {
+  *id
+  --
+  #post_id : 投稿ID
+  #tag_id : タグID
+  ※ （post_id, tag_id）で複合ユニーク制約をつける
+}
+
+posts |o--o| tags_posts
+tags }o--o{ tags_posts
+
+@enduml

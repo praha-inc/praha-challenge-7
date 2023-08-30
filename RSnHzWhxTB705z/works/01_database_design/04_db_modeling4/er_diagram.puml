@@ -1,0 +1,46 @@
+@startuml
+
+' hide the spot
+hide circle
+
+title
+DB設計
+
+（カラム名の前の「#（菱形）」はFKです）
+（カラム名の前の「*（黒丸）」は必須項目です）
+（全テーブルにcreated_atとupdated_atカラムが付きます）
+
+endtitle
+
+
+entity "m_frequencies : 頻度マスター" as m_frequencies {
+  *id : 頻度（区分）：1→時間、2->毎日、3→X日おき、4→毎週X曜日、5→毎月X日
+  ※（将来的に入る可能性があるため0に時間を当てておくが、今回は作成しない）
+}
+
+entity "t_reminders : リマインダーテーブル" as t_reminders {
+  *id
+  --
+  *send_user_id : 送信ユーザーID
+  #frequency_id : 頻度ID
+  *frequency_value : 頻度
+  *content : 本文
+  *is_done : 完了済みか
+  *reminded_at : 前回のリマインド日時
+  *created_at : 日時は、時間までを現在時刻に基づくものとし、00分00秒で登録することとします。
+  *updated_at : 日時は、時間までを現在時刻に基づくものとし、00分00秒で登録することとします。
+}
+
+entity "t_target_users : 送信先ユーザーテーブル" as t_target_users {
+  *id
+  --
+  #reminder_id : リマインダーID
+  *target_user_id : 対象ユーザーID
+}
+
+
+m_frequencies ||--|| t_reminders
+
+t_reminders ||--|{ t_target_users
+
+@enduml
