@@ -87,15 +87,15 @@ interface PurchaseValidationRule {
 }
 
 class HasPurchasedWithinLastYearRule implements PurchaseValidationRule {
-  private purchases: Purchases;
+  private purchasesWithinLastYear: Purchases;
 
   constructor(purchases: Purchases) {
-    this.purchases = purchases;
+    this.purchasesWithinLastYear = purchases;
   }
 
   isInvalid(purchaseItem: PurchaseItem): boolean {
     const oneYearAgo = DateUtils.getOneYearAgo(new Date());
-    return this.purchases.all.some(
+    return this.purchasesWithinLastYear.all.some(
         purchase =>
           purchase.product.equals(purchaseItem) &&
           purchase.transaction.succeeded &&
