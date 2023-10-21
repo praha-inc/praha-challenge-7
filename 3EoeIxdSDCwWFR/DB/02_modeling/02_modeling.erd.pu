@@ -1,0 +1,74 @@
+@startuml test
+hide circle
+skinparam linetype ortho
+
+entity "m_user (ユーザーマスタ)" as m_user {
+     * <<PK>> user_id(ユーザーid) uuid
+     --
+     * user_name(ユーザー名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "t_user_workspace (ユーザーワークスペーストラン)" as t_user_workspace {
+     * <<PK>><<FK>> user_id(ユーザーid) uuid
+     * <<PK>><<FK>> workspace_id(ワークスペースid) uuid
+     --
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_workspace (ワークスペースマスタ)" as m_workspace {
+     * <<PK>> workspace_id(ワークスペースid) uuid
+     --
+     * workspace_name(ワークスペース名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "t_user_channel (ユーザーチャネルトラン)" as t_user_channel {
+     * <<PK>><<FK>> user_id(ユーザーid) uuid
+     * <<PK>><<FK>> channel_id(チャネルid) uuid
+     --
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_channel (チャネルマスタ)" as m_channel {
+     * <<PK>> channel_id(チャネルid) uuid
+     --
+     * channel_name(チャネル名) string
+     * <<FK>> workspace_id(ワークスペースid) uuid
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "t_message (メッセージトラン)" as t_message {
+     * <<PK>> message_id(メッセージid) uuid
+     --
+     * <<FK>>user_id(ユーザーID) uuid
+     * <<FK>>channel_id(チャネルID) uuid
+     * content (内容) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "t_thread_message (スレッドメッセージトラン)" as t_thread_message {
+     * <<PK>> thread_message_id(スレッドメッセージid) uuid
+     --
+     * <<FK>> message_id(メッセージid) uuid
+     * <<FK>> user_id(ユーザーID) uuid
+     * content (内容) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ m_user ||..|{ t_user_workspace
+ m_workspace ||..|{ t_user_workspace
+ m_user ||..|{ t_user_channel
+ m_channel ||..|{ t_user_channel
+ m_user ||..|{ t_message
+ m_channel ||..|{ t_message
+ t_message ||..|{ t_thread_message
+
+@enduml
