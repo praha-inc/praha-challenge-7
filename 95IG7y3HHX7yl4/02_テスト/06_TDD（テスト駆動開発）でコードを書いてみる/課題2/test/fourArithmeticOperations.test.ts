@@ -16,6 +16,13 @@ describe('四則演算', () => {
         new ForArithmeticOperations(...Array(31).fill(1));
       }).toThrow('Number of arguments should be within 30');
     })
+
+    test('引数にStringを渡すとエラーが発生する', () => {
+      expect(() => {
+        // 準備・実行・確認
+        new ForArithmeticOperations('String' as unknown as number);
+      }).toThrow('All arguments must be numbers');
+    })
   })
 
   describe('足し算', () => {
@@ -48,13 +55,6 @@ describe('四則演算', () => {
         let object = new ForArithmeticOperations(...Array(30).fill(1));
         // 実行・確認
         expect(object.add()).toBe(30)
-      })
-    })
-
-    describe('引数が数字以外だとエラーが発生する', () => {
-      test('引数にStringを渡すとエラーが発生する', () => {
-        // コンパイル時にエラーに為るためコメントアウト
-        // expect(object.add('String'));
       })
     })
 
@@ -110,13 +110,6 @@ describe('四則演算', () => {
       })
     })
 
-    describe('引数が数字以外だとエラーが発生する', () => {
-      test('引数にStringを渡すとエラーが発生する', () => {
-        // コンパイル時にエラーに為るためコメントアウト
-        // expect(object.subtract('String'));
-      })
-    })
-
     describe('計算結果がマイナスの場合は「negative number」と文字列が返る', () => {
       test('引数が-1の場合、"negative number"という文字列が返ってくる', () => {
         // 準備
@@ -169,13 +162,6 @@ describe('四則演算', () => {
       })
     })
 
-    describe('引数が数字以外だとエラーが発生する', () => {
-      test('引数にStringを渡すとエラーが発生する', () => {
-        // コンパイル時にエラーに為るためコメントアウト
-        // expect(object.multiply('String'));
-      })
-    })
-
     describe('計算結果が1000を越える場合は「big big number」と文字列が返る', () => {
       test('引数が1001の場合、"big big number"という文字列が返ってくる', () => {
         // 準備
@@ -225,13 +211,6 @@ describe('四則演算', () => {
         let object = new ForArithmeticOperations(...Array(30).fill(1));
         // 実行・確認
         expect(object.divide()).toBe(1)
-      })
-    })
-
-    describe('引数が数字以外だとエラーが発生する', () => {
-      test('引数にStringを渡すとエラーが発生する', () => {
-        // コンパイル時にエラーに為るためコメントアウト
-        // expect(object.divide('String'));
       })
     })
 

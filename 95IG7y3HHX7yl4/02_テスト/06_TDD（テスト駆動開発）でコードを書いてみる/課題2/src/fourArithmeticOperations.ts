@@ -12,6 +12,11 @@ export class ForArithmeticOperations {
     if (values.length > this.MAX_NUMBER_OF_ARGUMENTS) {
       throw new Error('Number of arguments should be within 30')
     }
+    values.forEach(value => {
+      if (typeof value !== 'number') {
+        throw new Error('All arguments must be numbers');
+      }
+    });
     this.values = values;
   }
 
