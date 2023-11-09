@@ -3,33 +3,34 @@ export class ForArithmeticOperations {
   private MAX_RESULT_VALUE: number = 1000;
   private NUMBER_OF_DIGITS_TO_ROUND_UP: number = 5;
 
-  add(...num: number[]) {
-    if (num.length == 0) {
+  private values: number[];
+
+  constructor(...values: number[]) {
+    if (values.length == 0) {
       throw new Error('Number of arguments is 0')
     }
-    if (num.length > this.MAX_NUMBER_OF_ARGUMENTS) {
+    if (values.length > this.MAX_NUMBER_OF_ARGUMENTS) {
       throw new Error('Number of arguments should be within 30')
     }
+    this.values = values;
+  }
+
+  add() {
     let result = 0
-    for (let i = 0; i < num.length; i++) {
-      result += num[i]
+    for (let i = 0; i < this.values.length; i++) {
+      result += this.values[i]
       if (result > this.MAX_RESULT_VALUE) {
         return 'too big'
       }
     }
     return this.roundToSixthDecimalPlace(result)
   }
-  
-  subtract(...num: number[]): any {
-    if (num.length == 0) {
-      throw new Error('Number of arguments is 0')
-    }
-    if (num.length > this.MAX_NUMBER_OF_ARGUMENTS) {
-      throw new Error('Number of arguments should be within 30')
-    }
-    let result = num[0]
-    for (let i = 1; i < num.length; i++) {
-      result -= num[i]
+
+  subtract(): any {
+
+    let result = this.values[0]
+    for (let i = 1; i < this.values.length; i++) {
+      result -= this.values[i]
     }
     if (result < 0) {
       return 'negative number'
@@ -37,16 +38,10 @@ export class ForArithmeticOperations {
     return this.roundToSixthDecimalPlace(result)
   }
 
-  multiply(...num: number[]): any {
-    if (num.length == 0) {
-      throw new Error('Number of arguments is 0')
-    }
-    if (num.length > this.MAX_NUMBER_OF_ARGUMENTS) {
-      throw new Error('Number of arguments should be within 30')
-    }
+  multiply(): any {
     let result = 1
-    for (let i = 0; i < num.length; i++) {
-      result *= num[i]
+    for (let i = 0; i < this.values.length; i++) {
+      result *= this.values[i]
       if (result > this.MAX_RESULT_VALUE) {
         return 'big big number'
       }
@@ -54,16 +49,10 @@ export class ForArithmeticOperations {
     return this.roundToSixthDecimalPlace(result)
   }
 
-  divide(...num: number[]): any {
-    if (num.length == 0) {
-      throw new Error('Number of arguments is 0')
-    }
-    if (num.length > this.MAX_NUMBER_OF_ARGUMENTS) {
-      throw new Error('Number of arguments should be within 30')
-    }
-    let result = num[0]
-    for (let i = 1; i < num.length; i++) {
-      result /= num[i]
+  divide(): any {
+    let result = this.values[0]
+    for (let i = 1; i < this.values.length; i++) {
+      result /= this.values[i]
     }
     return this.roundToSixthDecimalPlace(result)
   }
