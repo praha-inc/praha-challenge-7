@@ -1,15 +1,13 @@
-export class ForArithmeticOperations {
-  private MAX_NUMBER_OF_ARGUMENTS: number = 30;
-  private MAX_RESULT_VALUE: number = 1000;
-  private NUMBER_OF_DIGITS_TO_ROUND_UP: number = 5;
+export class Parameter {
+  static MAX_NUMBER_OF_ARGUMENTS: number = 30;
 
-  private values: number[];
+  readonly values: number[];
 
   constructor(...values: number[]) {
     if (values.length == 0) {
       throw new Error('Number of arguments is 0')
     }
-    if (values.length > this.MAX_NUMBER_OF_ARGUMENTS) {
+    if (values.length > Parameter.MAX_NUMBER_OF_ARGUMENTS) {
       throw new Error('Number of arguments should be within 30')
     }
     values.forEach(value => {
@@ -19,47 +17,55 @@ export class ForArithmeticOperations {
     });
     this.values = values;
   }
+}
 
-  add() {
+
+export class ForArithmeticOperations {
+  static MAX_RESULT_VALUE: number = 1000;
+  static NUMBER_OF_DIGITS_TO_ROUND_UP: number = 5;
+
+  static add(param: Parameter) {
     let result = 0
-    for (let i = 0; i < this.values.length; i++) {
-      result += this.values[i]
-      if (result > this.MAX_RESULT_VALUE) {
+    for (let i = 0; i < param.values.length; i++) {
+      result += param.values[i]
+      if (result > ForArithmeticOperations.MAX_RESULT_VALUE) {
         return 'too big'
       }
     }
-    return this.roundToSixthDecimalPlace(result)
+    return ForArithmeticOperations.roundToSixthDecimalPlace(result)
   }
 
-  subtract(): any {
-
-    let result = this.values[0]
-    for (let i = 1; i < this.values.length; i++) {
-      result -= this.values[i]
+  static subtract(param: Parameter): any {
+    let result = param.values[0]
+    for (let i = 1; i < param.values.length; i++) {
+      result -= param.values[i]
     }
     if (result < 0) {
       return 'negative number'
     }
-    return this.roundToSixthDecimalPlace(result)
+    return ForArithmeticOperations.roundToSixthDecimalPlace(result)
   }
 
-  multiply(): any {
+  static multiply(param: Parameter): any {
     let result = 1
-    for (let i = 0; i < this.values.length; i++) {
-      result *= this.values[i]
-      if (result > this.MAX_RESULT_VALUE) {
+    for (let i = 0; i < param.values.length; i++) {
+      result *= param.values[i]
+      if (result > ForArithmeticOperations.MAX_RESULT_VALUE) {
         return 'big big number'
       }
     }
-    return this.roundToSixthDecimalPlace(result)
+    return ForArithmeticOperations.roundToSixthDecimalPlace(result)
   }
 
-  divide(): any {
-    let result = this.values[0]
-    for (let i = 1; i < this.values.length; i++) {
-      result /= this.values[i]
+  static divide(param: Parameter): any {
+    let result = param.values[0]
+    for (let i = 1; i < param.values.length; i++) {
+      if (param.values[i] === 0) {
+        throw new Error("Division by zero is undefined and not allowed.");
+      }
+      result /= param.values[i]
     }
-    return this.roundToSixthDecimalPlace(result)
+    return ForArithmeticOperations.roundToSixthDecimalPlace(result)
   }
 
   /**
@@ -71,7 +77,7 @@ export class ForArithmeticOperations {
    * @example
    * roundToSixthDecimalPlace(123.456789123);  // 123.456789を返します
    */
-  private roundToSixthDecimalPlace(value: number): number {
+  static roundToSixthDecimalPlace(value: number): number {
     const multiplier = Math.pow(10, this.NUMBER_OF_DIGITS_TO_ROUND_UP);
     return Math.round(value * multiplier) / multiplier;
   }
