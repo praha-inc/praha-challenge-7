@@ -7,6 +7,10 @@ class Id {
     }
     this.value = value;
   }
+
+  public equals(other: Id): boolean {
+    return this.value == other.value;
+  }
 }
 
 enum BloodTypeEnum {
@@ -17,9 +21,13 @@ enum BloodTypeEnum {
 }
 
 class BloodType {
-  readonly name: String;
+  readonly value: String;
   constructor(type: BloodTypeEnum) {
-    this.name = type;
+    this.value = type;
+  }
+
+  public equals(other: BloodType): boolean {
+    return this.value == other.value;
   }
 }
 
@@ -35,6 +43,10 @@ class BirthData {
   get value(): Date {
     return new Date(this._value.getTime());
   }
+
+  public equals(other: BirthData): boolean {
+    return this.value == other.value;
+  }
 }
 
 class Name {
@@ -44,6 +56,10 @@ class Name {
       throw new Error("名前は1文字以上の長さにしてください");;
     }
     this.value = value;
+  }
+
+  public equals(other: Name): boolean {
+    return this.value == other.value;
   }
 }
 
@@ -65,7 +81,7 @@ class HumanEntity {
   }
 
   get bloodType(): String {
-    return this._bloodType.name;
+    return this._bloodType.value;
   }
 
   get birthDate(): Date {
