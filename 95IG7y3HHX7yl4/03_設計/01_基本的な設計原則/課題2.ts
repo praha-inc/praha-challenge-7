@@ -113,9 +113,9 @@ class PurchaseService {
   private purchaseItem: PurchaseItem;
   private validationRules: PurchaseValidationRule[]; 
 
-  public constructor(purchaseRepo: IPurchaseRepo, cartItems: PurchaseItem, validationRules: PurchaseValidationRule[]) {
+  public constructor(purchaseRepo: IPurchaseRepo, cartItem: PurchaseItem, validationRules: PurchaseValidationRule[]) {
     this.purchaseRepo = purchaseRepo;
-    this.purchaseItem = cartItems;
+    this.purchaseItem = cartItem;
     this.validationRules = validationRules;
   }
 
