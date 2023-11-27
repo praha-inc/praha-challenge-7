@@ -1,4 +1,4 @@
-@startuml hoge 
+@startuml usecase 
 left to right direction
 
 :参加者: as participant
