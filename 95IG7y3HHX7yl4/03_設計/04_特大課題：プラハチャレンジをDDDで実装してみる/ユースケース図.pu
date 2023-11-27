@@ -2,12 +2,21 @@
 left to right direction
 
 :参加者: as participant
+
+:管理者: as manager
+
 note left of participant 
 - 名前とメールアドレスを持つ
     - メールアドレスの重複は許容されない
 - メールアドレスの重複は許容されない
     - ステータスが「在籍中」ではない場合、
     どのチームにもペアにも所属してはいけない
+end note
+
+note bottom of manager 
+- 参加者の変動により管理者の調整が必要な場合メールを受信。
+    - 参加者にヒアリングして、ペアを編成する。
+- 詳細は、「参加者の増減に関する仕様」を参照
 end note
 
 rectangle 全メンバー as all_member {
@@ -68,5 +77,6 @@ participant --> UC4_1
 participant --> UC4_2
 participant --> UC5_1
 participant --> UC5_2
+enrollment_status --> manager
 
 @enduml
