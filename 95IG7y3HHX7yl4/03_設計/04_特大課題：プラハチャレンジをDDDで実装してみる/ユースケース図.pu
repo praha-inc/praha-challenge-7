@@ -46,12 +46,12 @@ note right of pair
 - ペアは必ず同じチームの参加者から選ばれます（チーム1とチーム2の参加者がペアを組むことはありません）
 end note
 
-rectangle 課題 as assignment {
+rectangle 課題 as task {
     usecase "課題の進捗を変更する" as UC4_1
     usecase "課題の取得絞り込み" as UC4_2
 }
 
-note right of assignment 
+note right of task 
 - 全ての参加者は複数の課題（80個ぐらい）を所有（割り当てられて）いる
 - 課題には、参加者ごとに進捗ステータスがある
     - 進捗ステータスは「未着手、レビュー待ち、完了」いずれかの値を持つ
