@@ -1,4 +1,4 @@
-@startuml usecase 
+@startuml domain 
 
 object 管理者 {
     管理者ID
