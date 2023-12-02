@@ -25,7 +25,7 @@ note right of 課題
 end note
 
 object 課題進捗 {
-    課題ID
+    課題
     ユーザーID
     課題進捗
 }
