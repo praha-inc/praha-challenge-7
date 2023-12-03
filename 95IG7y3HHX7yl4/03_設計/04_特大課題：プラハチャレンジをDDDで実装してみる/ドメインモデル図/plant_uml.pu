@@ -13,6 +13,7 @@ note left of 管理者
 end note
 
 object 課題 {
+    課題ID
     課題番号
     課題タイトル
     課題ジャンル
@@ -39,7 +40,7 @@ note bottom of 課題進捗
     - 進捗ステータスを変更できるのは、課題の所有者だけ
 end note
 
-rectangle チーム集約 {
+rectangle ペア集約 {
     object 参加者 {
         参加者ID
         参加者名
@@ -48,14 +49,18 @@ rectangle チーム集約 {
         所属ペア
         在籍状況
     }
+
     object ペア {
+        ペアID
         ペア名
         ペアメンバー
     }
-    object チーム {
-        チーム名
-        チームメンバー
-    }
+}
+
+object チーム {
+    チームID
+    チーム名
+    チームメンバー
 }
 
 note bottom of 参加者 
@@ -81,10 +86,6 @@ note right of チーム
     - チームの名前は3文字以下でなければいけない
 - チームには最低でも参加者が3名いなければならない。
 - 2名以下になった時の挙動については以下の「参加者の増減に関する仕様」を参照
-end note
-
-note top of チーム集約 
-- 相互に影響を与え合う関係性な為、１つの集約に
 end note
 
 管理者 o--> 参加者 : has-many
