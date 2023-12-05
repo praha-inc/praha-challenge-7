@@ -1,0 +1,10 @@
+| 会話文(ドメイン) | プログラム上(単数) | 複数 | 概要 |
+| --- | --- | --- | --- |
+| 参加者 | Participant | Participants | プラハチャレンジの参加者<br>サービス利用者 |
+| 管理者 | Administrator | Administrators | プラハチャレンジの管理者<br>株式会社プラハの社員 |
+| ペア | Pair | Pairs | 参加者が組み学習を進めていくペア<br>基本3人組 |
+| チーム | Team | Teams | ペアが所属するチーム |
+| 課題 | Task | Tasks | プラハチャレンジの課題 |
+| 課題進捗 | AssignmentProgress | AssignmentProgresses | 参加スアそれぞれの課題の進捗状況<br>課題ごとに「未着手、レビュー待ち、完了」のステータスがある |
+| 在籍状況 | EnrollmentStatus | EnrollmentStatuses | 参加者の在籍状況<br>在籍状況としては「在籍中」「休会中」「退会済」の3つ |
+| ペア振り分け | PairAllocation | -- | ペアの振り分け状況<br>詳細は参加者の増減に関する仕様を参照 |

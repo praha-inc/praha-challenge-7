@@ -27,7 +27,7 @@ end note
 
 object 課題進捗 {
     課題進捗ID
-    課題
+    課題ID
     参加者ID
     課題進捗
 }
