@@ -10,7 +10,7 @@
  着手中 | InProgress | InProgressTasks | プラハチャレンジの課題の進捗状況<br />現在進行中の課題 |
  レビュー待ち | AwaitingReview | AwaitingReviewTasks | プラハチャレンジの課題の進捗状況<br />レビューを待っている課題 |
  完了 | Completed | CompletedTasks | プラハチャレンジの課題の進捗状況<br />完了した課題 |
- 在籍状況 | EnrollmentStatus | EnrollmentStatuses | 参加者の在籍状況<br />在籍状況としては「在籍中」「休会中」「退会済」の3つ<br />一度退会したら戻ることはできない。<br />休会から復帰して在籍中になることはできる|
+ 在籍状況 | EnrollmentStatus | EnrollmentStatuses | 参加者の在籍状況<br />在籍状況としては「在籍中」「休会中」「退会済」の3つ<br />一度退会したら戻ることはできない。<br />休会から復帰して在籍中になることはできる<br />ステータスが「在籍中」ではない場合、どのチームにもペアにも所属してはいけない|
  在籍中 | Enrolled | EnrolledParticipants | 参加者の在籍状況<br />現在参加中の参加者 |
  休会中 | OnLeave | OnLeaveParticipants | 参加者の在籍状況<br />一時的に参加を休止している参加者 |
  退会済 | Withdrawn | WithdrawnParticipants | 参加者の在籍状況<br />参加を終了した参加者 |
