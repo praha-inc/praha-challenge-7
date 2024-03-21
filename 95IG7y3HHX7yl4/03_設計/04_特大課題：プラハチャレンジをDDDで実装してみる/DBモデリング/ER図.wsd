@@ -3,10 +3,19 @@
 !define MASTER F9DFD5
 !define TRANSACTION CAE7F2
 
+entity generations as "generations" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    name: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
 entity teams as "teams" <<M,MASTER>> {
     + id: UUID <<PK>>
     --
     name: VARCHAR
+    - generation_id: UUID <<FK>>
     created_at: TIMESTAMP
     updated_at: TIMESTAMP
 }
@@ -45,7 +54,8 @@ entity participants as "participants" <<M,MASTER>> {
     --
     name: VARCHAR
     email: VARCHAR
-    year: INT
+    enrollmentStatus: INT
+    - team_id: UUID <<FK>>
     - pair_id: UUID <<FK>>
     created_at: TIMESTAMP
     updated_at: TIMESTAMP
@@ -54,7 +64,7 @@ entity participants as "participants" <<M,MASTER>> {
 entity assignment_progresses as "assignment_progresses" <<T,TRANSACTION>> {
     + id: UUID <<PK>>
     --
-    state: VARCHAR
+    state: INT
     - participant_id: UUID <<FK>>
     - assignment_id: UUID <<FK>>
     created_at: TIMESTAMP
