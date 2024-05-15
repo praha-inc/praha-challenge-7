@@ -1,0 +1,111 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity generations as "generations" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    name: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity teams as "teams" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    name: VARCHAR
+    - generation_id: UUID <<FK>>
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity pairs as "pairs" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    name: VARCHAR
+    - team_id: UUID <<FK>>
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity categories as "categories" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    name: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity assignments as "assignments" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    number: INT
+    title: VARCHAR
+    introduction: VARCHAR
+    content: VARCHAR
+    - category_id: UUID <<FK>>
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity participants as "participants" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    name: VARCHAR
+    email: VARCHAR
+    enrollmentStatus: INT
+    - team_id: UUID <<FK>>
+    - pair_id: UUID <<FK>>
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity assignment_progresses as "assignment_progresses" <<T,TRANSACTION>> {
+    + id: UUID <<PK>>
+    --
+    state: INT
+    - participant_id: UUID <<FK>>
+    - assignment_id: UUID <<FK>>
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity administrators as "administrators" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    email: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity admin_emails as "admin_emails" <<M,MASTER>> {
+    + id: UUID <<PK>>
+    --
+    title: VARCHAR
+    body: VARCHAR
+    sent_date_time: TIMESTAMP
+    status: VARCHAR
+    error_message: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+entity admin_email_senders as "admin_email_senders" <<T,TRANSACTION>> {
+    + id: UUID <<PK>>
+    --
+    - administrator_id: UUID <<FK>>
+    - admin_email_id: UUID <<FK>>
+    created_at: TIMESTAMP
+}
+
+teams ||--o{ pairs : contains
+pairs ||--o{ participants : contains
+categories ||--o{ assignments : categorizes
+participants ||--o{ assignment_progresses : tracks
+assignments ||--o{ assignment_progresses : evaluated_by
+administrators ||--o{ admin_email_senders : sends
+admin_emails ||--o{ admin_email_senders : sent_by
+
+
+@enduml
