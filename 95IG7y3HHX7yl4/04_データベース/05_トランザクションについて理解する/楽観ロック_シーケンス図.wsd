@@ -1,0 +1,26 @@
+@startuml
+actor ユーザー
+participant "予約端末" as 端末
+participant "サーバー" as サーバー
+participant "データベース" as DB
+
+ユーザー -> 端末: チケットを選択
+端末 -> サーバー: チケット予約情報を取得
+サーバー -> DB: SELECT * FROM tickets WHERE movie_id = 1 AND seat_id = 1
+DB -> サーバー: チケット情報とバージョン番号を返す
+サーバー -> 端末: チケット情報とバージョン番号を返す
+
+alt チケットが利用可能な場合
+    ユーザー -> 端末: 予約を実行
+    端末 -> サーバー: 予約を確定(movie_id, seat_id, versionをrequest bodyに含める)
+    サーバー -> DB: UPDATE tickets SET reserved = true, version = version + 1\nWHERE movie_id = 1 AND seat_id = 1 AND version = $取得したVersion
+    DB -> サーバー: 更新成功
+    サーバー -> 端末: 成功
+    端末 -> ユーザー: 予約が確認されました
+else チケットが既に予約されている場合
+    DB -> サーバー: 更新失敗
+    サーバー -> 端末: エラー
+    端末 -> ユーザー: 予約失敗（チケットは既に予約されています）
+end
+
+@enduml
