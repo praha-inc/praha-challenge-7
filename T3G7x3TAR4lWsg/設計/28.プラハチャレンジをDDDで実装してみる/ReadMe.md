@@ -8,20 +8,14 @@
 
 Draw.io を使っています。
 
-お手数ですが、
-
-VSCode の拡張機能
+お手数ですが、VSCode の拡張機能
 
 「Draw.io Integration」
 ID:hediet.vscode-drawio
 
 をインストールして頂くと見やすいかもです。
 
-環境を汚したくない場合、
-
-https://app.diagrams.net/
-
-↑ こちらにファイルをアップロードしたら見れます。
+※もしくはそれぞれ同名の.png を用意しましたのでそちらでご覧ください。
 
 # 課題２
 
