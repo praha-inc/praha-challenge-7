@@ -1,0 +1,37 @@
+@startuml db-modeling-4
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity frequencies as "frequencies\n周期" <<T, TRANSACTION>> {
+    +id uuid
+    --
+    every_word ENUM [毎] NULLABLE 
+    week_day_word ENUM [曜日] NULLABLE
+    year int [年] NULLABLE 
+    month ENUM [月] NULLABLE
+    date ENUM [日] NULLABLE 
+    time ENUM [時刻]
+    minute ENUM [分]
+    span int [間隔(日)]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity reminders as "reminders\nリマインダー" <<T, TRANSACTION>>  {
+    +reminder_id uuid
+    --
+    message TEXT [投稿内容]
+    frequency_id frequencies.uuid
+    user_id: uuid [送信者(slackのID)]
+    recipient_id uuid [受信者(slackのID)]
+    from TIMESTAMP [リマインド開始日時]
+    remided_at TIMESTAMP [前回のリマインド日時]
+    is_finished: BOOLEAN [終了フラグ]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+
+
+reminders --|{ frequencies
