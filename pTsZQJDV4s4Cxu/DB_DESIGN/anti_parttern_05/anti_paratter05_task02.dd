@@ -1,0 +1,26 @@
+table new_customer {
+  id int [pk, not null]
+  phone_number varchar(13) [null]
+}
+
+table new_customer_call {
+  id int [pk, not null]
+  new_customer_id int [not null, ref: > new_customer.id]
+  called blooean [not null]
+  call_at datetime [not null]
+  call_note varchar(max) [not null]
+}
+
+table new_customer_meeting {
+  id int [pk, not null]
+  new_customer_id int [not null, ref: > new_customer.id]
+  met_once blooean [not null]
+  met_at datetime [null]
+}
+
+table new_customer_closing {
+  id int [pk, not null]
+  new_customer_id int [not null, ref: > new_customer.id]
+  closed blooean [not null]
+  closed_at datetime [null]
+}
