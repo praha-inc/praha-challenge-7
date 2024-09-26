@@ -1,0 +1,151 @@
+<mxfile host="65bd71144e">
+    <diagram id="9xovjR4-WUleG0vmvGRw" name="ページ1">
+        <mxGraphModel dx="986" dy="731" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="71" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;fontColor=#000000;startArrow=none;exitX=-0.028;exitY=0.174;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="3" target="65" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="340" y="330" as="sourcePoint"/>
+                        <mxPoint x="650" y="801" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="54" value="" style="shape=actor;whiteSpace=wrap;html=1;labelBackgroundColor=default;fillStyle=auto;fontSize=10;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="935" y="179.5" width="30" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;fontColor=#000000;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" parent="1" source="3" target="41" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="395" y="484" as="sourcePoint"/>
+                        <mxPoint x="795" y="632.99" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="参加者" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="118" width="140" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="名前" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="3" vertex="1">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="メールアドレス" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="3" vertex="1">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="在籍ステータス" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="3" vertex="1">
+                    <mxGeometry y="90" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="「在籍中」「休会中」「退会済」" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=18;dy=13;boundedLbl=1;direction=south;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="228" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="重複を許容しない" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=18;dy=13;boundedLbl=1;direction=north;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="160.5" width="110" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;ステータスが「在籍中」ではない場合、どのチームにもペアにも所属してはいけない&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=104;dy=10;boundedLbl=1;direction=west;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="268" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="チーム" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="268" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="名前" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="11" vertex="1">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="参加者" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="11" vertex="1">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="重複を許容しない" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=80.33;dy=10;boundedLbl=1;direction=east;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="222" width="100" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="1,2,3,4のような数字でないといけない" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=18;dy=13;boundedLbl=1;direction=north;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="268" width="110" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="3文字以下でなければいけない" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=80.33;dy=10;boundedLbl=1;direction=east;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="178" width="100" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;fontColor=#000000;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;exitX=1;exitY=-0.133;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="4" target="13" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="620" y="434" as="sourcePoint"/>
+                        <mxPoint x="720" y="334" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;チームには最低でも参加者が3名いなければならない&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=104;dy=10;boundedLbl=1;direction=west;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fillStyle=auto;connectable=1;allowArrows=1;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="340" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="ペア" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="574" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="名前" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="39" vertex="1">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="参加者" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="39" vertex="1">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="ペア名は1文字" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=80.33;dy=10;boundedLbl=1;direction=east;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="960" y="568" width="100" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="a,b,c,dのような英文字でないといけない" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=18;dy=13;boundedLbl=1;direction=south;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="940" y="613" width="120" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;参加者は2名〜3名まで。1名のペアや、4名のペアは存在できない&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=104;dy=10;boundedLbl=1;direction=west;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fillStyle=auto;connectable=1;allowArrows=1;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="590" y="480" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="" style="shape=actor;whiteSpace=wrap;html=1;labelBackgroundColor=default;fillStyle=auto;fontSize=10;fillColor=#647687;strokeColor=#314354;opacity=90;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="50" width="40" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="" style="shape=actor;whiteSpace=wrap;html=1;labelBackgroundColor=default;fillStyle=auto;fontSize=10;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="506" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="" style="shape=actor;whiteSpace=wrap;html=1;labelBackgroundColor=default;fillStyle=auto;fontSize=10;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="870" y="506" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="" style="shape=actor;whiteSpace=wrap;html=1;labelBackgroundColor=default;fillStyle=auto;fontSize=10;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="205.5" width="30" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="" style="shape=actor;whiteSpace=wrap;html=1;labelBackgroundColor=default;fillStyle=auto;fontSize=10;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="950" y="205.5" width="30" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="ドメインモデル図" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=default;fillStyle=auto;fontSize=16;fontColor=#000000;opacity=40;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="500" y="40" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="課題" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="524" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="課題番号" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="56" vertex="1">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="内容" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="56" vertex="1">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="「未着手、レビュー待ち、完了」" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=18;dy=13;boundedLbl=1;direction=south;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;fontColor=#000000;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="430" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;div&gt;進捗ステータスはいつでも変更可能&lt;/div&gt;&lt;div&gt;ただし一度「完了」にした進捗ステータスを「レビュー待ち」「未着手」に戻すことはできない&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=104;dy=10;boundedLbl=1;direction=west;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="470" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="&lt;div style=&quot;&quot;&gt;進捗ステータスを変更できるのは、課題の所有者だけ&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=104;dy=10;boundedLbl=1;direction=west;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fillStyle=auto;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="580" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="参加者所有課題" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="330" width="140" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="参加者" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="65" vertex="1">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="課題" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="65" vertex="1">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="進捗ステータス" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="65" vertex="1">
+                    <mxGeometry y="90" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.concepts.address_book;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="462" width="55" height="44" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;参加者はそれぞれ約80個の課題を持つ&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.rectCallout;dx=90.26;dy=10;boundedLbl=1;direction=west;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fillStyle=auto;connectable=1;allowArrows=1;opacity=80;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="255.5" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERmandOne;startArrow=ERmandOne;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.021;entryY=-0.021;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="57" target="68" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="360" y="610" as="sourcePoint"/>
+                        <mxPoint x="160" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

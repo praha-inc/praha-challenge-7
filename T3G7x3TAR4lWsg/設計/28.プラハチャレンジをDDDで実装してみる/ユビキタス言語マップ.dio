@@ -1,0 +1,16 @@
+<mxfile host="65bd71144e">
+    <diagram id="E9Q2zmO8a1CzALKpMUC_" name="ページ1">
+        <mxGraphModel dx="1302" dy="926" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="参加者&#10;在籍ステータス&#10;課題&#10;参加者割当課題&#10;ペア&#10;チーム&#10;課題番号&#10;内容&#10;進捗ステータス" style="text;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="100" width="230" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="attendee&#10;enrollment_status&#10;task&#10;attendee_assigning_task&#10;pair&#10;team&#10;task_number&#10;content&#10;progress_status" style="text;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="530" y="100" width="175" height="260" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
