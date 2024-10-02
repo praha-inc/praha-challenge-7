@@ -1,0 +1,86 @@
+erDiagram
+
+users ||--o{ user_work_spaces: ""
+user_work_spaces }o--|| work_spaces: ""
+users ||--o{ user_chat_channels: ""
+user_chat_channels }|--|| chat_channels: ""
+work_spaces ||--o{ chat_channels: ""
+users ||--o{ user_chat_threads: ""
+user_chat_threads }|--|| chat_threads: ""
+chat_channels ||--o{ chat_messages: ""
+users ||--o{ chat_messages: ""
+chat_threads |o--|{ chat_messages: ""
+
+%% メッセージの親子関係を表している
+%% chat_messages_familiesが存在するなら、childは存在する。
+chat_messages ||--o| chat_messages_families: ""
+chat_messages_families |o--|| chat_messages: ""
+
+%% 誰によってワークスペースが作られたかを表すリレーション
+users ||--o{ work_spaces: ""
+
+%% 誰によってチャンネルが作られたかを表すリレーション
+users ||--o{ chat_channels: ""
+
+
+
+users {
+  id BIGINT PK
+  name VARCHAR(255)
+  email VARCHAR(255)
+  avatar_url VARCHAR(255)
+}
+
+work_spaces {
+  id BIGINT PK
+  name VARCHAR(255)
+  created_at DATETIME
+  created_by BIGINT FK
+}
+
+user_work_spaces {
+  id BIGINT PK
+  user_id BIGINT FK
+  work_space_id BIGINT FK
+}
+
+chat_channels {
+  id BIGINT PK
+  name VARCHAR(255)
+  created_at DATETIME
+  is_public BOOLEAN
+  created_by BIGINT FK
+  work_space_id BIGINT FK
+}
+
+user_chat_channels {
+  id BIGINT PK
+  user_id BIGINT FK
+  chat_channel_id BIGINT FK
+}
+
+chat_threads {
+  id BIGINT PK
+  created_at DATETIME
+}
+
+user_chat_threads {
+  id BIGINT PK
+  user_id BIGINT FK
+  chat_thread_id BIGINT FK
+}
+
+chat_messages {
+  id BIGINT PK
+  body VARCHAR(255)
+  send_at DATETIME
+  user_id BIGINT FK
+  chat_channel_id BIGINT FK
+  chat_thread_id BIGINT FK
+}
+
+chat_messages_families {
+  id BIGINT PK
+  parent_id BIGINT
+  child_id BIGINT
+}
