@@ -1,0 +1,42 @@
+@startuml
+
+skinparam cloud {
+    BackgroundColor LightBlue
+    BorderColor DarkBlue
+}
+
+skinparam rectangle {
+    BackgroundColor LightGray
+    BorderColor Black
+}
+
+cloud "On-Premises Data Center" as onprem {
+    rectangle "Corporate Network" {
+        [Router]
+    }
+}
+
+cloud "AWS Cloud" as aws {
+    rectangle "VPC: 10.0.0.0/16" {
+        rectangle "Public Subnet\n10.0.1.0/24" as public_subnet {
+            [Application Load Balancer] as alb
+        }
+        rectangle "Private Subnet\n10.0.2.0/24" as private_subnet {
+            [EC2 Instance 1\n(Private)] as ec2_1
+            [EC2 Instance 2\n(Private)] as ec2_2
+        }
+    }
+    
+    cloud "Virtual Private Gateway" as vpg
+    vpg -down-> public_subnet
+}
+
+cloud "Internet" as internet
+
+onprem -right-> internet
+internet -right-> vpg : VPN Connection
+
+alb -down-> ec2_1 : HTTP/HTTPS
+alb -down-> ec2_2 : HTTP/HTTPS
+
+@enduml
