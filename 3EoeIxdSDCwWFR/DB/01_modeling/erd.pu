@@ -1,0 +1,178 @@
+@startuml test
+hide circle
+skinparam linetype ortho
+
+entity "m_menu (メニューマスタ)" as m_menu {
+     * <<PK>> menu_id(メニューID) uuid
+     --
+     * <<FK>> menu_category_kbn(メニューカテゴリー区分) int (1:セットメニュー 2:寿司)
+     * <<FK>> price_id(価格ID) uuid
+     * is_deleted(削除フラグ) bool
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_menu_category_kbn (メニューカテゴリー区分マスタ)" as m_menu_category_kbn {
+     * <<PK>> menu_category_kbn(メニューカテゴリー区分) int
+     --
+     * menu_category_kbn_name(メニューカテゴリー区分名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_set_menu (セットメニューマスタ)" as m_set_menu {
+     * <<PK>> set_menu_id(セットメニューID) uuid
+     --
+     * <<FK>> set_menu_kbn(セットメニュー区分) int(1:盛り込み 2:にぎり 以下略)
+     * set_menu_name(セットメニュー名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_set_menu_detail (セットメニュー詳細マスタ)" as m_set_menu_detail {
+     * <<PK>> set_menu_detail_id(セットメニュー詳細ID) uuid
+     --
+     * <<FK>> menu_id(メニューID) uuid
+     * <<FK>> set_menu_kbn(寿司メニューID) uuid
+     * quantity (個数) int
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_set_menu_kbn (セットメニュー区分マスタ)" as m_set_menu_kbn {
+     * <<PK>> set_menu_kbn(セットメニュー区分) int
+     --
+     * set_menu_kbn_name(セットメニュー区分名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_menu_sushi_menu_mapping (メニュー 寿司メニューマッピングマスタ)" as m_menu_sushi_menu_mapping {
+     * <<PK>> <<FK>> menu_id(メニューID) uuid
+     -- 
+     * <<FK>> sushi_menu_id(寿司メニューID) uuid
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_menu_set_menu_mapping (メニュー セットメニューマッピングマスタ)" as m_menu_set_menu_mapping {
+     * <<PK>> <<FK>> menu_id(メニューID) uuid
+     -- 
+     * <<FK>> sushi_menu_id(セットメニューID) uuid
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_menu_lunch_menu_mapping (メニュー ランチメニューマッピングマスタ)" as m_menu_lunch_menu_mapping {
+     * <<PK>>  <<FK>> menu_id(メニューID) uuid
+     -- 
+     * <<FK>> lunch_menu_id(ランチメニューID) uuid
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_sushi_menu (寿司メニューマスタ)" as m_sushi_menu {
+     * <<PK>> sushi_menu_id(寿司メニューID) uuid
+     --
+     * sushi_menu_name(寿司メニュー名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_lunch_menu (ランチメニューマスタ)" as m_lunch_menu {
+     * <<PK>> lunch_menu_id(ランチメニューID) uuid
+     --
+     * lunch_menu_name(ランチメニュー名) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_price (価格マスタ)" as m_price {
+     * <<PK>> price_id(価格ID) uuid
+     --
+     * price(価格) int
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "m_customer (顧客マスタ)" as m_customer {
+     * <<PK>> customer_id(顧客ID) uuid
+     --
+     * <<FK>> customer_name(顧客名) string
+     * tel_number(電話番号) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "t_order (注文トラン)" as t_order {
+     * <<PK>> order_id(注文ID) uuid
+     --
+     * <<FK>> customer_id(顧客ID) uuid
+     * is_payed(支払い済みフラグ) bool
+     * order_method_kbn (注文方法区分) int
+     * <<FK>> tax_rate_id(税率ID) uuid
+     <<FK>>coupon_id(クーポンID) uuid
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+ entity "m_coupon (クーポンマスタ)" as m_coupon {
+     * <<PK>> coupon_id(クーポンID) uuid
+     --
+     * coupon_name(クーポン名) string
+     discount_rate(割引率) int
+     discount_price(割引金額) int
+     * start_date(適用開始日時) date
+     * end_date(適用終了日時) date
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "t_order_detail (注文詳細トラン)" as t_order_detail {
+     * <<PK>> order_detail_id(注文詳細ID) uuid
+     --
+     * <<FK>> order_id(注文ID) uuid
+     * <<FK>> menu_id(メニューID) uuid
+     * quantity(数量) int
+     * is_no_wasabi(わさび抜きフラグ) bool
+     * <<FK>> sushi_rice_amount_kbn (シャリ量区分) int (0:少 1:大)
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "m_sushi_rice_amount_kbn (シャリ量区分マスタ)" as m_sushi_rice_amount_kbn {
+     * <<PK>> sushi_rice_amount_kbn (シャリ量区分) int
+     --
+     * sushi_rice_amount_kbn_name (シャリ量区分) string
+     created_at(作成日時) date
+     updated_at(更新日時) date
+ }
+
+entity "m_tax_rate (税率マスタ)" as m_tax_rate {
+     * <<PK>> tax_rate_id(税率ID) uuid
+     --
+     * tax_rate(税率) int
+     * start_date(適用開始日時) date
+     * end_date(適用終了日時) date
+ }
+
+ t_order ||..|{ t_order_detail
+ m_customer ||..|{ t_order
+ m_menu ||..|| m_menu_category_kbn
+ m_menu_set_menu_mapping ||--|| m_set_menu
+ m_menu_sushi_menu_mapping ||--|| m_sushi_menu
+ m_menu_lunch_menu_mapping ||--|| m_lunch_menu
+ m_menu ||..o{ t_order_detail
+ m_set_menu }o..|| m_set_menu_kbn
+ t_order }o..|| m_tax_rate 
+ m_price }o..|| m_menu
+ t_order_detail }o..|| m_sushi_rice_amount_kbn
+ m_set_menu ||--o{ m_set_menu_detail
+ m_menu_sushi_menu_mapping ||..|| m_menu
+ m_menu_set_menu_mapping ||..|| m_menu
+ m_menu_lunch_menu_mapping ||..||m_menu
+ m_coupon ||..|{ t_order
+
+
+
+@enduml
