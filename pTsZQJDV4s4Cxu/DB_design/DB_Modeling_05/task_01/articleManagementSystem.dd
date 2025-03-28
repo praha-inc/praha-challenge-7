@@ -1,0 +1,13 @@
+table article {
+  id int [pk, not null]
+  title nvarchar(200) [not null]
+  content nvarchar(1000) [not null]
+}
+
+table articleHistory {
+  id int [pk, not null]
+  articleId int [ref: > article.id, not null]
+  title nvarchar(200) [not null]
+  content nvarchar(1000) [not null]
+  updateDate datetime
+}

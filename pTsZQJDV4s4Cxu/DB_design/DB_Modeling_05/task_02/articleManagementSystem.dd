@@ -1,0 +1,7 @@
+table article {
+  id int [pk, not null]
+  historyId int [pk, not null]
+  title nvarchar(200) [not null]
+  content nvarchar(1000) [not null]
+  updateDate datetime [not null]
+}
