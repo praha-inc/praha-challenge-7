@@ -1,0 +1,27 @@
+
+table document {
+  id int [pk, not null]
+  name nvarchar(200) [not null]
+  content text [null]
+  editDate datetime [not null]
+  editUser int [ref: > user.id, not null]
+  directoryId int [ref: > directory.id, not null]
+  order int [not null]
+}
+
+table directory {
+  id int [pk, not null]
+  name nvarchar(200) [not null]
+  editDate datetime [not null]
+  editUser nvarchar(30) [not null]
+}
+
+table directoryClosureTable {
+  parentDirectoryId int [ref: > directory.id, not null]
+  childDirectoryId int [ref: > directory.id, not null]
+}
+
+table user {
+  id int [pk, not null]
+  name nvarchar(100) [not null]
+}
