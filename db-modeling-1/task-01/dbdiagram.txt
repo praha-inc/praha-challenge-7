@@ -1,0 +1,167 @@
+Table customers {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  first_name VARCHAR [not null, note: '名']
+  last_name VARCHAR [not null, note: '姓']
+  phone_number VARCHAR [note: '電話番号']
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+  
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: '注文者'
+}
+
+Table orders {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  comments TEXT [note: "自由記述欄"]
+  is_paid BOOLEAN [note: "支払いの有無"]
+  customer_id INT [ref: > customers.id]
+  
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: '注文'
+}
+
+Table single_item_order_detail {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  order_id INT [not null, ref: > orders.id]
+  single_item_id INT [not null, ref: - single_items.id]
+  has_wasabi BOOLEAN [not null, default: true, note: "わさびの有無" ]
+  count INTEGER [not null, default: 0, note: "個数"]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: '単品メニューのメニューごとの注文'
+}
+
+Table set_menu_order_detail {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  order_id INT [not null, ref: > orders.id]
+  set_menu_id INT [not null, ref: - set_menus.id]
+  has_wasabi BOOLEAN [not null, default: true, note: "わさびの有無" ]
+  count INTEGER [not null, default: 0, note: "個数"]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: 'セットメニューのメニューごとの注文'
+}
+
+Table single_items {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  single_item_category_id INT [not null, ref: - single_item_categories.id]
+  name VARCHAR [not null, note: "お寿司の名前"]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: '単品メニュー'
+}
+
+Table single_item_categories {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  name VARCHAR [not null, note: "カテゴリー名"]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: '単品メニューのカテゴリー'
+}
+
+Table single_item_price_relations {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  single_item_id INT [not null, ref: > single_items.id]
+  price_id INT [not null, ref: > prices.id]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: '単品メニューの価格の変更履歴'
+}
+
+Table set_menus {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  set_menu_category_id INT [not null, ref: - set_menu_categories.id]
+  name VARCHAR [not null, note: "セットメニューの名前"]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: 'セットメニュー'
+}
+
+Table set_menu_categories {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  name VARCHAR [not null, note: "カテゴリー名"]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: 'セットメニューのカテゴリー'
+}
+
+Table set_menu_price_relations {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  set_menu_id INT [not null, ref: > set_menus.id]
+  price_id INT [not null, ref: > prices.id]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: 'セットメニューの価格の変更履歴'
+}
+
+Table prices {
+  id INT [increment]
+  uuid VARCHAR [not null, unique]
+  price INT [not null, note: "税抜価格"]
+  starts_at TIMESTAMP [not null, note: "適用開始日"]
+  ends_at TIMESTAMP [note: "適用終了日"]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+
+  Indexes {
+    (id) [pk]
+  }
+
+  Note: '価格マスタ'
+}
