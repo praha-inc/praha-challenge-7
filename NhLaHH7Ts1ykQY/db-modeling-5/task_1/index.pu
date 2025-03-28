@@ -1,0 +1,36 @@
+@startuml db-modeling-5
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity users as "users\nユーザー" <<M, MASTER>> {
+    +uuid VARCHAR(255)
+    --
+    name VARCHAR(30) [名前]
+    email VARCHAR(30) UNIQUE [メールアドレス]
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity articles as "\n記事" <<T, TRANSACTION>> {
+    +uuid VARCHAR(255)
+    --
+    title VARCHAR(255) [記事タイトル]
+    body TEXT [表示名]
+    autor_id: users.uuid
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity article_logs as "\n記事履歴" <<T, TRANSACTION>> {
+    +uuid VARCHAR(255)
+    --
+    article_id: articles.uuid
+    title VARCHAR(255) [記事タイトル]
+    body TEXT [表示名]
+    autor_id: users.uuid
+    created_at TIMESTAMP
+}
+
+users --|{ articles
+articles --|{ article_logs
