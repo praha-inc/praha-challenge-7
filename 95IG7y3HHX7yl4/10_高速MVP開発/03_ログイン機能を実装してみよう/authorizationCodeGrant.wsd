@@ -1,0 +1,19 @@
+@startuml OAuth2.0 認可コードグラント
+
+actor "リソースオーナー\n(ユーザー)" as User
+participant "クライアント\n(画像編集アプリ)" as Client
+participant "認可サーバー\n(Google OAuth)" as AuthServer
+participant "リソースサーバー\n(Google Photo)" as ResourceServer
+
+User -> Client: 1. アプリ起動、写真インポート機能を選択
+Client -> AuthServer: 2. 認可リクエスト\n(client_id, redirect_uri, response_type=code,\nscope, state)
+AuthServer -> User: 3. 認証と同意画面を表示
+User -> AuthServer: 4. Googleアカウントでログイン、アクセス許可に同意
+AuthServer -> Client: 5. リダイレクト（認可コード付き）\n(redirect_uri?code=xxx&state=yyy)
+Client -> AuthServer: 6. アクセストークン要求\n(grant_type=authorization_code, code,\nredirect_uri, client_id, client_secret)
+AuthServer -> Client: 7. アクセストークン発行\n(access_token, refresh_token, expires_in, token_type)
+Client -> ResourceServer: 8. リソースリクエスト\n(Authorization: Bearer access_token)
+ResourceServer -> Client: 9. リソース（写真データ）提供
+Client -> User: 10. 写真を表示、編集機能を提供
+
+@enduml

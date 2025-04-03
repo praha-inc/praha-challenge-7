@@ -1,0 +1,65 @@
+@startuml OIDC Flow
+
+actor "エンドユーザー\n(End User)" as user
+participant "リライング・パーティ\n(Relying Party)" as rp
+participant "IDプロバイダー\n(ID Provider)" as idp
+participant "UserInfoエンドポイント\n(UserInfo Endpoint)" as userInfo
+
+note over user, userInfo
+  OIDCの基本的なフロー
+end note
+
+== 認証フェーズ ==
+rp -> user: 1. 認証リクエスト
+user -> user: ユーザーが同意を判断
+user -> rp: 2. 認可コード (Authorization Code)
+
+== トークン取得フェーズ ==
+rp -> idp: 3. 認可コードを提示してIDトークンをリクエスト
+idp -> idp: 認可コードを検証
+idp -> rp: 4. IDトークン発行（および通常はアクセストークンも併せて発行）
+
+note right
+  **OIDCにおけるトークン**
+  - IDトークン: OIDCの本質的部分。認証の証明としてユーザー情報を含むJWT
+  - アクセストークン: OAuth 2.0由来。リソースへのアクセス権限を表す
+  - 純粋な認証だけの場合はIDトークンのみで十分だが、
+    実際の運用では両方を同時に発行するパターンが一般的
+end note
+
+== ユーザー情報アクセスフェーズ ==
+rp -> userInfo: 5. アクセストークンを提示してユーザー情報にアクセス
+userInfo -> userInfo: トークンを検証
+userInfo -> rp: 6. ユーザー情報を提供
+
+note right of user
+  **エンドユーザー**
+  - 認証される対象の人
+  - アクセス権限の付与を承認する人
+  - 個人を識別できる情報の所有者
+end note
+
+note right of rp
+  **リライング・パーティ**
+  - ユーザー認証を依頼するアプリケーション
+  - Webアプリ、モバイルアプリなど
+  - エンドユーザーのIDに依存する
+end note
+
+note right of idp
+  **IDプロバイダー**
+  - エンドユーザーを認証
+  - リライング・パーティを登録・認証
+  - IDトークン・アクセストークンを発行
+  - 同意画面を提供
+end note
+
+note right of userInfo
+  **UserInfoエンドポイント**
+  - 認証されたユーザーの情報を提供
+  - トークンを検証
+  - 認可されたユーザー属性へのアクセスを提供
+  - IDトークンに含まれない追加情報を取得できる
+end note
+
+@enduml
