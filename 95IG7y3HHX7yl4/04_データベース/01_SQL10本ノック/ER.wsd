@@ -1,0 +1,80 @@
+@startuml
+entity "Customers(顧客)" as customers {
+    * CustomerID : int <<PK>>
+    --
+    CustomerName : string -- 名前
+    ContactName : string -- 連絡担当者の名前
+    Country : string -- 国
+}
+
+entity "Orders(注文)" as orders {
+    * OrderID : int <<PK>>
+    --
+    CustomerID : int -- 顧客のID
+    EmployeeID : int -- 従業員のID
+    OrderDate : date -- 注文日
+    ShipperID : int -- 配送業者のID
+}
+
+entity "Employees(従業員)" as employees {
+    * EmployeeID : int <<PK>>
+    --
+    LastName : string -- 姓
+    FirstName : string -- 名
+    BirthDate : date -- 生年月日
+    Photo : string -- 写真
+    Notes : string -- メモ
+}
+
+entity "OrderDetails(注文)" as orderdetails {
+    * OrderDetailID : int <<PK>>
+    --
+    OrderID : int -- ID
+    ProductID : int -- 商品のID
+    Quantity : int -- 商品の数量
+}
+
+entity "Products(商品)" as products {
+    * ProductID : int <<PK>>
+    --
+    ProductName : string -- 名前
+    SupplierID : int -- 供給業者のID
+    CategoryID : int -- カテゴリのID
+    Unit : string -- 単位
+    Price : float -- 価格
+}
+
+entity "Suppliers(供給業者)" as suppliers {
+    * SupplierID : int <<PK>>
+    --
+    SupplierName : string -- 名前
+    ContactName : string -- 連絡担当者の名前
+    Address : string -- 住所
+    City : string -- 都市
+    PostalCode : string -- 郵便番号
+    Country : string -- 国
+    Phone : string -- 電話番号
+}
+
+entity "Shippers(配送業者)" as shippers {
+    * ShipperID : int <<PK>>
+    --
+    ShipperName : string -- 名前
+    Phone : string -- 電話番号
+}
+
+entity "Categories(カテゴリ)" as categories {
+    * CategoryID : int <<PK>>
+    --
+    CategoryName : string -- 名前
+    Description : string -- 説明
+}
+
+customers ||--o{ orders : "places"
+orders ||--o{ orderdetails : "contains"
+orders ||--|| employees : "handled by"
+orderdetails ||--|| products : "includes"
+products ||--|| suppliers : "supplied by"
+orders ||--|| shippers : "shipped by"
+products ||--|| categories : "categorized as"
+@enduml
