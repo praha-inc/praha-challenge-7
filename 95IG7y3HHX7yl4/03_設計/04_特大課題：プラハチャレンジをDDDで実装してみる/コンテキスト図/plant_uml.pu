@@ -1,0 +1,13 @@
+@startuml context 
+
+actor ユーザー
+actor 管理者
+
+node アプリケーション {
+    agent DB 
+    agent WebServer
+}
+ユーザー -right-> WebServer : API
+管理者 -up-> WebServer : API
+WebServer -right-> DB
+@enduml
