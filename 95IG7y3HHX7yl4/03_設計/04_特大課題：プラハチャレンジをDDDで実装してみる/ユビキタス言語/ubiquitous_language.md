@@ -5,7 +5,7 @@
  ペア | Pair | Pairs| 参加者が組み学習を進めていくペア<br />2-3人組|
  チーム | Team | Teams| ペアが所属するチーム<br />人数の上限はなし |
  課題 | Task | Tasks| プラハチャレンジの課題<br />課題数は80個ぐらいある |
- 課題進捗 | AssignmentProgress | AssignmentProgresses | 参加スアそれぞれの課題の進捗状況<br />課題ごとに「未着手、着手中、レビュー待ち、完了」のステータスがある<br />一度完了にしたら、他のステータスに戻すことは出来ない |
+ 課題進捗 | AssignmentProgress | AssignmentProgresses | 参加者それぞれの課題の進捗状況<br />課題ごとに「未着手、着手中、レビュー待ち、完了」のステータスがある<br />一度完了にしたら、他のステータスに戻すことは出来ない |
  未着手 | NotStarted | NotStartedTasks | プラハチャレンジの課題の進捗状況<br />まだ始まっていない課題 |
  着手中 | InProgress | InProgressTasks | プラハチャレンジの課題の進捗状況<br />現在進行中の課題 |
  レビュー待ち | AwaitingReview | AwaitingReviewTasks | プラハチャレンジの課題の進捗状況<br />レビューを待っている課題 |
