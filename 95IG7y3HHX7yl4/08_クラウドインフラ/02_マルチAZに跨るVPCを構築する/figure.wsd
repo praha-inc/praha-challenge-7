@@ -1,0 +1,30 @@
+@startuml
+
+skinparam cloud {
+    BackgroundColor LightBlue
+    BorderColor DarkBlue
+}
+
+skinparam rectangle {
+    BackgroundColor LightGray
+    BorderColor Black
+}
+
+cloud "Internet" as internet
+
+rectangle "VPC: 10.0.0.0/16" {
+    rectangle "Public Subnet 1\n10.0.1.0/24\n(AZ1)" as public1 {
+        [EC2 Instance\n(Public)] as ec2_public1
+    }
+    rectangle "Private Subnet 2\n10.0.4.0/24\n(AZ2)" as private2 {
+        [EC2 Instance\n(Private)] as ec2_private2
+    }
+    
+    cloud "Internet Gateway" as igw
+    igw -down-> public1
+}
+
+internet -right-> igw
+ec2_public1 -right-> ec2_private2 : SSH
+
+@enduml
