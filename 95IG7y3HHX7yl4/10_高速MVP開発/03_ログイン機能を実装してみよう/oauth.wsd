@@ -1,0 +1,57 @@
+@startuml OAuth2.0 Flow
+
+actor "リソースオーナー\n(Resource Owner)" as owner
+participant "クライアント\n(Client)" as client
+participant "認可サーバー\n(Authorization Server)" as authServer
+participant "リソースサーバー\n(Resource Server)" as resourceServer
+
+note over owner, resourceServer
+  OAuth2.0の基本的なフロー
+end note
+
+== 認可フェーズ ==
+client -> owner: 1. 認可リクエスト
+owner -> owner: ユーザーが同意を判断
+owner -> client: 2. 認可付与 (Authorization Grant)
+
+== トークン取得フェーズ ==
+client -> authServer: 3. 認可付与を提示してアクセストークンをリクエスト
+authServer -> authServer: 認可付与を検証
+authServer -> client: 4. アクセストークン発行
+
+== リソースアクセスフェーズ ==
+client -> resourceServer: 5. アクセストークンを提示してリソースにアクセス
+resourceServer -> resourceServer: トークンを検証
+resourceServer -> client: 6. 保護されたリソースを提供
+
+note right of owner
+  **リソースオーナー**
+  - 保護されたリソースの所有者
+  - アクセス権限の付与を承認する人
+  - 一般的にはエンドユーザー
+end note
+
+note right of client
+  **クライアント**
+  - リソースにアクセスしたいアプリケーション
+  - Webアプリ、モバイルアプリなど
+  - リソースオーナーに代わって行動
+end note
+
+note right of authServer
+  **認可サーバー**
+  - リソースオーナーを認証
+  - クライアントを登録・認証
+  - アクセストークンを発行
+  - 同意画面を提供
+end note
+
+note right of resourceServer
+  **リソースサーバー**
+  - 保護されたリソースをホスト
+  - トークンを検証
+  - 認可されたアクセスを提供
+  - 通常はAPIサーバー
+end note
+
+@enduml
